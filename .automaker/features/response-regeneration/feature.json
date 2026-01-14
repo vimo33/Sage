@@ -1,0 +1,14 @@
+{
+  "id": "response-regeneration",
+  "category": "Core",
+  "title": "Regenerate AI Response",
+  "description": "Button to regenerate AI answer with different temperature/seed. Useful when response doesn't resonate or user wants alternative framing.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.381Z",
+  "updatedAt": "2026-01-13T03:01:26.940Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:54:23.440Z"
+}

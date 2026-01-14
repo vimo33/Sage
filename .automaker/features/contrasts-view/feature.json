@@ -1,0 +1,14 @@
+{
+  "id": "contrasts-view",
+  "category": "UI",
+  "title": "Wisdom Contrasts Comparison",
+  "description": "Display complementary or contrasting passages from different traditions on same topic. Helps users see multiple perspectives on their question.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.376Z",
+  "updatedAt": "2026-01-13T02:11:07.214Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:03:44.195Z"
+}

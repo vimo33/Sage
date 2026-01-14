@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create horizontal scrollable list of recent journey cards showing icon, title, duration, relative time, and chevron for navigation.",
+  "title": "Recent Journeys Section",
+  "dependencies": [
+    "theme-pack-system"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028069-pp08jyfs3"
+}

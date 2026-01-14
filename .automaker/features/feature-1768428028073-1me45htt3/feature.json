@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create progress display for theme paths showing path name, 'Day X of 7' badge, progress bar with green fill, and 'Next: [prompt title]' with chevron.",
+  "title": "Theme Progress Section",
+  "dependencies": [
+    "theme-pack-system"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028073-1me45htt3"
+}

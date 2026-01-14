@@ -1,0 +1,14 @@
+{
+  "id": "biometric-lock",
+  "category": "Authentication",
+  "title": "Biometric App Lock",
+  "description": "Use expo-local-authentication for Face ID/Touch ID app locking. Protects journal and insights from unauthorized access on shared devices.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.378Z",
+  "updatedAt": "2026-01-13T02:10:40.390Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:00:01.718Z"
+}

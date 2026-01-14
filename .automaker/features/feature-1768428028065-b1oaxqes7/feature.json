@@ -1,0 +1,9 @@
+{
+  "category": "feature",
+  "description": "Create Sage logo (leaf icon) as vector SVG, app icon for welcome screen (green rounded square with leaf), exported at 1x, 2x, 3x resolutions in assets/images/.",
+  "title": "App Logo and Icon Assets",
+  "dependencies": [],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028065-b1oaxqes7"
+}

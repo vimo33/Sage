@@ -1,0 +1,109 @@
+{
+  "expo": {
+    "name": "Sage",
+    "slug": "sage",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": false,
+    "scheme": "sage",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a1a2e"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.name.Sage",
+      "infoPlist": {
+        "NSSpeechRecognitionUsageDescription": "Sage uses speech recognition for voice input",
+        "NSMicrophoneUsageDescription": "Sage uses the microphone for voice input"
+      }
+    },
+    "android": {
+      "package": "com.sage.wisdom",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1a1a2e"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-asset",
+        {
+          "assets": ["./assets/data/wisdom.db"]
+        }
+      ],
+      [
+        "expo-sqlite",
+        {
+          "enableFTS": true
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
+      ],
+      [
+        "llama.rn",
+        {
+          "enableEntitlements": true,
+          "entitlementsProfile": "development",
+          "forceCxx20": true,
+          "enableOpenCL": false
+        }
+      ],
+      [
+        "expo-quick-actions",
+        {
+          "androidIcons": {
+            "shortcut_ask_sage": {
+              "foregroundImage": "./assets/icon.png",
+              "backgroundColor": "#1a1a2e"
+            },
+            "shortcut_new_entry": {
+              "foregroundImage": "./assets/icon.png",
+              "backgroundColor": "#1a1a2e"
+            },
+            "shortcut_wisdom": {
+              "foregroundImage": "./assets/icon.png",
+              "backgroundColor": "#1a1a2e"
+            }
+          }
+        }
+      ],
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Sage uses the microphone for voice input",
+          "speechRecognitionPermission": "Sage uses speech recognition for hands-free question input",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
+        }
+      ],
+      "./plugins/android-widget/app.plugin.js",
+      "./plugins/withRemovePushEntitlement.js"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "packagerOpts": {
+      "assetExts": ["gguf", "db"]
+    },
+    "assetBundlePatterns": [
+      "assets/**/*"
+    ]
+  }
+}

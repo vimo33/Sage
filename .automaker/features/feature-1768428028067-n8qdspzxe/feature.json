@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create journal entry mood/type icons: Morning sun icon (orange glow), Moon/night icon (blue), Lightning/realization icon, Cloud/heavy thoughts icon. Store in assets/images/journal/.",
+  "title": "Journal Entry Icon Assets",
+  "dependencies": [
+    "journal-entry-creation"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028067-n8qdspzxe"
+}

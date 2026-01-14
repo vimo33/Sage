@@ -1,0 +1,16 @@
+{
+  "id": "export-journal",
+  "category": "Core",
+  "title": "Export Journal as Text",
+  "description": "Export all journal entries as formatted text or markdown file. Preserves user data sovereignty and enables backup without cloud dependency.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "simple",
+  "dependencies": [
+    "journal-entry-creation"
+  ],
+  "createdAt": "2026-01-13T01:18:37.377Z",
+  "updatedAt": "2026-01-13T02:17:06.472Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:11:56.030Z"
+}

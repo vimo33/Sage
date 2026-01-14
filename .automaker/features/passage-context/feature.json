@@ -1,0 +1,14 @@
+{
+  "id": "passage-context",
+  "category": "UI",
+  "title": "Expanded Passage Context",
+  "description": "Show surrounding verses/paragraphs when tapping citation. Provides fuller context for retrieved wisdom passages.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.382Z",
+  "updatedAt": "2026-01-13T04:36:48.787Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T04:26:59.783Z"
+}

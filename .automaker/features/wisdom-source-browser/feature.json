@@ -1,0 +1,14 @@
+{
+  "id": "wisdom-source-browser",
+  "category": "UI",
+  "title": "Browse Wisdom Corpus",
+  "description": "Exploratory interface to browse all 13,955+ chunks by source text or theme. Educational feature for users curious about corpus content.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.382Z",
+  "updatedAt": "2026-01-13T05:19:14.941Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T05:11:47.938Z"
+}

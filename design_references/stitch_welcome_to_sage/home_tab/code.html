@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage - Home</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ecc8",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#10221f",
+                        "surface-dark": "#162b28",
+                        "surface-darker": "#0d1c1a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+            width: 100%; /* Specific width is required for Firefox. */
+            background: transparent; /* Otherwise white in Chrome */
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #13ecc8;
+            cursor: pointer;
+            margin-top: -8px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+            box-shadow: 0 0 10px rgba(19, 236, 200, 0.4);
+        }
+        
+        input[type=range]::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #13ecc8;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(19, 236, 200, 0.4);
+        }
+        
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+        
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden pb-24">
+<!-- Top Section with Illustration Background -->
+<div class="relative w-full">
+<!-- Abstract Background Illustration -->
+<div class="absolute inset-0 w-full h-full z-0 opacity-40">
+<div class="w-full h-full bg-cover bg-center" data-alt="abstract soothing aurora borealis gradient" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRi0lqw67HZhEEXVckz2u3EAIyfMYTSlt0yoh0LvP0oEUhBatFWA7D1MtPRIK5T6X4rR3B0vNAr9wUT9p9n6FnzmhGcUqpHzMlODpgmPrl_QlIJs3UNiBO8vbRvZumt4S_C6zIqzqSJ1Z77NOrjJ7-pKCTgRyyTIl21CCzweZ7d9PtjMniOFV9e4-uRytTbp3vqFgTxsbAlqoeeza8qsbMdEkwSUEenFF1WNqbQRtZne3J8W3lx1Sr2sTxz0z-CR68Ihd_b_UjSS24'); mask-image: linear-gradient(to bottom, black 0%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);"></div>
+</div>
+<!-- Header Content -->
+<div class="relative z-10 px-6 pt-12 pb-6">
+<div class="flex items-center justify-between mb-6">
+<!-- App/Brand or simple spacer -->
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">spa</span>
+<h2 class="text-white text-xl font-bold tracking-tight">Sage</h2>
+</div>
+<!-- Profile Avatar -->
+<div class="h-10 w-10 rounded-full bg-white/10 p-0.5 cursor-pointer ring-1 ring-white/20">
+<img alt="Profile avatar of a young woman" class="h-full w-full rounded-full object-cover" data-alt="User profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTexO0RaKHVbxnAXU-sf9Xk2MLYB1PKboZsPrPQc6TKAMAqbQojtmzNBW9uURsn_vhDHm1wwfaujC29ZD4QN36z8cCSM1T7z-UV6Z8S-JTjBnDXZ4l7kvM8lW3bRhGwxg64B24_bq_U_Uc1JDeUC7BruygjH3ojcF7vnRQnU43cJj8iW99NfP0IHtK7rDXwT2PZj966rxtBE2fsdKMm__fkoCGEr5L_DplLgZBPYLglKDw774VCxuO2oMuMnNzqg8P_V6_soUDRh5A"/>
+</div>
+</div>
+<!-- Greeting and Streak -->
+<div class="flex flex-col gap-1">
+<h1 class="text-white text-3xl font-bold leading-tight tracking-tight">Good evening,<br/>Alex</h1>
+<!-- Streak Badge (Modified ProfileStats) -->
+<div class="flex items-center gap-2 mt-2">
+<div class="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-3 py-1 backdrop-blur-sm">
+<span class="material-symbols-outlined text-primary text-[18px] fill-1">local_fire_department</span>
+<span class="text-white font-semibold text-sm">14 Day Streak</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex flex-col gap-8 px-4 -mt-2 relative z-10">
+<!-- Daily Session Card -->
+<div class="w-full bg-surface-dark border border-white/5 rounded-2xl p-5 shadow-xl shadow-black/20">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="text-white text-xl font-bold">Daily Session</h2>
+<p class="text-gray-400 text-sm mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                        3 min check-in
+                    </p>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+</div>
+<!-- Sliders -->
+<div class="space-y-6 mb-8">
+<!-- Mood Slider -->
+<div>
+<div class="flex justify-between text-xs font-medium text-gray-400 mb-2 uppercase tracking-wider">
+<span>Calm</span>
+<span>Overwhelmed</span>
+</div>
+<input class="w-full" max="100" min="0" type="range" value="30"/>
+</div>
+<!-- Energy Slider -->
+<div>
+<div class="flex justify-between text-xs font-medium text-gray-400 mb-2 uppercase tracking-wider">
+<span>Low Energy</span>
+<span>High Energy</span>
+</div>
+<input class="w-full" max="100" min="0" type="range" value="70"/>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="w-full bg-primary hover:bg-[#0fd4b3] text-surface-darker font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors">
+<span>Start Session</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+<!-- Quick Prompts Section -->
+<div>
+<div class="flex items-center justify-between px-2 mb-3">
+<h3 class="text-white text-lg font-bold">Quick prompts</h3>
+<button class="text-primary text-sm font-medium">See all</button>
+</div>
+<div class="flex overflow-x-auto gap-3 pb-2 hide-scrollbar px-1">
+<button class="whitespace-nowrap rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white px-5 py-2.5 text-sm font-medium transition-all">
+                    Stress
+                </button>
+<button class="whitespace-nowrap rounded-full border border-primary/30 bg-primary/10 text-primary px-5 py-2.5 text-sm font-medium transition-all">
+                    Purpose
+                </button>
+<button class="whitespace-nowrap rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white px-5 py-2.5 text-sm font-medium transition-all">
+                    Relationships
+                </button>
+<button class="whitespace-nowrap rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white px-5 py-2.5 text-sm font-medium transition-all">
+                    Discipline
+                </button>
+<button class="whitespace-nowrap rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white px-5 py-2.5 text-sm font-medium transition-all">
+                    Fear
+                </button>
+<button class="whitespace-nowrap rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white px-5 py-2.5 text-sm font-medium transition-all">
+                    Change
+                </button>
+</div>
+</div>
+<!-- Recent Insights List -->
+<div>
+<div class="flex items-center justify-between px-2 mb-3">
+<h3 class="text-white text-lg font-bold">Recent Insights</h3>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Card 1 -->
+<div class="group flex items-center gap-4 bg-surface-dark hover:bg-[#1f3834] p-4 rounded-xl border border-white/5 transition-colors cursor-pointer">
+<div class="h-12 w-12 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-0.5">
+<h4 class="text-white font-semibold truncate">The Power of Habit</h4>
+<span class="text-xs text-gray-500">Oct 24</span>
+</div>
+<p class="text-gray-400 text-sm truncate">Today I realized that small changes in my morning...</p>
+</div>
+<span class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+<!-- Card 2 -->
+<div class="group flex items-center gap-4 bg-surface-dark hover:bg-[#1f3834] p-4 rounded-xl border border-white/5 transition-colors cursor-pointer">
+<div class="h-12 w-12 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 shrink-0">
+<span class="material-symbols-outlined">self_improvement</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-0.5">
+<h4 class="text-white font-semibold truncate">Facing Anxiety</h4>
+<span class="text-xs text-gray-500">Oct 23</span>
+</div>
+<p class="text-gray-400 text-sm truncate">Breathing exercises helped me calm down before...</p>
+</div>
+<span class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+<!-- Card 3 -->
+<div class="group flex items-center gap-4 bg-surface-dark hover:bg-[#1f3834] p-4 rounded-xl border border-white/5 transition-colors cursor-pointer">
+<div class="h-12 w-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-0.5">
+<h4 class="text-white font-semibold truncate">Weekly Review</h4>
+<span class="text-xs text-gray-500">Oct 20</span>
+</div>
+<p class="text-gray-400 text-sm truncate">My focus for next week is balancing work and...</p>
+</div>
+<span class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Spacer for Bottom Nav -->
+<div class="h-6"></div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-[#10221f]/95 backdrop-blur-md border-t border-white/5 px-6 py-4 pb-8 z-50">
+<div class="flex justify-between items-center">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined fill-1">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300">
+<span class="material-symbols-outlined">book_2</span>
+<span class="text-[10px] font-medium">Journal</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Explore</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

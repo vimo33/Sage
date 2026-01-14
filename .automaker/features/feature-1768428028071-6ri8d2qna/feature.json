@@ -1,0 +1,11 @@
+{
+  "category": "enhancement",
+  "description": "Create rich empty state for journal with large circular background, book illustration, 'Your space to reflect' heading, and 'Your thoughts are safe here. Tap the + to begin your first entry.' subtitle.",
+  "title": "Journal Empty State",
+  "dependencies": [
+    "empty-state-illustration-assets"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028071-6ri8d2qna"
+}

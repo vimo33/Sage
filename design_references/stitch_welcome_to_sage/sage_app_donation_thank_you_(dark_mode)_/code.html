@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage - Donation Thank You</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#37ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#132210",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display antialiased">
+<!-- Main Container -->
+<div class="relative flex h-full min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden text-slate-900 dark:text-white">
+<!-- Top Bar -->
+<div class="flex items-center p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-full active:bg-white/10 transition-colors cursor-pointer text-slate-900 dark:text-white">
+<span class="material-symbols-outlined" style="font-size: 24px;">close</span>
+</div>
+</div>
+<!-- Main Content Area: Vertically Centered -->
+<div class="flex flex-1 flex-col justify-center items-center px-6 py-6 w-full max-w-md mx-auto">
+<!-- Success Graphic / Empty State Replacement -->
+<div class="flex flex-col items-center gap-8 w-full">
+<!-- Icon Container -->
+<div class="relative flex items-center justify-center">
+<!-- Abstract glowing effect behind -->
+<div class="absolute inset-0 rounded-full bg-primary/20 blur-2xl"></div>
+<!-- Main Circle -->
+<div class="relative flex items-center justify-center w-32 h-32 rounded-full bg-[#1e2f1b] border border-[#2a3f26]">
+<span class="material-symbols-outlined text-primary" style="font-size: 48px;">check</span>
+</div>
+</div>
+<!-- Text Content -->
+<div class="flex max-w-[480px] flex-col items-center gap-4 text-center">
+<h1 class="text-3xl md:text-4xl font-bold leading-tight tracking-tight text-slate-900 dark:text-white">
+                        Deeply appreciated.
+                    </h1>
+<p class="text-slate-600 dark:text-gray-300 text-base font-light leading-relaxed max-w-[320px]">
+                        Your generosity fuels the growth of Sage. Thank you for supporting our journey towards mindfulness and reflection.
+                    </p>
+</div>
+<!-- Transaction Pill -->
+<div class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#1e2f1b] border border-[#2a3f26]">
+<span class="material-symbols-outlined text-primary/60 mr-2" style="font-size: 16px;">receipt_long</span>
+<p class="text-primary/80 text-xs font-medium tracking-wide uppercase">
+                        Donation #8492 — $5.00
+                    </p>
+</div>
+</div>
+</div>
+<!-- Bottom Actions -->
+<div class="flex flex-col gap-4 px-6 py-8 w-full max-w-md mx-auto">
+<!-- Primary Button -->
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary text-background-dark hover:opacity-90 active:scale-[0.98] transition-all duration-200">
+<span class="text-base font-bold leading-normal tracking-wide">Return to Home</span>
+</button>
+<!-- Secondary Link -->
+<button class="flex w-full items-center justify-center gap-2 py-2 group">
+<p class="text-slate-500 dark:text-[#a1b99d] text-sm font-normal group-hover:underline transition-all">
+                    Need a receipt?
+                </p>
+</button>
+</div>
+<!-- Bottom Spacer/Safe Area -->
+<div class="h-5"></div>
+</div>
+</body></html>

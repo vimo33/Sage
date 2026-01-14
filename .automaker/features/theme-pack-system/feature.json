@@ -1,0 +1,16 @@
+{
+  "id": "theme-pack-system",
+  "category": "Core",
+  "title": "7-Day Theme Paths",
+  "description": "Create curated 7-day journey packs focused on specific themes (acceptance, purpose, stillness). Unlocks one prompt per day with progress tracking.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "complex",
+  "dependencies": [
+    "guided-reflection-flow"
+  ],
+  "createdAt": "2026-01-13T01:18:37.375Z",
+  "updatedAt": "2026-01-13T03:23:59.787Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:12:08.859Z"
+}

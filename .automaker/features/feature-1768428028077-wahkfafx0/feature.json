@@ -1,0 +1,9 @@
+{
+  "category": "feature",
+  "description": "Create tone selection screen with back arrow, progress dots (4 total), 'Choose your tone' heading, four option cards with icons (Practical/briefcase, Poetic/star with green border default, Minimal/minus, Deep/eye), 'Skip for now' link, 'Continue' button, and privacy notice.",
+  "title": "Onboarding Tone Selection Screen",
+  "dependencies": [],
+  "priority": 3,
+  "status": "backlog",
+  "id": "feature-1768428028077-wahkfafx0"
+}

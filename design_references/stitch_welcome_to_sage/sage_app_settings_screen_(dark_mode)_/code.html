@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage App Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#37ec13",
+                        "sage-black": "#121811",
+                        "sage-dark": "#1c261b",
+                        "sage-light": "#2b3928",
+                        "sage-text": "#a1b99d",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#121811",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white overflow-x-hidden selection:bg-primary selection:text-black">
+<div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-sage-black shadow-2xl overflow-hidden">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center bg-sage-black/80 backdrop-blur-md px-4 pt-6 pb-4 justify-between border-b border-white/5">
+<button class="text-white flex size-10 shrink-0 items-center justify-center rounded-full active:bg-white/10 transition-colors">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Settings</h2>
+</header>
+<!-- Scrollable Content -->
+<main class="flex-1 flex flex-col px-4 pb-12 overflow-y-auto no-scrollbar">
+<!-- Profile Section -->
+<div class="mt-6">
+<h3 class="text-sage-text text-xs font-bold uppercase tracking-wider mb-2 ml-2">Profile</h3>
+<div class="bg-sage-dark rounded-2xl overflow-hidden">
+<!-- Tone Preference -->
+<div class="p-4 border-b border-white/5">
+<p class="text-white text-sm font-medium mb-3">Tone</p>
+<div class="flex h-10 w-full items-center justify-center rounded-lg bg-sage-light p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 has-[:checked]:bg-sage-dark has-[:checked]:shadow-sm has-[:checked]:text-white text-sage-text text-xs font-medium transition-all">
+<span class="truncate">Gentle</span>
+<input checked="" class="invisible w-0 absolute" name="tone" type="radio" value="Gentle"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 has-[:checked]:bg-sage-dark has-[:checked]:shadow-sm has-[:checked]:text-white text-sage-text text-xs font-medium transition-all">
+<span class="truncate">Direct</span>
+<input class="invisible w-0 absolute" name="tone" type="radio" value="Direct"/>
+</label>
+</div>
+</div>
+<!-- Narration Toggle -->
+<div class="flex items-center justify-between p-4 border-b border-white/5 active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sage-text">record_voice_over</span>
+<p class="text-white text-sm font-medium">Narration</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-sage-light peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Voice Selector -->
+<button class="w-full flex items-center justify-between p-4 border-b border-white/5 active:bg-white/5 transition-colors text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sage-text">graphic_eq</span>
+<p class="text-white text-sm font-medium">Voice</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sage-text text-sm">Sage (Default)</span>
+<span class="material-symbols-outlined text-sage-text text-sm">chevron_right</span>
+</div>
+</button>
+<!-- Speed Selector -->
+<div class="p-4">
+<div class="flex justify-between items-center mb-2">
+<p class="text-white text-sm font-medium">Speed</p>
+<span class="text-primary text-xs font-bold">1.0x</span>
+</div>
+<input class="w-full h-1 bg-sage-light rounded-lg appearance-none cursor-pointer [&amp;::-webkit-slider-thumb]:appearance-none [&amp;::-webkit-slider-thumb]:h-4 [&amp;::-webkit-slider-thumb]:w-4 [&amp;::-webkit-slider-thumb]:rounded-full [&amp;::-webkit-slider-thumb]:bg-primary" max="2.0" min="0.5" step="0.1" type="range" value="1.0"/>
+</div>
+</div>
+</div>
+<!-- Privacy Section -->
+<div class="mt-6">
+<h3 class="text-sage-text text-xs font-bold uppercase tracking-wider mb-2 ml-2">Privacy</h3>
+<div class="bg-sage-dark rounded-2xl overflow-hidden">
+<div class="flex items-center justify-between p-4 border-b border-white/5 active:bg-white/5 transition-colors">
+<div class="flex flex-col">
+<p class="text-white text-sm font-medium">Local-only Storage</p>
+<span class="text-xs text-sage-text/70 mt-0.5">Data stays on this device</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-sage-light peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-4 border-b border-white/5 active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sage-text">cloud_sync</span>
+<p class="text-white text-sm font-medium">iCloud Sync</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-sage-light peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<button class="w-full flex items-center justify-start p-4 active:bg-red-500/10 transition-colors text-left group">
+<span class="material-symbols-outlined text-red-400 group-hover:text-red-500 mr-3">delete_forever</span>
+<p class="text-red-400 text-sm font-medium group-hover:text-red-500">Delete all data</p>
+</button>
+</div>
+</div>
+<!-- Safety Section -->
+<div class="mt-6">
+<h3 class="text-sage-text text-xs font-bold uppercase tracking-wider mb-2 ml-2">Safety</h3>
+<div class="bg-sage-dark rounded-2xl overflow-hidden">
+<div class="flex items-center justify-between p-4 border-b border-white/5 active:bg-white/5 transition-colors">
+<div class="flex flex-col">
+<p class="text-white text-sm font-medium">Content Limits</p>
+<span class="text-xs text-sage-text/70 mt-0.5">Avoid intense topics</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-sage-light peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<button class="w-full flex items-center justify-between p-4 active:bg-white/5 transition-colors text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">sos</span>
+<p class="text-white text-sm font-medium">Crisis Help Resources</p>
+</div>
+<span class="material-symbols-outlined text-sage-text text-sm">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Notifications Section -->
+<div class="mt-6">
+<h3 class="text-sage-text text-xs font-bold uppercase tracking-wider mb-2 ml-2">Notifications</h3>
+<div class="bg-sage-dark rounded-2xl overflow-hidden">
+<div class="flex items-center justify-between p-4 active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sage-text">notifications</span>
+<p class="text-white text-sm font-medium">Daily Reflection</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-sage-light peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Time Picker Simulation -->
+<div class="px-4 pb-4 pt-0">
+<div class="flex justify-between items-center bg-sage-black rounded-xl p-3 border border-white/5">
+<span class="text-xs text-sage-text uppercase font-bold tracking-wider">Time</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="text-xl font-mono font-bold">08:00</span>
+<span class="text-sm font-medium ml-1">AM</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Donation Card -->
+<div class="mt-8 mb-2">
+<div class="relative bg-gradient-to-br from-sage-dark to-[#0f1a0e] rounded-2xl p-5 border border-primary/20 shadow-[0_0_15px_rgba(55,236,19,0.05)] overflow-hidden">
+<!-- Decorative glow -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-start gap-3 mb-4 relative z-10">
+<div class="p-2 bg-primary/10 rounded-full text-primary">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<div>
+<h4 class="text-white font-bold text-base">Support Sage</h4>
+<p class="text-sage-text text-xs mt-1 leading-relaxed">Your tips help us keep Sage ad-free and focused on your growth.</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3 relative z-10">
+<button class="flex flex-col items-center justify-center py-3 px-2 rounded-xl bg-sage-black border border-white/5 hover:border-primary/50 hover:bg-primary/5 active:scale-95 transition-all group">
+<span class="text-xs text-sage-text group-hover:text-primary transition-colors">Coffee</span>
+<span class="text-white font-bold text-sm mt-1">CHF 2</span>
+</button>
+<button class="flex flex-col items-center justify-center py-3 px-2 rounded-xl bg-sage-black border border-primary/30 shadow-[0_0_10px_rgba(55,236,19,0.1)] hover:bg-primary/10 active:scale-95 transition-all group relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5"></div>
+<span class="text-xs text-primary font-medium relative z-10">Lunch</span>
+<span class="text-white font-bold text-sm mt-1 relative z-10">CHF 5</span>
+</button>
+<button class="flex flex-col items-center justify-center py-3 px-2 rounded-xl bg-sage-black border border-white/5 hover:border-primary/50 hover:bg-primary/5 active:scale-95 transition-all group">
+<span class="text-xs text-sage-text group-hover:text-primary transition-colors">Dinner</span>
+<span class="text-white font-bold text-sm mt-1">CHF 10</span>
+</button>
+</div>
+</div>
+</div>
+<!-- About Section -->
+<div class="mt-8 mb-8 flex flex-col items-center text-center px-6">
+<div class="size-12 bg-sage-dark rounded-xl flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl">spa</span>
+</div>
+<h5 class="text-white font-bold text-sm mb-2">About Sage</h5>
+<p class="text-sage-text text-xs leading-relaxed max-w-xs mx-auto">
+                    Sage is designed to help you explore your inner world through gentle, reflective guidance. We believe in privacy, simplicity, and the power of self-inquiry.
+                </p>
+<div class="mt-6 flex flex-col gap-2 w-full max-w-xs">
+<button class="text-xs text-primary hover:underline">Terms of Service</button>
+<button class="text-xs text-primary hover:underline">Privacy Policy</button>
+</div>
+<p class="text-sage-text/40 text-[10px] mt-6">Version 2.4.0 (Build 192)</p>
+</div>
+</main>
+<!-- Bottom Tab Bar (Contextual visual, static) -->
+<div class="sticky bottom-0 bg-sage-black/90 backdrop-blur-lg border-t border-white/5 px-6 py-3 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 text-sage-text hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">home_app_logo</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-sage-text hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">history_edu</span>
+<span class="text-[10px] font-medium">Journal</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-2xl fill-1">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,9 @@
+{
+  "category": "feature",
+  "description": "Create reusable TabIcon component (components/navigation/TabIcon.tsx) with SVG-based icons supporting filled vs outlined variants, active state with primary color, and optional badge support for notifications.",
+  "title": "Custom Tab Icon Component",
+  "dependencies": [],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028065-kzuo1woaf"
+}

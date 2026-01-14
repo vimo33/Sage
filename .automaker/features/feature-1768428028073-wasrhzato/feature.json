@@ -1,0 +1,12 @@
+{
+  "category": "feature",
+  "description": "Create horizontal scrolling paths section with 'View all' link. Cards show thumbnail image, '7 DAYS' badge, title, description, and chevron.",
+  "title": "Paths Section Component",
+  "dependencies": [
+    "journey-path-image-assets",
+    "theme-pack-system"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028073-wasrhzato"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "voice-input",
+  "category": "Core",
+  "title": "Voice-to-Text Question Entry",
+  "description": "Speech recognition for hands-free question input. Transcribes to text for RAG processing with privacy-preserving on-device recognition.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "complex",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.381Z",
+  "updatedAt": "2026-01-13T05:08:30.409Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T04:58:24.899Z"
+}

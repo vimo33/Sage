@@ -1,0 +1,14 @@
+{
+  "id": "haptic-feedback",
+  "category": "UI",
+  "title": "Contextual Haptic Responses",
+  "description": "Add tactile feedback for key interactions (save insight, complete entry, start TTS). Enhances mobile-native feel.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.380Z",
+  "updatedAt": "2026-01-13T04:15:46.481Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:59:32.430Z"
+}

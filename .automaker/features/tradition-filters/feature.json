@@ -1,0 +1,14 @@
+{
+  "id": "tradition-filters",
+  "category": "Core",
+  "title": "Source Tradition Filtering",
+  "description": "Allow users to prefer certain wisdom traditions in RAG retrieval. Respects user resonance while maintaining cross-tradition blending option.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.383Z",
+  "updatedAt": "2026-01-13T05:04:31.250Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T04:50:26.862Z"
+}

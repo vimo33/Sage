@@ -1,0 +1,7 @@
+{
+  "category": "refactor",
+  "description": "Create an abstraction layer that decouples the AI conversation logic from specific LLM implementations. This would allow easy switching between local models, cloud providers, or hybrid approaches without changing core business logic.\n\n**Rationale:** Currently the app appears tightly coupled to specific model implementations. An abstraction layer would enable A/B testing different models, graceful fallbacks, and easier migration as LLM technology evolves.",
+  "title": "Modular LLM Provider Abstraction Layer",
+  "status": "backlog",
+  "id": "feature-1768429349565-9bklf7nls"
+}

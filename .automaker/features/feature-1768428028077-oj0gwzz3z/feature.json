@@ -1,0 +1,9 @@
+{
+  "category": "enhancement",
+  "description": "Reorganize settings into clear sections: PROFILE (tone selector, narration toggle with voice picker and speed slider), PRIVACY (Local/iCloud toggles), SAFETY (content limits, crisis resources), NOTIFICATIONS.",
+  "title": "Settings Section Reorganization",
+  "dependencies": [],
+  "priority": 3,
+  "status": "backlog",
+  "id": "feature-1768428028077-oj0gwzz3z"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "quick-actions",
+  "category": "UI",
+  "title": "Home Screen Quick Actions",
+  "description": "iOS 3D Touch and Android long-press shortcuts for common actions (New Entry, Ask Sage, Today's Wisdom). Improves daily ritual UX.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.383Z",
+  "updatedAt": "2026-01-13T04:40:59.597Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T04:30:26.356Z"
+}

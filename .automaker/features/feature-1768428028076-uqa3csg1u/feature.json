@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create tone adjustment sheet (components/chat/ToneAdjustmentSheet.tsx) with drag handle, header, current preview card with quote icon, tone selector (Practical/Poetic/Minimal/Deep), guidance style slider (More Questions ↔ More Statements), and Cancel/Apply buttons.",
+  "title": "Tone Adjustment Bottom Sheet",
+  "dependencies": [
+    "wisdom-remix"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028076-uqa3csg1u"
+}

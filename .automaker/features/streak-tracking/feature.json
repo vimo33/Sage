@@ -1,0 +1,14 @@
+{
+  "id": "streak-tracking",
+  "category": "Core",
+  "title": "Daily Usage Streak Calculation",
+  "description": "Calculate consecutive days user has interacted with app. Display on home screen with motivational messaging and streak preservation grace period.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.374Z",
+  "updatedAt": "2026-01-13T03:14:58.814Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:05:29.552Z"
+}

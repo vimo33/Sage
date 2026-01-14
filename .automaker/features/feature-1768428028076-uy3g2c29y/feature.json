@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create reusable offline banner (components/common/OfflineBanner.tsx) with yellow/amber background, cloud-slash icon, 'You're currently offline' text, 'Reflections are saved locally' subtitle, and 'RETRY' button.",
+  "title": "Offline Mode Banner Component",
+  "dependencies": [
+    "offline-indicator"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028076-uy3g2c29y"
+}

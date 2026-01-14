@@ -1,0 +1,14 @@
+{
+  "id": "stop-tts-button",
+  "category": "UI",
+  "title": "Stop TTS Playback Button",
+  "description": "Add visible button in chat interface to stop text-to-speech narration mid-playback. Includes visual indicator when TTS is actively speaking.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.369Z",
+  "updatedAt": "2026-01-13T02:01:07.647Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:54:23.053Z"
+}

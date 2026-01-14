@@ -1,0 +1,14 @@
+{
+  "id": "search-refinement",
+  "category": "Core",
+  "title": "Enhanced Search Query Processing",
+  "description": "Improve FTS query generation with synonym expansion, phrase detection, and better stop word handling. Increases retrieval accuracy for complex queries.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.372Z",
+  "updatedAt": "2026-01-13T01:59:59.162Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:54:22.594Z"
+}

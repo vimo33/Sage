@@ -1,0 +1,16 @@
+{
+  "id": "journal-entry-detail",
+  "category": "UI",
+  "title": "Journal Entry Detail View",
+  "description": "Modal screen showing full journal entry with edit capability, mood history, and option to delete. Accessible by tapping entry in journal list.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [
+    "journal-entry-creation"
+  ],
+  "createdAt": "2026-01-13T01:18:37.373Z",
+  "updatedAt": "2026-01-13T02:03:42.105Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:54:22.238Z"
+}

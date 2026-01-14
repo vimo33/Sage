@@ -1,0 +1,16 @@
+{
+  "id": "insight-notes-editing",
+  "category": "Core",
+  "title": "Edit Notes on Saved Insights",
+  "description": "Allow users to add or edit personal notes on saved insight passages. Notes stored in secure local storage tied to insight ID.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "simple",
+  "dependencies": [
+    "save-to-insights"
+  ],
+  "createdAt": "2026-01-13T01:18:37.374Z",
+  "updatedAt": "2026-01-13T02:32:20.639Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:26:08.499Z"
+}

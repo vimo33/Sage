@@ -1,0 +1,12 @@
+{
+  "category": "feature",
+  "description": "Add journal prompt section to insight detail with 'Journal your thoughts' header, edit icon, text input area, 'Save Note' button, tag chips, and 'SHARE INSIGHT' action.",
+  "title": "Insight Journal Prompt Section",
+  "dependencies": [
+    "insight-notes-editing",
+    "share-insight"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028075-dzentfxg0"
+}

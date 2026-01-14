@@ -1,0 +1,16 @@
+{
+  "id": "cloud-sync-optin",
+  "category": "Core",
+  "title": "Optional Encrypted Cloud Backup",
+  "description": "Opt-in end-to-end encrypted backup to user's iCloud/Google Drive. Journal and insights only, not chat history. Maintains privacy while enabling device migration.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "complex",
+  "dependencies": [
+    "export-journal"
+  ],
+  "createdAt": "2026-01-13T01:18:37.385Z",
+  "updatedAt": "2026-01-13T03:45:51.778Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:34:50.511Z"
+}

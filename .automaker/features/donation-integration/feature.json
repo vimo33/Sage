@@ -1,0 +1,14 @@
+{
+  "id": "donation-integration",
+  "category": "Core",
+  "title": "Optional Donation Flow",
+  "description": "Respectful tip jar integration for users who want to support development. Non-intrusive with one-time or recurring options.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.385Z",
+  "updatedAt": "2026-01-13T03:55:43.824Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:45:53.631Z"
+}

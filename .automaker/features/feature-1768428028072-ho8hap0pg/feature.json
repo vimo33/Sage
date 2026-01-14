@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create 2x3 grid of theme cards for Explore screen. Each card has image background, icon overlay, and label. Themes: Calm, Action, Self, Relationships, Change, Meaning.",
+  "title": "Theme Grid Component",
+  "dependencies": [
+    "theme-card-image-assets"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028072-ho8hap0pg"
+}

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project_specification>
+  <project_name>Sage AI</project_name>
+
+  <overview>
+    Sage is a privacy-first, fully on-device AI companion for self-inquiry and wisdom. It&apos;s a mobile app (iOS/Android) that provides conversational guidance grounded in ancient wisdom texts (Vedas, Upanishads, Bhagavad Gita, Yoga Sutras) without explicitly naming sources. The app uses RAG (Retrieval-Augmented Generation) to retrieve relevant passages from a curated corpus of 13,955+ wisdom chunks stored in a local SQLite database, then generates personalized guidance using an on-device LLM (Qwen3-0.6B). Key principles include: grounded responses (not generic), non-dogmatic perspectives, user-led reflection, safety-first approach with crisis detection, and complete privacy with all data stored locally. The north star goal is helping users feel calmer and clearer after 3-5 minute sessions that become a daily ritual.
+  </overview>
+
+  <technology_stack>
+    <technology>Expo 52 (SDK 52)</technology>
+    <technology>React Native 0.76.5</technology>
+    <technology>TypeScript 5.3</technology>
+    <technology>llama.rn v0.9.7 (native C++ LLM engine)</technology>
+    <technology>Qwen3-0.6B GGUF model (~480MB)</technology>
+    <technology>expo-sqlite with FTS5 full-text search</technology>
+    <technology>Zustand v5 (state management)</technology>
+    <technology>expo-secure-store (encrypted preferences)</technology>
+    <technology>expo-speech (text-to-speech)</technology>
+    <technology>expo-router (file-based routing)</technology>
+    <technology>expo-file-system</technology>
+    <technology>expo-asset</technology>
+    <technology>expo-local-authentication</technology>
+    <technology>react-native-gesture-handler</technology>
+    <technology>react-native-reanimated</technology>
+    <technology>react-native-screens</technology>
+    <technology>react-native-safe-area-context</technology>
+    <technology>better-sqlite3 (build scripts)</technology>
+    <technology>ts-node (build scripts)</technology>
+    <technology>Jest + jest-expo (testing)</technology>
+    <technology>ESLint + TypeScript ESLint</technology>
+  </technology_stack>
+
+  <core_capabilities>
+    <capability>Conversational AI guidance with structured responses (Guidance, Reflection, Practice)</capability>
+    <capability>RAG-based wisdom retrieval from curated ancient text corpus</capability>
+    <capability>On-device LLM inference (zero network calls for AI)</capability>
+    <capability>Intent-based theme detection mapping emotions to wisdom themes</capability>
+    <capability>Four tone preferences: Practical, Poetic, Minimal, Deep</capability>
+    <capability>Text-to-speech narration with adjustable speed</capability>
+    <capability>Local journal entries with mood tracking</capability>
+    <capability>Saved insights collection from conversations</capability>
+    <capability>3-step onboarding flow (Welcome, Tone, Narration)</capability>
+    <capability>Tab-based navigation (Explore, Journal, Insights, Settings)</capability>
+    <capability>Daily focus prompts and guided reflections</capability>
+    <capability>Citation display showing source passages</capability>
+    <capability>Conversational memory (last 10 messages)</capability>
+    <capability>Swiss-inspired dark theme with green accents</capability>
+    <capability>Crisis detection and safety messaging</capability>
+    <capability>Complete privacy - all data stays on device</capability>
+  </core_capabilities>
+
+  <implemented_features>
+    <feature>
+      <name>Expo Router Navigation</name>
+      <description>Full file-based routing with tab navigation and onboarding redirect. Includes Stack navigator for modal screens and Tab navigator for main app sections.</description>
+      <file_locations>
+        <location>app/_layout.tsx</location>
+        <location>app/(tabs)/_layout.tsx</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Onboarding Flow</name>
+      <description>3-step setup flow: Welcome screen with privacy message, Tone selection (Practical/Poetic/Minimal/Deep), and Narration settings (enable TTS, adjust speaking speed).</description>
+      <file_locations>
+        <location>app/onboarding.tsx</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Home/Explore Screen</name>
+      <description>Main dashboard with Daily Focus card, streak/mindful time stats, and carousel of guided reflections. FAB button navigates to Ask Sage chat.</description>
+      <file_locations>
+        <location>app/(tabs)/index.tsx</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Conversational AI Chat</name>
+      <description>Full chat interface with user/assistant message bubbles, citation display, loading states, and keyboard handling. Generates structured responses with Guidance, Reflection, and Practice sections.</description>
+      <file_locations>
+        <location>app/ask.tsx</location>
+        <location>lib/chat/service.ts</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>RAG Wisdom Retrieval</name>
+      <description>SQLite-based retrieval using FTS5 full-text search. Includes intent detection mapping 40+ emotional keywords to 15 theme categories, stop word filtering, and fuzzy search fallback.</description>
+      <file_locations>
+        <location>lib/retrieval/search.ts</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>LLM Inference Engine</name>
+      <description>Integration with llama.rn for on-device Qwen3-0.6B model inference. Supports chat completion with configurable temperature, top-k, top-p, repeat penalty, and stop words.</description>
+      <file_locations>
+        <location>lib/llm/inference.ts</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>State Management</name>
+      <description>Zustand store with SecureStore persistence for user preferences, chat history, journal entries, and saved insights. Handles model loading state and generation status.</description>
+      <file_locations>
+        <location>lib/storage/store.ts</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Text-to-Speech Service</name>
+      <description>expo-speech integration with configurable rate, automatic stop on new speech, and text cleaning for natural narration.</description>
+      <file_locations>
+        <location>lib/tts/service.ts</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Journal Screen</name>
+      <description>UI for viewing journal entries with daily prompt card, recent entries list with mood badges, and empty state. FAB for creating new entries (UI only).</description>
+      <file_locations>
+        <location>app/(tabs)/journal.tsx</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Insights Screen</name>
+      <description>Collection view for saved wisdom passages with quote styling, source references, user notes display, and stats (saved count, themes). Empty state prompts saving from chat.</description>
+      <file_locations>
+        <location>app/(tabs)/insights.tsx</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Settings Screen</name>
+      <description>Tone selection grid, narration toggle with speed slider, privacy status indicator, and clear chat history option.</description>
+      <file_locations>
+        <location>app/(tabs)/settings.tsx</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Theme System</name>
+      <description>Comprehensive design tokens including colors (Swiss-inspired dark theme), spacing scale, border radii, typography, shadows, and utility functions like withAlpha().</description>
+      <file_locations>
+        <location>lib/ui/theme.ts</location>
+      </file_locations>
+    </feature>
+    <feature>
+      <name>Corpus Build Pipeline</name>
+      <description>Node.js scripts to download public domain texts and build SQLite database with FTS5 indexing. Includes theme detection, tone classification, and chunk extraction for Gita, Upanishads, Vedic hymns.</description>
+      <file_locations>
+        <location>scripts/build-corpus.ts</location>
+        <location>scripts/download-sources.ts</location>
+      </file_locations>
+    </feature>
+  </implemented_features>
+
+  <additional_requirements>
+    <requirement>Must use native build (npx expo run:ios/android) - Expo Go incompatible with llama.rn</requirement>
+    <requirement>Requires C++20 (gnu++20) configured in Podfile for LLM engine</requirement>
+    <requirement>Old Architecture mode required (newArchEnabled: false) for library compatibility</requirement>
+    <requirement>Model file (~480MB) must be bundled in assets/models/sage-model.gguf</requirement>
+    <requirement>wisdom.db must be pre-built and bundled in assets/data/</requirement>
+    <requirement>iOS deployment target: 15.1 minimum</requirement>
+    <requirement>useMlock must be false to prevent RCTFatal crashes</requirement>
+    <requirement>SafeAreaProvider must wrap entire app</requirement>
+  </additional_requirements>
+
+  <development_guidelines>
+    <guideline>All AI inference is on-device - no network calls during normal operation</guideline>
+    <guideline>Responses must be grounded in retrieved passages, not hallucinated</guideline>
+    <guideline>Never give medical/legal advice - use crisis detection for self-harm mentions</guideline>
+    <guideline>Use non-dogmatic language - offer perspectives, not commandments</guideline>
+    <guideline>Keep sessions to 3-8 minute sweet spot for user engagement</guideline>
+    <guideline>Store sensitive data locally only - journal entries never leave device</guideline>
+    <guideline>Model loading deferred until after onboarding to prevent timeouts</guideline>
+    <guideline>Use prepareSearchQuery() for FTS queries to handle stop words</guideline>
+    <guideline>Follow Swiss-inspired dark theme: deep navy background, green accent</guideline>
+    <guideline>Structured responses always include: Guidance, Reflection (2 questions), Practice (1 micro-action)</guideline>
+  </development_guidelines>
+
+  <implementation_roadmap>
+    <phase>
+      <name>Phase 0: Core Infrastructure</name>
+      <status>completed</status>
+      <description>Tech stack setup, Expo 52 + React Native 0.76, llama.rn integration, SQLite database, Zustand state management, native build configuration</description>
+    </phase>
+    <phase>
+      <name>Phase 1: MVP Features</name>
+      <status>completed</status>
+      <description>Navigation, onboarding flow, all UI screens (Home, Ask, Journal, Insights, Settings), RAG retrieval, LLM inference, TTS narration, theme system</description>
+    </phase>
+    <phase>
+      <name>Phase 1.5: Polish &amp; Integration</name>
+      <status>in_progress</status>
+      <description>Save to Insights button, Journal entry creation, Chat-to-Journal conversion, Stop TTS button, search refinement, daily wisdom widget</description>
+    </phase>
+    <phase>
+      <name>Phase 2: V1 Launch</name>
+      <status>pending</status>
+      <description>Theme packs (7-day paths), Wisdom remix (3 tones), Contrasts view, Practice generator, optional citations toggle, donation integration</description>
+    </phase>
+    <phase>
+      <name>Phase 3: V1+ Enhancements</name>
+      <status>pending</status>
+      <description>Community prompts, cross-tradition blending, premium neural voices, cloud sync opt-in, analytics, accessibility improvements</description>
+    </phase>
+  </implementation_roadmap>
+</project_specification>

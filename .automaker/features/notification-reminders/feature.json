@@ -1,0 +1,14 @@
+{
+  "id": "notification-reminders",
+  "category": "Core",
+  "title": "Daily Reflection Reminders",
+  "description": "Local push notifications to encourage daily check-ins. User configures preferred time and frequency with respectful reminder copy.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.378Z",
+  "updatedAt": "2026-01-13T02:45:20.544Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:32:23.302Z"
+}

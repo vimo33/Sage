@@ -1,0 +1,14 @@
+{
+  "id": "offline-indicator",
+  "category": "UI",
+  "title": "Privacy Mode Indicator",
+  "description": "Persistent visual indicator showing no network activity and on-device processing. Reinforces privacy promise with real-time status.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.380Z",
+  "updatedAt": "2026-01-13T02:43:44.615Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:35:44.326Z"
+}

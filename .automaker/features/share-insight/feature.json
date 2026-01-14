@@ -1,0 +1,16 @@
+{
+  "id": "share-insight",
+  "category": "UI",
+  "title": "Share Insight as Image",
+  "description": "Generate beautiful card image of saved insight with quote styling. Allows sharing to social media or saving to camera roll without revealing app identity.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [
+    "save-to-insights"
+  ],
+  "createdAt": "2026-01-13T01:18:37.377Z",
+  "updatedAt": "2026-01-13T03:12:06.247Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:01:29.616Z"
+}

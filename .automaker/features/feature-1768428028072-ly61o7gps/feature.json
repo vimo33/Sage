@@ -1,0 +1,12 @@
+{
+  "category": "feature",
+  "description": "Create new Explore screen (app/(tabs)/explore.tsx) with Sage logo header, profile avatar, 'Search themes' search bar, theme grid section, paths section with horizontal scroll, and floating Ask button.",
+  "title": "Explore Screen",
+  "dependencies": [
+    "app-logo-icon-assets",
+    "floating-ask-sage-button"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028072-ly61o7gps"
+}

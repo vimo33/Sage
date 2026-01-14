@@ -1,0 +1,11 @@
+{
+  "category": "enhancement",
+  "description": "Add calendar-based navigation to journal screen with hamburger menu icon, centered title, calendar icon for date picker, month/year selector, and horizontal week view with day dots (Mon-Sun) and green circle highlight for current day.",
+  "title": "Journal Calendar Header",
+  "dependencies": [
+    "journal-entry-creation"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028070-z8cxk8j7z"
+}

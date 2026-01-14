@@ -1,0 +1,16 @@
+{
+  "id": "session-summary",
+  "category": "Core",
+  "title": "End-of-Session Recap",
+  "description": "Summarize key themes and insights from chat session. Displayed when user exits with option to save summary to journal.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [
+    "journal-entry-creation"
+  ],
+  "createdAt": "2026-01-13T01:18:37.383Z",
+  "updatedAt": "2026-01-13T03:05:27.287Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:57:08.404Z"
+}

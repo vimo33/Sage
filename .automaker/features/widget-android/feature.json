@@ -1,0 +1,16 @@
+{
+  "id": "widget-android",
+  "category": "UI",
+  "title": "Android Home Screen Widget",
+  "description": "Daily wisdom widget for Android home screen. Material Design styled with deep link to app.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "complex",
+  "dependencies": [
+    "daily-wisdom-widget"
+  ],
+  "createdAt": "2026-01-13T01:18:37.384Z",
+  "updatedAt": "2026-01-13T05:11:45.374Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T05:04:32.833Z"
+}

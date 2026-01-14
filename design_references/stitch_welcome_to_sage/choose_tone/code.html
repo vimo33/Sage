@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage - Choose Tone</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5bec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#162210",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased selection:bg-primary selection:text-black">
+<div class="relative flex min-h-screen w-full flex-col overflow-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
+<!-- TopAppBar -->
+<header class="flex items-center justify-between p-4 pb-2 z-10">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white" style="font-size: 24px;">arrow_back_ios_new</span>
+</button>
+<h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Tone</h2>
+</header>
+<!-- PageIndicators -->
+<div class="flex w-full flex-row items-center justify-center gap-2 py-4">
+<div class="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-[#43543b]"></div>
+<div class="h-1.5 w-8 rounded-full bg-slate-900 dark:bg-white"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-[#43543b]"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-[#43543b]"></div>
+</div>
+<!-- Scrollable Content Area -->
+<main class="flex-1 overflow-y-auto px-6 pb-32">
+<!-- HeadlineText -->
+<div class="pb-2 pt-4">
+<h1 class="tracking-tight text-3xl font-extrabold leading-tight text-left text-slate-900 dark:text-white">
+                    Choose your tone
+                </h1>
+</div>
+<!-- BodyText -->
+<div class="pb-6">
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal">
+                    Customize how Sage responds to your reflections.
+                </p>
+</div>
+<!-- TextGrid / Selection Cards -->
+<div class="flex flex-col gap-3">
+<!-- Card 1: Practical -->
+<button class="group flex w-full items-start gap-4 rounded-xl border border-transparent bg-white dark:bg-[#1f271c] p-4 text-left shadow-sm transition-all hover:border-slate-300 dark:hover:border-[#43543b] focus:outline-none ring-offset-2 focus:ring-2 ring-primary">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">work</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight text-slate-900 dark:text-white">Practical</h3>
+<p class="text-sm font-medium leading-normal text-slate-500 dark:text-[#a6b99d]">Direct, actionable advice. No fluff.</p>
+</div>
+</button>
+<!-- Card 2: Poetic (Active State) -->
+<button class="relative flex w-full items-start gap-4 rounded-xl border-[1.5px] border-primary bg-primary/5 dark:bg-[#1f271c] p-4 text-left shadow-md transition-all">
+<div class="absolute top-4 right-4 text-primary">
+<span class="material-symbols-outlined filled" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-primary-dark dark:text-primary">
+<span class="material-symbols-outlined">flight</span>
+</div>
+<div class="flex flex-col gap-1 pr-6">
+<h3 class="text-base font-bold leading-tight text-slate-900 dark:text-white">Poetic</h3>
+<p class="text-sm font-medium leading-normal text-slate-600 dark:text-slate-300">Metaphorical and gentle guidance.</p>
+</div>
+</button>
+<!-- Card 3: Minimal -->
+<button class="group flex w-full items-start gap-4 rounded-xl border border-transparent bg-white dark:bg-[#1f271c] p-4 text-left shadow-sm transition-all hover:border-slate-300 dark:hover:border-[#43543b] focus:outline-none ring-offset-2 focus:ring-2 ring-primary">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">remove_circle_outline</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight text-slate-900 dark:text-white">Minimal</h3>
+<p class="text-sm font-medium leading-normal text-slate-500 dark:text-[#a6b99d]">Short, concise prompts. Less is more.</p>
+</div>
+</button>
+<!-- Card 4: Deep -->
+<button class="group flex w-full items-start gap-4 rounded-xl border border-transparent bg-white dark:bg-[#1f271c] p-4 text-left shadow-sm transition-all hover:border-slate-300 dark:hover:border-[#43543b] focus:outline-none ring-offset-2 focus:ring-2 ring-primary">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold leading-tight text-slate-900 dark:text-white">Deep</h3>
+<p class="text-sm font-medium leading-normal text-slate-500 dark:text-[#a6b99d]">Philosophical and probing questions.</p>
+</div>
+</button>
+</div>
+</main>
+<!-- Fixed Bottom Actions -->
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark dark:to-transparent pt-12 pb-6 px-6 z-20">
+<div class="flex flex-col items-center gap-4">
+<!-- Skip Action -->
+<button class="text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
+                    Skip for now
+                </button>
+<!-- Primary CTA -->
+<button class="w-full rounded-full bg-primary py-4 px-6 text-center text-base font-bold text-background-dark shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.01] active:scale-[0.98] transition-all">
+                    Continue
+                </button>
+<!-- Privacy Note -->
+<div class="flex items-center gap-1.5 opacity-60">
+<span class="material-symbols-outlined text-xs text-slate-500 dark:text-slate-400" style="font-size: 14px;">lock</span>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 text-center">
+                        Your reflections stay on your device unless you sync.
+                    </p>
+</div>
+</div>
+</div>
+</div>
+</body></html>

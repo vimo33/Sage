@@ -1,0 +1,16 @@
+{
+  "id": "chat-to-journal",
+  "category": "Core",
+  "title": "Convert Chat to Journal Entry",
+  "description": "Add button in chat interface to save conversation as journal entry. Pre-fills entry with user's question and AI guidance for reflection.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [
+    "journal-entry-creation"
+  ],
+  "createdAt": "2026-01-13T01:18:37.370Z",
+  "updatedAt": "2026-01-13T01:52:55.319Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:45:46.647Z"
+}

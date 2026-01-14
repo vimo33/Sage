@@ -1,0 +1,9 @@
+{
+  "category": "enhancement",
+  "description": "Implement consistent header design across all screens with Sage logo and leaf icon top-left, profile avatar circle top-right, 60px header height, and chevron-style back arrows with proper touch targets.",
+  "title": "Global Header Redesign",
+  "dependencies": [],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028065-w0enanffo"
+}

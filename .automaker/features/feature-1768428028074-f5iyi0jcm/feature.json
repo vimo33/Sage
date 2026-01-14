@@ -1,0 +1,12 @@
+{
+  "category": "feature",
+  "description": "Create 2-column grid of exercise cards for theme detail screen with 'GUIDED EXERCISES' header and 'View all' link. Each card shows icon, title, subtitle, duration, and arrow.",
+  "title": "Guided Exercises Grid",
+  "dependencies": [
+    "practice-generator",
+    "breath-timer"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028074-f5iyi0jcm"
+}

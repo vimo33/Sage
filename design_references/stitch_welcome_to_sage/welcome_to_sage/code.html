@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome to Sage</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5bec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#162210",
+                        "surface-dark": "#1f2e18",
+                        "text-primary-dark": "#e8ebe6",
+                        "text-secondary-dark": "#9aa596",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom subtle fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display h-screen w-full overflow-hidden flex flex-col items-center justify-between text-gray-900 dark:text-text-primary-dark antialiased transition-colors duration-300">
+<!-- Top Navigation / Skip -->
+<header class="w-full px-6 pt-12 pb-4 flex justify-end z-10">
+<button class="text-sm font-medium text-gray-500 dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors">
+            Skip
+        </button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-center px-8 w-full max-w-md relative z-10">
+<!-- Background Gradient Glow -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/20 dark:bg-primary/10 rounded-full blur-[80px] -z-10 pointer-events-none"></div>
+<!-- Logo/Icon Area -->
+<div class="mb-10 animate-fade-in">
+<div class="w-20 h-20 bg-gradient-to-br from-primary to-green-600 rounded-2xl shadow-xl shadow-primary/20 flex items-center justify-center rotate-3 transform hover:rotate-6 transition-transform duration-500">
+<span class="material-icons-round text-background-dark text-4xl">spa</span>
+</div>
+</div>
+<!-- Text Content -->
+<div class="text-center space-y-4 animate-fade-in delay-100">
+<h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-gray-900 dark:text-white">
+                A quiet place <br/> to <span class="text-primary">reflect.</span>
+</h1>
+<p class="text-lg text-gray-600 dark:text-text-secondary-dark font-medium leading-relaxed max-w-xs mx-auto">
+                Capture your thoughts, track your growth, and find clarity in a private digital sanctuary.
+            </p>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<footer class="w-full px-6 pb-10 pt-4 max-w-md space-y-6 z-10 animate-fade-in delay-200">
+<!-- Buttons Stack -->
+<div class="space-y-3">
+<button class="w-full bg-primary hover:bg-[#4dd010] active:scale-[0.98] text-background-dark font-bold text-lg py-4 px-6 rounded-xl shadow-lg shadow-primary/25 transition-all duration-200 flex items-center justify-center group">
+                Begin
+                <span class="material-icons-round ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="w-full bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 active:scale-[0.98] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-semibold text-lg py-4 px-6 rounded-xl transition-all duration-200">
+                Learn more
+            </button>
+</div>
+<!-- Privacy Note -->
+<div class="flex items-start justify-center gap-2 px-4 animate-fade-in delay-300">
+<span class="material-icons-round text-gray-400 dark:text-green-800/60 text-base mt-0.5">lock</span>
+<p class="text-xs text-center text-gray-400 dark:text-text-secondary-dark/60 font-medium leading-snug">
+                Your reflections stay on your device unless you choose to sync.
+            </p>
+</div>
+</footer>
+<!-- Abstract Background Pattern (Subtle grid) -->
+<div class="fixed inset-0 z-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" data-alt="Subtle dot grid pattern background" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 32px 32px;">
+</div>
+</body></html>

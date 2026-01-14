@@ -1,0 +1,13 @@
+{
+  "category": "feature",
+  "description": "Create theme detail screen (app/theme-detail.tsx) with back navigation, 'CURRENT FOCUS' label, large theme name in italic serif font, description, 'Start a session' CTA, progress section, guided exercises grid, contrasts section, and FAQ accordions.",
+  "title": "Theme Detail Screen",
+  "dependencies": [
+    "theme-grid-component",
+    "guided-reflection-flow",
+    "contrasts-view"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028073-2f634hkzo"
+}

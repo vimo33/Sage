@@ -1,0 +1,14 @@
+{
+  "id": "journal-entry-creation",
+  "category": "Core",
+  "title": "Journal Entry Creation Modal",
+  "description": "Implement modal screen for creating new journal entries with text input, mood selection, and optional daily prompt response. Saves to local store with timestamp.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.370Z",
+  "updatedAt": "2026-01-13T01:45:03.698Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:35:12.627Z"
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage - Journal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#37ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#132210",
+                        "card-dark": "#1a2e17",
+                        "card-hover": "#20361d",
+                        "text-muted": "#a1b99d",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+        background: transparent;
+    }
+    .swiss-title {
+        letter-spacing: -0.02em;
+    }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.filled {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display antialiased text-white">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden pb-24">
+<header class="sticky top-0 z-40 flex items-center justify-between bg-background-dark/95 px-5 py-4 backdrop-blur-md border-b border-white/5">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full text-white cursor-pointer hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h1 class="swiss-title flex-1 text-center text-lg font-bold leading-tight tracking-tight">Journal</h1>
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full text-white cursor-pointer hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">search</span>
+</div>
+</header>
+<section class="w-full border-b border-white/5 bg-background-dark pt-2 pb-4">
+<div class="flex items-center justify-between px-4">
+<span class="text-sm font-medium text-text-muted">September 2023</span>
+<span class="material-symbols-outlined text-sm text-text-muted">chevron_right</span>
+</div>
+<div class="mt-4 flex w-full justify-between px-3">
+<button class="group flex flex-col items-center gap-1.5 rounded-full p-2 transition-colors">
+<span class="text-[10px] font-medium uppercase text-text-muted/60">Mon</span>
+<span class="flex size-8 items-center justify-center rounded-full text-sm font-medium text-white group-hover:bg-white/5">18</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 rounded-full p-2 transition-colors">
+<span class="text-[10px] font-medium uppercase text-text-muted/60">Tue</span>
+<span class="flex size-8 items-center justify-center rounded-full text-sm font-medium text-white group-hover:bg-white/5">19</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 rounded-full p-2 transition-colors">
+<span class="text-[10px] font-medium uppercase text-text-muted/60">Wed</span>
+<span class="flex size-8 items-center justify-center rounded-full text-sm font-medium text-white group-hover:bg-white/5">20</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 rounded-full p-2 transition-colors">
+<span class="text-[10px] font-medium uppercase text-primary">Thu</span>
+<span class="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-background-dark shadow-[0_0_12px_rgba(55,236,19,0.3)]">21</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 rounded-full p-2 transition-colors">
+<span class="text-[10px] font-medium uppercase text-text-muted/60">Fri</span>
+<span class="flex size-8 items-center justify-center rounded-full text-sm font-medium text-white group-hover:bg-white/5">22</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 rounded-full p-2 transition-colors">
+<span class="text-[10px] font-medium uppercase text-text-muted/60">Sat</span>
+<span class="flex size-8 items-center justify-center rounded-full text-sm font-medium text-white group-hover:bg-white/5">23</span>
+</button>
+<button class="group flex flex-col items-center gap-1.5 rounded-full p-2 transition-colors">
+<span class="text-[10px] font-medium uppercase text-text-muted/60">Sun</span>
+<span class="flex size-8 items-center justify-center rounded-full text-sm font-medium text-white group-hover:bg-white/5">24</span>
+</button>
+</div>
+</section>
+<main class="flex flex-col gap-6 px-4 pt-6">
+<section class="flex flex-col gap-4">
+<div class="flex items-center gap-6 border-b border-white/10 px-1 pb-1">
+<button class="relative pb-3 text-sm font-semibold text-white">
+                    All
+                    <span class="absolute -bottom-1.5 left-0 h-0.5 w-full bg-primary"></span>
+</button>
+<button class="relative pb-3 text-sm font-medium text-text-muted hover:text-white transition-colors">
+                    Journal only
+                </button>
+<button class="relative pb-3 text-sm font-medium text-text-muted hover:text-white transition-colors">
+                    Insights only
+                </button>
+</div>
+<div class="no-scrollbar flex gap-2 overflow-x-auto pb-1">
+<button class="shrink-0 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20">
+                    All Tags
+                </button>
+<button class="shrink-0 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-white/10 hover:text-white">
+                    #WorkLife
+                </button>
+<button class="shrink-0 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-white/10 hover:text-white">
+                    #Gratitude
+                </button>
+<button class="shrink-0 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-white/10 hover:text-white">
+                    #Anxiety
+                </button>
+<button class="shrink-0 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-text-muted transition-colors hover:bg-white/10 hover:text-white">
+                    #Relationships
+                </button>
+</div>
+</section>
+<section class="flex flex-col gap-4">
+<div class="relative flex w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center transition-colors hover:bg-white/[0.04]">
+<div class="mb-1 rounded-full bg-white/5 p-3 text-text-muted">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+<h3 class="swiss-title text-base font-medium text-white">Your journal starts with one honest sentence.</h3>
+<p class="mb-2 max-w-[240px] text-xs text-text-muted">Capture your thoughts for today.</p>
+<button class="flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-background-dark shadow-lg shadow-primary/20 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    New entry
+                 </button>
+</div>
+<h3 class="swiss-title mt-2 px-1 text-sm font-semibold uppercase tracking-wider text-text-muted">Previous Days</h3>
+<article class="group relative flex cursor-pointer gap-4 overflow-hidden rounded-xl bg-card-dark p-5 shadow-sm transition-all hover:bg-card-hover hover:shadow-md">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/5 text-primary">
+<span class="material-symbols-outlined filled">wb_sunny</span>
+</div>
+<div class="flex min-w-0 flex-1 flex-col gap-1">
+<div class="flex items-baseline justify-between gap-2">
+<h4 class="truncate text-base font-semibold text-white">Morning Clarity</h4>
+<span class="shrink-0 text-xs text-text-muted/60">Yesterday, 9:00 AM</span>
+</div>
+<p class="line-clamp-2 text-sm leading-relaxed text-text-muted">
+                        Woke up feeling surprisingly refreshed. The dream I had about the ocean seems to have washed away the stress from...
+                    </p>
+<div class="mt-2 flex items-center gap-2">
+<span class="rounded bg-white/5 px-2 py-0.5 text-[10px] font-medium text-text-muted/80">#Gratitude</span>
+<span class="rounded bg-white/5 px-2 py-0.5 text-[10px] font-medium text-text-muted/80">#Calm</span>
+</div>
+</div>
+</article>
+<article class="group relative flex cursor-pointer gap-4 overflow-hidden rounded-xl bg-card-dark p-5 shadow-sm transition-all hover:bg-card-hover hover:shadow-md">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/5 text-[#a1b99d]">
+<span class="material-symbols-outlined">cloud</span>
+</div>
+<div class="flex min-w-0 flex-1 flex-col gap-1">
+<div class="flex items-baseline justify-between gap-2">
+<h4 class="truncate text-base font-semibold text-white">Heavy thoughts</h4>
+<span class="shrink-0 text-xs text-text-muted/60">Tue 19, 8:45 PM</span>
+</div>
+<p class="line-clamp-2 text-sm leading-relaxed text-text-muted">
+                        It’s hard to shake off the conversation from earlier. I keep replaying the words in my head, wondering if I said too much or...
+                    </p>
+<div class="mt-2 flex items-center gap-2">
+<span class="rounded bg-white/5 px-2 py-0.5 text-[10px] font-medium text-text-muted/80">#Anxiety</span>
+<span class="rounded bg-white/5 px-2 py-0.5 text-[10px] font-medium text-text-muted/80">#Reflection</span>
+</div>
+</div>
+</article>
+<article class="group relative flex cursor-pointer gap-4 overflow-hidden rounded-xl bg-card-dark p-5 shadow-sm transition-all hover:bg-card-hover hover:shadow-md">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/5 text-[#a1b99d]">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div class="flex min-w-0 flex-1 flex-col gap-1">
+<div class="flex items-baseline justify-between gap-2">
+<h4 class="truncate text-base font-semibold text-white">Sudden realization</h4>
+<span class="shrink-0 text-xs text-text-muted/60">Mon 18, 2:15 PM</span>
+</div>
+<p class="line-clamp-2 text-sm leading-relaxed text-text-muted">
+                        I realized today that I've been holding onto expectations that aren't even mine. It was a lightning bolt moment during...
+                    </p>
+<div class="mt-2 flex items-center gap-2">
+<span class="rounded bg-white/5 px-2 py-0.5 text-[10px] font-medium text-text-muted/80">#Insight</span>
+</div>
+</div>
+</article>
+</section>
+</main>
+<div class="fixed bottom-24 right-4 z-30">
+<button class="flex size-14 items-center justify-center rounded-full bg-primary shadow-[0_4px_20px_rgba(55,236,19,0.4)] transition-transform hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-background-dark" style="font-size: 28px;">edit</span>
+</button>
+</div>
+<nav class="fixed bottom-0 left-0 z-40 w-full border-t border-white/5 bg-background-dark/95 pb-safe pt-2 backdrop-blur-lg">
+<div class="flex items-center justify-around pb-4 pt-2">
+<button class="flex flex-col items-center justify-center gap-1 text-primary">
+<span class="material-symbols-outlined filled">book_2</span>
+<span class="text-[10px] font-medium">Journal</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Guide</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</nav>
+<div class="h-safe w-full bg-background-dark"></div>
+</div>
+
+</body></html>

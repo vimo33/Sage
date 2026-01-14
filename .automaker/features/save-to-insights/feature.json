@@ -1,0 +1,14 @@
+{
+  "id": "save-to-insights",
+  "category": "Core",
+  "title": "Save to Insights Button",
+  "description": "Add button in chat interface to save wisdom passages to the Insights collection. Includes confirmation feedback and automatic deduplication of saved passages.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.368Z",
+  "updatedAt": "2026-01-13T01:50:55.528Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:45:05.432Z"
+}

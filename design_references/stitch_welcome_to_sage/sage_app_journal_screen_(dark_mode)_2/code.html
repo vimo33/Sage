@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage - Journal</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#37ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#132210",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        
+        /* Swiss typography adjustments */
+        .swiss-title {
+            letter-spacing: -0.02em;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-gray-900 dark:text-white">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden pb-24">
+<!-- Header -->
+<header class="sticky top-0 z-40 flex items-center justify-between bg-background-dark/90 px-4 py-4 backdrop-blur-md">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full text-white">
+<!-- Menu / Profile Icon -->
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h1 class="swiss-title flex-1 text-center text-lg font-bold leading-tight text-white">Journal</h1>
+<div class="flex size-10 shrink-0 items-center justify-center">
+<button class="flex items-center justify-center text-white transition-opacity hover:opacity-80">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex flex-col gap-6 px-4 pt-2">
+<!-- Daily Prompt Card -->
+<section class="w-full">
+<div class="relative flex aspect-[4/3] w-full flex-col items-start justify-end overflow-hidden rounded-xl bg-gray-800 shadow-lg md:aspect-[21/9]">
+<!-- Background Image -->
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="Abstract dark green misty forest landscape with gentle light beams" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDgqna1LHfzsin4uYGhzpWdWOPGen6e9d1lTVJiatVGDsvv4DoeQw2UH2v5XVpMVH3qliBURKfN9YFUIkR2TsvBW26CcKOQAijMhA4RrEG8D6Y_6sVQZJMmzf7yHIhpj2pQysi9P4oeKDu27aZYEVla7I9BctGplAnQ4zj-Rcwzb2AvNMt7Efd_IscqUl9gMHgkUngnvxeiCF-kKlcDsAB1Q-KoQe3xTA2hkApvCudZMdnEofJ3BTSKd8yRoC5CDDl15f7BWTJd_Myz');">
+</div>
+<!-- Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+<!-- Content -->
+<div class="relative z-10 flex w-full flex-col gap-2 p-6">
+<div class="mb-1 flex items-center gap-2">
+<span class="flex size-6 items-center justify-center rounded-full bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-[16px]">wb_sunny</span>
+</span>
+<p class="text-sm font-medium uppercase tracking-wider text-primary">Daily Reflection</p>
+</div>
+<h2 class="swiss-title max-w-[80%] text-2xl font-bold leading-tight text-white">What brought you peace today?</h2>
+<button class="mt-2 flex w-fit items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20">
+<span>Start Writing</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Entries Section -->
+<section class="flex flex-col gap-2">
+<!-- Section Header -->
+<div class="flex items-end justify-between px-1 pb-2 pt-4">
+<h3 class="swiss-title text-xl font-bold text-white">Recent Entries</h3>
+<button class="text-sm font-medium text-white/60 hover:text-primary">View all</button>
+</div>
+<!-- Today's Entry -->
+<article class="group relative flex cursor-pointer items-center justify-between gap-4 overflow-hidden rounded-lg border border-white/5 bg-[#1a2e17] p-4 transition-all hover:bg-[#20361d]">
+<div class="flex items-start gap-4">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#2b3928] text-primary">
+<span class="material-symbols-outlined filled">circle</span>
+</div>
+<div class="flex flex-1 flex-col justify-center gap-0.5">
+<p class="text-base font-semibold leading-normal text-white">Finding clarity in chaos</p>
+<p class="line-clamp-1 text-sm font-normal text-[#a1b99d]">The morning started with a rush of adrenaline but...</p>
+<div class="mt-1 flex items-center gap-2 text-xs font-medium text-[#a1b99d]/80">
+<span>Today</span>
+<span class="size-0.5 rounded-full bg-current"></span>
+<span>8:42 PM</span>
+</div>
+</div>
+</div>
+<div class="shrink-0 text-white/40 transition-colors group-hover:text-white">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</article>
+<!-- Yesterday's Entry -->
+<article class="group relative flex cursor-pointer items-center justify-between gap-4 overflow-hidden rounded-lg border border-white/5 bg-[#1a2e17] p-4 transition-all hover:bg-[#20361d]">
+<div class="flex items-start gap-4">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#2b3928] text-[#a1b99d]">
+<span class="material-symbols-outlined">spa</span>
+</div>
+<div class="flex flex-1 flex-col justify-center gap-0.5">
+<p class="text-base font-semibold leading-normal text-white">Gratitude for small moments</p>
+<p class="line-clamp-1 text-sm font-normal text-[#a1b99d]">I noticed the way the light hit the trees...</p>
+<div class="mt-1 flex items-center gap-2 text-xs font-medium text-[#a1b99d]/80">
+<span>Yesterday</span>
+<span class="size-0.5 rounded-full bg-current"></span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">sentiment_satisfied</span> Calm</span>
+</div>
+</div>
+</div>
+<div class="shrink-0 text-white/40 transition-colors group-hover:text-white">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</article>
+<!-- Older Entry -->
+<article class="group relative flex cursor-pointer items-center justify-between gap-4 overflow-hidden rounded-lg border border-white/5 bg-[#1a2e17] p-4 transition-all hover:bg-[#20361d]">
+<div class="flex items-start gap-4">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#2b3928] text-[#a1b99d]">
+<span class="material-symbols-outlined">cloud</span>
+</div>
+<div class="flex flex-1 flex-col justify-center gap-0.5">
+<p class="text-base font-semibold leading-normal text-white">Anxiety about upcoming move</p>
+<p class="line-clamp-1 text-sm font-normal text-[#a1b99d]">Packing boxes feels overwhelming today...</p>
+<div class="mt-1 flex items-center gap-2 text-xs font-medium text-[#a1b99d]/80">
+<span>Sept 12</span>
+<span class="size-0.5 rounded-full bg-current"></span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">sentiment_dissatisfied</span> Anxious</span>
+</div>
+</div>
+</div>
+<div class="shrink-0 text-white/40 transition-colors group-hover:text-white">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</article>
+<!-- Older Entry 2 -->
+<article class="group relative flex cursor-pointer items-center justify-between gap-4 overflow-hidden rounded-lg border border-white/5 bg-[#1a2e17] p-4 transition-all hover:bg-[#20361d]">
+<div class="flex items-start gap-4">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#2b3928] text-[#a1b99d]">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div class="flex flex-1 flex-col justify-center gap-0.5">
+<p class="text-base font-semibold leading-normal text-white">Rainy day thoughts</p>
+<p class="line-clamp-1 text-sm font-normal text-[#a1b99d]">The sound of rain against the window is...</p>
+<div class="mt-1 flex items-center gap-2 text-xs font-medium text-[#a1b99d]/80">
+<span>Sept 10</span>
+<span class="size-0.5 rounded-full bg-current"></span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">sentiment_neutral</span> Reflective</span>
+</div>
+</div>
+</div>
+<div class="shrink-0 text-white/40 transition-colors group-hover:text-white">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</article>
+</section>
+</main>
+<!-- Floating Action Button -->
+<div class="fixed bottom-24 right-4 z-30">
+<button class="flex size-14 items-center justify-center rounded-full bg-primary shadow-[0_4px_20px_rgba(55,236,19,0.4)] transition-transform hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-black" style="font-size: 28px;">edit</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 z-40 w-full border-t border-white/5 bg-background-dark/95 pb-safe pt-2 backdrop-blur-lg">
+<div class="flex items-center justify-around pb-4 pt-2">
+<button class="flex flex-col items-center justify-center gap-1 text-primary">
+<span class="material-symbols-outlined filled">book_2</span>
+<span class="text-[10px] font-medium">Journal</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Guide</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</nav>
+<!-- Safe Area Padding for Bottom Nav -->
+<div class="h-safe w-full bg-background-dark"></div>
+</div>
+<script>
+        // Simple JS to handle safe area if needed, though Tailwind pb-safe usually handled via plugins or manual padding
+        // Adding manual padding for demonstration since plugin might not be fully active in this environment
+        // In a real app, 'pb-safe' utility from tailwind-css-safe-area would be used.
+    </script>
+</body></html>

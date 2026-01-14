@@ -1,0 +1,13 @@
+{
+  "category": "feature",
+  "description": "Implement filter tab system with 'All', 'Journal only', 'Insights only' tabs with green underline indicator, plus tag filter chips below ('All Tags', '#WorkLife', '#Gratitude', '#Anxiety').",
+  "title": "Journal Filter Tabs",
+  "dependencies": [
+    "journal-entry-creation",
+    "save-to-insights",
+    "favorites-tagging"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028071-ucg8ltx22"
+}

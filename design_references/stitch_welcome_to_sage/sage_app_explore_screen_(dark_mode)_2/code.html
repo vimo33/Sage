@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage Explore Screen</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#37ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#132210", // Using the provided config color
+                        "surface-dark": "#1d271c", // Slightly lighter surface for cards
+                        "surface-darker": "#0f140e", // Darker background
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Custom scrollbar hide for horizontal scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-white transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl">
+<!-- Header -->
+<header class="flex items-center px-6 py-5 justify-between sticky top-0 z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">spa</span>
+<h1 class="text-2xl font-bold tracking-tight dark:text-white">Sage</h1>
+</div>
+<div class="flex items-center justify-end">
+<div class="size-10 rounded-full bg-surface-dark border border-white/10 overflow-hidden relative">
+<img class="w-full h-full object-cover opacity-80" data-alt="User profile avatar silhouette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK8LMhZ-oHUCY7DBIHSmDA8X9Kqc1lJtW3-SA54_lnUDHPQcSpwRpDm1DGBsAoLBAKv7RwRNuTpyspHEU_jIu5EALnQijMa2-Of-VPYIL8X08h_t0tdudXvABPFJaQGPfWcLJn9_igSMFztk5YqWi7QxMSZbPIHN9VcAXj2OvssaJfZwtEIcm_j4vF5n8vHkajL3KvUUzWhq_MoMykZVFyl0IqnJZy7xaEIPxWCh4w5RrfbCYjTb9Vpk-A3oMQih2ztaBJMSHQHh1B"/>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col px-4 pb-24 space-y-8">
+<!-- Hero Card: Daily Wisdom -->
+<section class="@container">
+<div class="flex flex-col items-stretch justify-start rounded-2xl shadow-lg bg-white dark:bg-surface-dark overflow-hidden border border-gray-100 dark:border-white/5 transition-transform active:scale-[0.99]">
+<div class="relative w-full h-48 bg-center bg-no-repeat bg-cover" data-alt="Abstract calming gradient with soft light" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAbkPx0Aqr0cZjlEIGvxZNkz3Iw9ET-k_UzqkeQy8hvSsjpNNOQv51utwl9iacuzgu_RGx38W5J86de-7wwxLfunZYePHccxuIZKClBEstZ1H5LooGrjm7H3qDCKXXvJH-zJOkqGLwEP4Ltq0zKnf2jvHN-fLEXovQuv4ZAdVKTf2eZpB9_hAuwLBgd4HdJ-utITds5RrpoXZ0-6WLK4FL7RhZMaDAu3G8lY1urSdJEpNqyYWKXarE87r7gGvGZXGG0rlB-VzdR3alI");'>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark via-transparent to-transparent opacity-90"></div>
+<div class="absolute top-4 left-4 bg-black/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+<span class="text-xs font-medium text-white tracking-wider uppercase">Daily Wisdom</span>
+</div>
+</div>
+<div class="flex w-full grow flex-col items-start justify-center gap-4 p-5 -mt-12 relative z-10">
+<blockquote class="text-white text-xl md:text-2xl font-semibold leading-tight tracking-tight">
+                            "The unexamined life is not worth living."
+                        </blockquote>
+<div class="w-full flex items-end justify-between gap-4 mt-2">
+<div class="flex flex-col gap-1">
+<p class="text-gray-400 text-sm font-medium uppercase tracking-wider">— Socrates</p>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-full h-10 px-5 bg-primary hover:bg-primary/90 text-background-dark text-sm font-bold transition-colors">
+<span>Reflect</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Topics Grid -->
+<section>
+<div class="flex items-center justify-between mb-4 px-1">
+<h2 class="text-xl font-bold tracking-tight dark:text-white">Explore Topics</h2>
+<a class="text-sm font-medium text-primary hover:text-primary/80" href="#">View all</a>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Card 1 -->
+<div class="group relative flex flex-col justify-end h-40 p-4 rounded-2xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 overflow-hidden transition-all hover:border-primary/50">
+<div class="absolute inset-0 opacity-40 mix-blend-overlay bg-cover bg-center transition-transform group-hover:scale-105 duration-700" data-alt="Abstract soft blue geometric shapes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB97IZLO-mXJD4sPgtRaOKGQRClzc5Yxlk8T3xX1gxHD7nSQbZcN81omYeQMs4bFKtXvkkTdSNKCUgy16i2eIL13uwDXT3HMeyyqdEJbhyd51gRTbpI14IihfEr2VlE2FFmlA9tsPsYPORX51vqnsKK4bUYe3nM9IN6I7WPCXdZW-hBHCNbp5GyJEZbZr7_vQU-dQu1hmOZs-q2d9m-fcG6l6uMObwvjB0Ewyev0UFMZKy7KE9nqz6djvG0WW85AKNWAu6gC7RXMR8k");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="material-symbols-outlined text-primary mb-1 text-2xl">balance</span>
+<p class="text-white text-lg font-bold leading-tight">Emotional Balance</p>
+<p class="text-gray-400 text-xs">8 sessions</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex flex-col justify-end h-40 p-4 rounded-2xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 overflow-hidden transition-all hover:border-primary/50">
+<div class="absolute inset-0 opacity-40 mix-blend-overlay bg-cover bg-center transition-transform group-hover:scale-105 duration-700" data-alt="Abstract orange and dark geometric shapes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCGW4C-hS6hlDiLaPprrK2sNdT7Da_rEeaSQG5KGenh8QspJrOBCJQY5G1JS_T531jY6PTARdpOImNyu-a9XbpJAtm1CCEmzQkVrIG0x0W_NXpR2AwHXwC5sjdUgGvAniu7bl9_t9Rc8uqcxIv2WdM-c_v_CcTgiNQ-SNbX26RzrWYeIkBuBBeKlJgX0gTKcV4Obj39rVNvL4QoU75jTYENq55htIRklNTVh_uOC0qxDWlq50WnBR-rtN82Er6fl9FCCfiJr00JR1Wu");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="material-symbols-outlined text-primary mb-1 text-2xl">flag</span>
+<p class="text-white text-lg font-bold leading-tight">Goal Setting</p>
+<p class="text-gray-400 text-xs">5 sessions</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative flex flex-col justify-end h-40 p-4 rounded-2xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 overflow-hidden transition-all hover:border-primary/50">
+<div class="absolute inset-0 opacity-40 mix-blend-overlay bg-cover bg-center transition-transform group-hover:scale-105 duration-700" data-alt="Dark moody abstract texture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDsSOM6ACDkTUNKWCxPAj6dk9LUnFtsxy4y0xHsTnyELcIAv7B6cFtRyTSwDhu75Bl_WEmXWHlPdbIb8SNV-ozQFl3cOnO9CILRwTt7SjAEM5yD9uYcMdTjMjyUGGhqbVgPtZLewxrsfRcgotiyRXcT9eLrJod7snTgUkqUETkoxtsvNEGo0kKXf9ZrVyVuzC026HimpcmlFwyylknyxD5VQSKDSuMXhr5gEMIy0OhW20bdQolSirwNf6vWdPnJNfN1OHSOd10K6nmR");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="material-symbols-outlined text-primary mb-1 text-2xl">visibility</span>
+<p class="text-white text-lg font-bold leading-tight">Shadow Work</p>
+<p class="text-gray-400 text-xs">12 sessions</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative flex flex-col justify-end h-40 p-4 rounded-2xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 overflow-hidden transition-all hover:border-primary/50">
+<div class="absolute inset-0 opacity-40 mix-blend-overlay bg-cover bg-center transition-transform group-hover:scale-105 duration-700" data-alt="Abstract connecting lines and nodes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAF58ysdCv1Ed4qfD-x8xq8snS9yF3Y_PP0fqN06YdaDlpX9SwKy0ZZIjdX-WxtgNMMoHDcc3_Vs8H-QVPX3EUASz16p1HPhdDWaFiLAgV6x4W9n8XG2QpLRm8YLkj1wgXfCBePYRigO_HZjh-Sevqf7lus5vQtHPu0S0LZ-nPhiRohOdFb-8vYrDgdmQAbsVY6c1Dk6xEkIKGt30_r3MGKbU7ZkiM6ZyFyEA2U2G3waBHHyiKK0-M3cA9kX1GUKzH3nDSjBNY3dbpC");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="material-symbols-outlined text-primary mb-1 text-2xl">favorite</span>
+<p class="text-white text-lg font-bold leading-tight">Relationships</p>
+<p class="text-gray-400 text-xs">6 sessions</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Grounding Section (Horizontal Scroll) -->
+<section>
+<div class="flex items-center justify-between mb-4 px-1">
+<h2 class="text-xl font-bold tracking-tight dark:text-white">Quick Grounding</h2>
+</div>
+<div class="flex overflow-x-auto no-scrollbar gap-4 pb-4 -mx-4 px-4 snap-x">
+<!-- Audio Card 1 -->
+<div class="flex-shrink-0 w-64 snap-start p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined filled">play_arrow</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-bold text-base dark:text-white">Morning Breath</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">3 min • Focus</p>
+</div>
+</div>
+<!-- Audio Card 2 -->
+<div class="flex-shrink-0 w-64 snap-start p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined filled">play_arrow</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-bold text-base dark:text-white">Body Scan</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">5 min • Relaxation</p>
+</div>
+</div>
+<!-- Audio Card 3 -->
+<div class="flex-shrink-0 w-64 snap-start p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined filled">play_arrow</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-bold text-base dark:text-white">Walking Mindfully</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400">10 min • Active</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button -->
+<div class="fixed bottom-24 right-4 z-50">
+<button class="flex items-center gap-2 bg-primary hover:bg-[#2ed60e] text-background-dark py-3 px-5 rounded-full shadow-[0_0_20px_rgba(55,236,19,0.4)] transition-all hover:scale-105 active:scale-95 group">
+<span class="material-symbols-outlined text-2xl group-hover:animate-pulse">spark</span>
+<span class="font-bold text-sm tracking-wide uppercase">Ask Sage</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-lg border-t border-gray-200 dark:border-white/5 pb-6 pt-3 px-6 z-40 max-w-md mx-auto right-0">
+<div class="flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-[24px] filled">explore</span>
+<span class="text-[10px] font-medium">Explore</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+<span class="text-[10px] font-medium">Journal</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</div>
+</nav>
+</div>
+</body></html>

@@ -1,0 +1,14 @@
+{
+  "id": "reflection-question-bank",
+  "category": "Core",
+  "title": "Dynamic Reflection Questions",
+  "description": "Enhanced Reflection section with 3-5 question variations per response. User can expand to see additional prompts for deeper inquiry.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.383Z",
+  "updatedAt": "2026-01-13T02:54:21.977Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:45:23.523Z"
+}

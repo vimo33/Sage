@@ -1,0 +1,14 @@
+{
+  "id": "mindful-time-tracking",
+  "category": "Core",
+  "title": "Session Duration Analytics",
+  "description": "Track cumulative time spent in chat sessions and journal writing. Display weekly/monthly totals on home screen with privacy-preserving aggregation.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.374Z",
+  "updatedAt": "2026-01-13T02:35:42.472Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:27:08.315Z"
+}

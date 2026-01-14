@@ -1,0 +1,16 @@
+{
+  "id": "favorites-tagging",
+  "category": "Core",
+  "title": "Tag and Organize Insights",
+  "description": "User-created tags for saved insights with filter/search by tag. Enables personal taxonomy for organizing wisdom collection.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "moderate",
+  "dependencies": [
+    "save-to-insights"
+  ],
+  "createdAt": "2026-01-13T01:18:37.379Z",
+  "updatedAt": "2026-01-13T03:59:29.248Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:47:44.480Z"
+}

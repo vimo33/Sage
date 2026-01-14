@@ -1,0 +1,14 @@
+{
+  "id": "model-config-settings",
+  "category": "Core",
+  "title": "Advanced LLM Parameters",
+  "description": "Developer settings for temperature, top-k, top-p, repeat penalty. Hidden behind long-press gesture for power users.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.382Z",
+  "updatedAt": "2026-01-13T04:26:20.583Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T04:15:47.493Z"
+}

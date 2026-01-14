@@ -1,0 +1,14 @@
+{
+  "id": "crisis-detection",
+  "category": "Core",
+  "title": "Crisis Keyword Detection",
+  "description": "Scan user input for self-harm, suicide, or crisis keywords before generating response. Display safety resources and hotline numbers when detected.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.371Z",
+  "updatedAt": "2026-01-13T01:39:18.212Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:26:36.682Z"
+}

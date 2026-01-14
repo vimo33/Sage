@@ -1,0 +1,12 @@
+{
+  "category": "enhancement",
+  "description": "Redesign stats display as two side-by-side cards with colored icons in circles (green fire for streak, blue clock for time), large bold numbers, and uppercase labels below.",
+  "title": "Stats Cards Redesign",
+  "dependencies": [
+    "streak-tracking",
+    "mindful-time-tracking"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028069-ae610pm2c"
+}

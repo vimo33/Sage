@@ -1,0 +1,16 @@
+{
+  "id": "widget-ios",
+  "category": "UI",
+  "title": "iOS Home Screen Widget",
+  "description": "Daily wisdom widget for iOS 14+ home screen. Shows quote and opens app to full passage on tap.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "complex",
+  "dependencies": [
+    "daily-wisdom-widget"
+  ],
+  "createdAt": "2026-01-13T01:18:37.384Z",
+  "updatedAt": "2026-01-13T05:16:23.748Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T05:08:32.841Z"
+}

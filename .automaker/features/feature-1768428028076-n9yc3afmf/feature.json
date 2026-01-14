@@ -1,0 +1,11 @@
+{
+  "category": "enhancement",
+  "description": "Add 'Support Sage' card to settings with heart icon, heading, description text, and three donation buttons: Coffee (CHF 2), Lunch (CHF 5), Dinner (CHF 10).",
+  "title": "Settings Support Sage Card",
+  "dependencies": [
+    "donation-integration"
+  ],
+  "priority": 3,
+  "status": "backlog",
+  "id": "feature-1768428028076-n9yc3afmf"
+}

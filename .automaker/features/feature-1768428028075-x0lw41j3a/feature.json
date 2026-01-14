@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create donation success screen (app/donation-success.tsx) with large heart icon, 'Thank you' heading, confirmation message, and 'Return to Sage' button.",
+  "title": "Donation Thank You Screen",
+  "dependencies": [
+    "donation-screen"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028075-x0lw41j3a"
+}

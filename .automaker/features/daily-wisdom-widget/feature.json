@@ -1,0 +1,14 @@
+{
+  "id": "daily-wisdom-widget",
+  "category": "UI",
+  "title": "Daily Wisdom Card Widget",
+  "description": "Display rotating wisdom passage on home screen that changes daily. Pulled from high-quality chunks with share and save options.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.372Z",
+  "updatedAt": "2026-01-13T01:35:09.464Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:26:37.273Z"
+}

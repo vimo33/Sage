@@ -1,0 +1,14 @@
+{
+  "id": "font-size-settings",
+  "category": "UI",
+  "title": "Typography Size Controls",
+  "description": "Settings option to adjust base font size (small, medium, large). Improves accessibility for users with vision needs.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.380Z",
+  "updatedAt": "2026-01-13T04:18:56.591Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:55:44.715Z"
+}

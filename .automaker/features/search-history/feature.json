@@ -1,0 +1,14 @@
+{
+  "id": "search-history",
+  "category": "Core",
+  "title": "Recent Queries History",
+  "description": "Display recent user questions with quick re-ask functionality. Helps users revisit themes without retyping common queries.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.378Z",
+  "updatedAt": "2026-01-13T04:50:23.922Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T04:41:00.387Z"
+}

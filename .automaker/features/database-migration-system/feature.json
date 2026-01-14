@@ -1,0 +1,14 @@
+{
+  "id": "database-migration-system",
+  "category": "Database",
+  "title": "Database Schema Versioning",
+  "description": "Implement migration system for wisdom.db schema changes. Tracks version in metadata table and applies incremental updates without data loss.",
+  "status": "verified",
+  "priority": 1,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.371Z",
+  "updatedAt": "2026-01-13T01:35:24.665Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T01:26:39.802Z"
+}

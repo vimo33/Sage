@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create large hero card component with background gradient/image (wavy dark green pattern), 'Daily Reflection' chip badge, menu dots, large question text, and full-width green 'Start Reflection →' CTA button.",
+  "title": "Daily Reflection Hero Card",
+  "dependencies": [
+    "guided-reflection-flow"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028068-rs8d6w672"
+}

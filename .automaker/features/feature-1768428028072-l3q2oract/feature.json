@@ -1,0 +1,11 @@
+{
+  "category": "enhancement",
+  "description": "Add green circular floating action button to journal screen bottom-right with white '+' icon for creating new entries.",
+  "title": "Journal FAB Button",
+  "dependencies": [
+    "journal-entry-creation"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028072-l3q2oract"
+}

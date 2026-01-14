@@ -1,0 +1,9 @@
+{
+  "category": "feature",
+  "description": "Create narration settings screen with back arrow, title, 'Skip' link, 'Customize your experience' heading, Enable Narration toggle, Voice dropdown selector, Speaking Speed slider (Slow-Normal-Fast), privacy notice, and 'Finish Setup' button.",
+  "title": "Onboarding Narration Settings Screen",
+  "dependencies": [],
+  "priority": 3,
+  "status": "backlog",
+  "id": "feature-1768428028078-iwyqqkj6p"
+}

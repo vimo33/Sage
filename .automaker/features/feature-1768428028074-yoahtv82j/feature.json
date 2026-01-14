@@ -1,0 +1,13 @@
+{
+  "category": "enhancement",
+  "description": "Restructure insight detail view with labeled sections: '● GUIDANCE' with quote, '● REFLECTION' with questions, '● PRACTICE' with exercise. Uses green dot indicators.",
+  "title": "Insight Detail Content Sections",
+  "dependencies": [
+    "save-to-insights",
+    "reflection-question-bank",
+    "practice-generator"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028074-yoahtv82j"
+}

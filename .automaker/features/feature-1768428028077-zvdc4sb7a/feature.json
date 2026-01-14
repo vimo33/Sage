@@ -1,0 +1,11 @@
+{
+  "category": "enhancement",
+  "description": "Add About section to settings with centered Sage leaf logo, 'About Sage' heading, app description paragraph, Terms of Service link, Privacy Policy link, and version number.",
+  "title": "Settings About Section",
+  "dependencies": [
+    "app-logo-icon-assets"
+  ],
+  "priority": 3,
+  "status": "backlog",
+  "id": "feature-1768428028077-zvdc4sb7a"
+}

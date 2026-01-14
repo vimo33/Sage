@@ -1,0 +1,12 @@
+{
+  "category": "enhancement",
+  "description": "Redesign entry cards with colored icon in circle, title, right-aligned date/time, 2-line preview text, and tag chips at bottom.",
+  "title": "Journal Entry Card Redesign",
+  "dependencies": [
+    "journal-entry-creation",
+    "journal-entry-icon-assets"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028071-9nvgfabwr"
+}

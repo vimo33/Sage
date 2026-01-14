@@ -1,0 +1,9 @@
+{
+  "category": "feature",
+  "description": "Create actual images for theme cards replacing emoji placeholders: Calm (tea cup/zen), Action (abstract shapes), Self (abstract pattern), Relationships (connected dots), Change (wave pattern), Meaning (lightbulb/glow), Fear (abstract dark). Store in assets/images/themes/.",
+  "title": "Theme Card Image Assets",
+  "dependencies": [],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028066-eneb9knfh"
+}

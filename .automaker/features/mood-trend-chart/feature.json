@@ -1,0 +1,16 @@
+{
+  "id": "mood-trend-chart",
+  "category": "UI",
+  "title": "Mood Tracking Visualization",
+  "description": "Line chart showing mood trends over 7/30/90 days. Helps users identify emotional patterns from journal mood selections.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "moderate",
+  "dependencies": [
+    "journal-entry-creation"
+  ],
+  "createdAt": "2026-01-13T01:18:37.379Z",
+  "updatedAt": "2026-01-13T04:26:58.398Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T04:18:59.419Z"
+}

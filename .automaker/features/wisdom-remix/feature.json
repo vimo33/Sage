@@ -1,0 +1,14 @@
+{
+  "id": "wisdom-remix",
+  "category": "Core",
+  "title": "Multi-Tone Response Generation",
+  "description": "Generate same guidance in 3 different tones (e.g., Practical, Poetic, Deep) and allow user to swipe between them. Helps users discover preferred communication style.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "complex",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.375Z",
+  "updatedAt": "2026-01-13T03:22:32.773Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:14:59.892Z"
+}

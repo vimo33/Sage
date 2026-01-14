@@ -1,0 +1,14 @@
+{
+  "id": "guided-reflection-flow",
+  "category": "Core",
+  "title": "Guided Reflection Prompts",
+  "description": "Implement multi-turn guided sessions based on selected theme card. Provides structured journey through 3-5 related prompts with progressive depth.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "complex",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.375Z",
+  "updatedAt": "2026-01-13T02:27:06.247Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:15:02.657Z"
+}

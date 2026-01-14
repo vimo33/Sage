@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create images for 7-day journey paths: 7 Days of Calm (serene landscape), 7 Days of Clarity (abstract lines), 7 Days of Courage (orange abstract shape). Store in assets/images/journeys/.",
+  "title": "Journey Path Image Assets",
+  "dependencies": [
+    "theme-pack-system"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028066-g4uii9a6z"
+}

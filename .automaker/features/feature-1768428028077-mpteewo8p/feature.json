@@ -1,0 +1,11 @@
+{
+  "category": "enhancement",
+  "description": "Update welcome screen with 'Skip' link top-right, large app icon (green rounded square with leaf), 'A quiet place to reflect.' with 'reflect' in green, subtitle paragraph, 'Begin →' primary button, 'Learn more' secondary button, and privacy notice with lock icon.",
+  "title": "Onboarding Welcome Screen Polish",
+  "dependencies": [
+    "app-logo-icon-assets"
+  ],
+  "priority": 3,
+  "status": "backlog",
+  "id": "feature-1768428028077-mpteewo8p"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "practice-generator",
+  "category": "Core",
+  "title": "Actionable Practice Suggestions",
+  "description": "Enhanced practice section with multiple micro-action options. Includes 1-minute, 5-minute, and daily practice variants tied to conversation context.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.376Z",
+  "updatedAt": "2026-01-13T02:57:05.490Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:43:47.482Z"
+}

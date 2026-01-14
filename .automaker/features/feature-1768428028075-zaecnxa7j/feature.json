@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create donation screen (app/donation.tsx) with close/restore header, heart icon in green circle, 'Keep Sage free for everyone.' heading, benefits card with 3 items, amount selector grid (CHF 2, 5, 10, Custom), payment method selector, 'Donate CHF X →' CTA, and 'Maybe later' link.",
+  "title": "Donation Screen",
+  "dependencies": [
+    "donation-integration"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028075-zaecnxa7j"
+}

@@ -1,0 +1,9 @@
+{
+  "category": "feature",
+  "description": "Create pill-shaped floating action button at bottom center with chat icon, 'Ask Sage' text, and Sage logo watermark. Reusable across Home and Explore screens.",
+  "title": "Floating Ask Sage Button",
+  "dependencies": [],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028070-mhzag2vpn"
+}

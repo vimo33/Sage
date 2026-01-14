@@ -1,0 +1,11 @@
+{
+  "category": "feature",
+  "description": "Create connection error screen (app/connection-error.tsx) with back arrow, circular broken chain illustration, 'Connection Pause' heading, retry message, 'Retry' button, and 'Return to Home' link.",
+  "title": "Connection Error Screen",
+  "dependencies": [
+    "empty-state-illustration-assets"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028076-ce40kwarl"
+}

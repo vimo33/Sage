@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage - Journal Empty State</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#37ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#132210", // Deep dark green/charcoal
+                        "surface-dark": "#1c2e18", // Slightly lighter for nav/cards
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased transition-colors duration-200">
+<div class="relative flex h-screen w-full max-w-md mx-auto flex-col overflow-hidden shadow-2xl">
+<!-- Status Bar Area (Visual Placeholder) -->
+<div class="h-10 w-full bg-transparent shrink-0"></div>
+<!-- TopAppBar -->
+<header class="flex items-center justify-between px-6 py-4 z-10 shrink-0">
+<!-- Left: Settings/Menu -->
+<button class="flex items-center justify-center size-10 rounded-full text-white hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined !text-[28px]">menu</span>
+</button>
+<!-- Center: Title -->
+<h1 class="text-white text-xl font-extrabold tracking-tight">Journal</h1>
+<!-- Right: Calendar -->
+<button class="flex items-center justify-center size-10 rounded-full text-white hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined !text-[24px]">calendar_today</span>
+</button>
+</header>
+<!-- Main Content: Empty State -->
+<main class="flex-1 flex flex-col items-center justify-center px-8 pb-20 relative">
+<!-- Illustration / Visual Centerpiece -->
+<div class="relative mb-10 group cursor-default">
+<!-- Abstract glow behind -->
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-150 opacity-40 animate-pulse"></div>
+<!-- Icon container -->
+<div class="relative size-32 rounded-full border-[3px] border-white/10 flex items-center justify-center bg-background-dark/50 backdrop-blur-sm z-10">
+<div class="bg-center bg-no-repeat bg-cover w-16 h-16 opacity-80" data-alt="Abstract minimal white line art representing an open book or reflection" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYjpAx_-RfooUg10w6hMU0lvDMgamqht5M9paxiUkTp2V__X46x9odePZYCfmhwy8rH2OjtBYskVCPu1GVxHr0FKSJVmk9ovC2e0mp3_pMXakY2KfIPkQyU31zlxMF1oCOR51G0ZFLpW91AWfmR1OD4gXj-OWVA2w3-PvSXTMkHpLlvyFEmF-vonSBOpK2LbDhFbBPXbgLpPl8pnjDFiSsU86REXKRSL4Ggh0ucC41xzbAOS1n3DTqyVnrwPvp0O0WdTddrOF3R8IO'); mask-image: url('https://placehold.co/100x100/000000/000000'); -webkit-mask-image: url('https://placehold.co/100x100/000000/000000');">
+<!-- Using Material Icon as the 'image' for better control in this snippet -->
+<span class="material-symbols-outlined text-white/80 !text-[64px] font-thin">auto_stories</span>
+</div>
+</div>
+</div>
+<!-- Text Content -->
+<div class="flex flex-col items-center gap-3 text-center max-w-[280px]">
+<h2 class="text-white text-2xl font-bold tracking-tight leading-tight">Your space to reflect</h2>
+<p class="text-white/60 text-base font-normal leading-relaxed">
+                    Your thoughts are safe here. <br/>Tap the '+' to begin your first entry.
+                </p>
+</div>
+</main>
+<!-- Floating Action Button (FAB) -->
+<!-- Positioned absolutely above the bottom nav for the "floating" effect -->
+<div class="absolute bottom-24 right-6 z-20">
+<button class="flex items-center justify-center size-16 rounded-full bg-primary text-background-dark shadow-[0_4px_24px_rgba(55,236,19,0.4)] hover:scale-105 active:scale-95 transition-all duration-300">
+<span class="material-symbols-outlined !text-[32px] font-medium">add</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="shrink-0 h-20 bg-background-dark border-t border-white/5 px-6 flex items-start pt-4 justify-between z-10">
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-white/40 group-hover:text-white transition-colors !text-[28px]">home</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-16 group">
+<div class="relative">
+<span class="material-symbols-outlined text-primary !text-[28px] drop-shadow-[0_0_8px_rgba(55,236,19,0.5)]">book_2</span>
+<!-- Active indicator dot -->
+<span class="absolute -bottom-2 left-1/2 -translate-x-1/2 size-1 bg-primary rounded-full"></span>
+</div>
+<span class="text-[10px] font-bold text-primary mt-1">Journal</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-white/40 group-hover:text-white transition-colors !text-[28px]">insights</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Insights</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-white/40 group-hover:text-white transition-colors !text-[28px]">person</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Profile</span>
+</button>
+</nav>
+<!-- Bottom safe area spacing -->
+<div class="h-4 w-full bg-background-dark shrink-0"></div>
+</div>
+</body></html>

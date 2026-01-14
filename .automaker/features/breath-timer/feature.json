@@ -1,0 +1,16 @@
+{
+  "id": "breath-timer",
+  "category": "Core",
+  "title": "Guided Breath Practice Timer",
+  "description": "Animated breath timer (4-7-8, box breathing) launched from Practice suggestions. Includes haptic feedback and calming visuals.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "moderate",
+  "dependencies": [
+    "practice-generator"
+  ],
+  "createdAt": "2026-01-13T01:18:37.379Z",
+  "updatedAt": "2026-01-13T03:34:48.286Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:24:02.909Z"
+}

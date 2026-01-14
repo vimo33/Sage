@@ -1,0 +1,14 @@
+{
+  "id": "citation-toggle",
+  "category": "UI",
+  "title": "Optional Citations Display Toggle",
+  "description": "Add settings option to hide/show source citations in chat responses. Allows users who prefer immersion to hide scholarly references.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.372Z",
+  "updatedAt": "2026-01-13T02:05:39.149Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:01:12.128Z"
+}

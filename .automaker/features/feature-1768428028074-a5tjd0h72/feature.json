@@ -1,0 +1,11 @@
+{
+  "category": "enhancement",
+  "description": "Update InsightDetailModal with audio player card featuring waveform visualization and speed control (1.0x badge). Enhances TTS experience with visual feedback.",
+  "title": "Insight Detail Audio Player",
+  "dependencies": [
+    "stop-tts-button"
+  ],
+  "priority": 2,
+  "status": "backlog",
+  "id": "feature-1768428028074-a5tjd0h72"
+}

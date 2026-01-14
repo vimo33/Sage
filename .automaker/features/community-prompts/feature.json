@@ -1,0 +1,14 @@
+{
+  "id": "community-prompts",
+  "category": "Core",
+  "title": "User-Submitted Prompt Library",
+  "description": "Curated collection of user-contributed reflection questions. Community feature that maintains privacy by submitting anonymized text only.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "complex",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.382Z",
+  "updatedAt": "2026-01-13T03:47:41.914Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:35:54.195Z"
+}

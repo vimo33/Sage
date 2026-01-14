@@ -1,0 +1,14 @@
+{
+  "id": "analytics-privacy",
+  "category": "Core",
+  "title": "Privacy-Preserving Usage Analytics",
+  "description": "Optional anonymous analytics for crash reporting and usage patterns. Fully local with explicit opt-in and detailed data disclosure.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.384Z",
+  "updatedAt": "2026-01-13T03:35:52.365Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T03:22:35.584Z"
+}

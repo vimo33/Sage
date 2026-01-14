@@ -1,0 +1,9 @@
+{
+  "category": "enhancement",
+  "description": "Redesign tab bar from 5 tabs with emojis to 4 tabs with SF Symbols/Ionicons. Implement icon-based navigation with filled/outlined states, pill-shaped active indicator, proper 70px height, and updated color scheme (green #37ec13 active, muted gray inactive).",
+  "title": "Navigation Tab Bar Redesign",
+  "dependencies": [],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028064-itk48uyck"
+}

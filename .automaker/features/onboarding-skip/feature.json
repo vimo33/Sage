@@ -1,0 +1,14 @@
+{
+  "id": "onboarding-skip",
+  "category": "UI",
+  "title": "Skip Onboarding Option",
+  "description": "Allow advanced users to skip onboarding and use defaults. Includes confirmation that shows what defaults will be applied.",
+  "status": "verified",
+  "priority": 3,
+  "complexity": "simple",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.384Z",
+  "updatedAt": "2026-01-13T04:30:23.824Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T04:26:23.277Z"
+}

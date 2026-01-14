@@ -1,0 +1,14 @@
+{
+  "id": "conversation-context",
+  "category": "Core",
+  "title": "Extended Conversation Memory",
+  "description": "Expand conversational context window from 10 to 20 messages with smart summarization. Maintains coherence across longer chat sessions.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [],
+  "createdAt": "2026-01-13T01:18:37.378Z",
+  "updatedAt": "2026-01-13T02:15:17.914Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:11:53.450Z"
+}

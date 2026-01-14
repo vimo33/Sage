@@ -1,0 +1,16 @@
+{
+  "id": "import-journal",
+  "category": "Core",
+  "title": "Import Journal from Backup",
+  "description": "Parse and import previously exported journal entries. Validates format and handles duplicate detection during import process.",
+  "status": "verified",
+  "priority": 2,
+  "complexity": "moderate",
+  "dependencies": [
+    "export-journal"
+  ],
+  "createdAt": "2026-01-13T01:18:37.377Z",
+  "updatedAt": "2026-01-13T02:26:06.280Z",
+  "branchName": "main",
+  "startedAt": "2026-01-13T02:17:08.304Z"
+}

@@ -1,0 +1,9 @@
+{
+  "category": "feature",
+  "description": "Create rich illustrations for empty states: No insights yet (Sage leaf in circle with glow), Journal empty (open book illustration), Connection error (broken chain/link icon), Offline mode (cloud with slash icon). Store in assets/images/empty-states/.",
+  "title": "Empty State Illustration Assets",
+  "dependencies": [],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028067-aqbkyr1ko"
+}

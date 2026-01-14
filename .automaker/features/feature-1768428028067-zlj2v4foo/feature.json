@@ -1,0 +1,11 @@
+{
+  "category": "enhancement",
+  "description": "Update home screen header with Sage logo and leaf icon top-left, profile circle with image/avatar support, date format as uppercase 'THURSDAY, OCT 24', and greeting format 'Good evening, [Name]'.",
+  "title": "Home Screen Header Redesign",
+  "dependencies": [
+    "app-logo-icon-assets"
+  ],
+  "priority": 1,
+  "status": "backlog",
+  "id": "feature-1768428028067-zlj2v4foo"
+}

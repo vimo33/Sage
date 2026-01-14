@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sage - Explore Empty State</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#37ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#132210",
+                        "surface-dark": "#1c2e18",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "2rem", 
+                        "xl": "3rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display antialiased overflow-x-hidden text-slate-900 dark:text-white">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 pt-12 pb-4 flex items-center justify-between">
+<button class="flex items-center justify-center p-2 -ml-2 text-white/80 hover:text-primary transition-colors rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-[28px]">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Explore</h1>
+<div class="w-10"></div> <!-- Spacer for optical centering -->
+</header>
+<!-- Search Bar Section -->
+<div class="px-6 pb-2">
+<div class="relative flex items-center w-full h-14 rounded-full bg-surface-dark/50 dark:bg-[#1f301b] border border-white/5 focus-within:border-primary/50 transition-all duration-300">
+<div class="pl-5 pr-3 text-white/40 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</div>
+<input aria-label="Search" class="w-full bg-transparent border-none text-white placeholder-white/40 focus:ring-0 text-base font-medium h-full px-0" type="text" value="Advanced Meditati..."/>
+<button class="pr-5 pl-3 text-white/40 hover:text-white transition-colors flex items-center justify-center h-full">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</button>
+</div>
+</div>
+<!-- Main Content: Empty State -->
+<main class="flex-1 flex flex-col items-center justify-center px-8 py-12 w-full max-w-md mx-auto">
+<!-- Abstract Visual -->
+<div class="mb-8 relative w-40 h-40 flex items-center justify-center">
+<!-- Decorative minimal circles -->
+<div class="absolute inset-0 border border-white/5 rounded-full scale-100"></div>
+<div class="absolute inset-4 border border-white/5 rounded-full scale-90 opacity-70"></div>
+<div class="absolute inset-8 border border-white/10 rounded-full scale-75 opacity-50 bg-white/5 backdrop-blur-sm"></div>
+<!-- Icon -->
+<span class="material-symbols-outlined text-white/20 text-[48px] relative z-10">search_off</span>
+</div>
+<!-- Text Block -->
+<div class="text-center space-y-3 mb-10">
+<h2 class="text-2xl font-bold tracking-tight text-white">No results found</h2>
+<p class="text-white/60 text-sm leading-relaxed max-w-[280px] mx-auto">
+                No matching explorations found. Try adjusting your search, or discover something new!
+            </p>
+</div>
+<!-- Primary Action -->
+<button class="bg-primary hover:bg-[#2fd010] active:scale-95 transition-all text-background-dark font-bold text-sm px-8 py-4 rounded-full w-full max-w-[200px] flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(55,236,19,0.3)]">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+<span>Clear Search</span>
+</button>
+</main>
+<!-- Suggestions Section -->
+<section class="px-6 pb-24">
+<h3 class="text-xs font-bold uppercase tracking-widest text-white/30 mb-5 ml-1">Try searching for...</h3>
+<div class="flex flex-wrap gap-3">
+<button class="group flex items-center gap-2 bg-[#1f301b] border border-white/5 hover:border-primary/50 hover:bg-primary/10 transition-all rounded-full px-5 py-3">
+<span class="material-symbols-outlined text-white/50 group-hover:text-primary text-[18px]">spa</span>
+<span class="text-sm font-medium text-white/90 group-hover:text-primary">Mindfulness</span>
+</button>
+<button class="group flex items-center gap-2 bg-[#1f301b] border border-white/5 hover:border-primary/50 hover:bg-primary/10 transition-all rounded-full px-5 py-3">
+<span class="material-symbols-outlined text-white/50 group-hover:text-primary text-[18px]">psychology</span>
+<span class="text-sm font-medium text-white/90 group-hover:text-primary">Anxiety</span>
+</button>
+<button class="group flex items-center gap-2 bg-[#1f301b] border border-white/5 hover:border-primary/50 hover:bg-primary/10 transition-all rounded-full px-5 py-3">
+<span class="material-symbols-outlined text-white/50 group-hover:text-primary text-[18px]">trending_up</span>
+<span class="text-sm font-medium text-white/90 group-hover:text-primary">Growth</span>
+</button>
+<button class="group flex items-center gap-2 bg-[#1f301b] border border-white/5 hover:border-primary/50 hover:bg-primary/10 transition-all rounded-full px-5 py-3">
+<span class="material-symbols-outlined text-white/50 group-hover:text-primary text-[18px]">bedtime</span>
+<span class="text-sm font-medium text-white/90 group-hover:text-primary">Sleep</span>
+</button>
+<button class="group flex items-center gap-2 bg-[#1f301b] border border-white/5 hover:border-primary/50 hover:bg-primary/10 transition-all rounded-full px-5 py-3">
+<span class="material-symbols-outlined text-white/50 group-hover:text-primary text-[18px]">self_improvement</span>
+<span class="text-sm font-medium text-white/90 group-hover:text-primary">Reflect</span>
+</button>
+</div>
+</section>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-dark/90 backdrop-blur-xl border-t border-white/5 pb-8 pt-4 px-8 z-40">
+<ul class="flex justify-between items-center max-w-md mx-auto">
+<li>
+<button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[10px] font-medium tracking-wide">Home</span>
+</button>
+</li>
+<li>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[24px] fill-current">explore</span>
+<span class="text-[10px] font-medium tracking-wide">Explore</span>
+</button>
+</li>
+<li>
+<button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+<span class="text-[10px] font-medium tracking-wide">Journal</span>
+</button>
+</li>
+<li>
+<button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-[10px] font-medium tracking-wide">Profile</span>
+</button>
+</li>
+</ul>
+</nav>
+</body></html>
