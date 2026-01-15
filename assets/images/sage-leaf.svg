@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sage Leaf Icon - 3 leaves forming upward pattern -->
+  <g id="sage-leaf">
+    <!-- Center leaf (tallest) -->
+    <path d="M32 8C32 8 24 20 24 32C24 44 32 52 32 52C32 52 40 44 40 32C40 20 32 8 32 8Z" fill="#162210"/>
+    <!-- Left leaf -->
+    <path d="M20 20C20 20 12 28 12 36C12 44 20 48 20 48C20 48 24 40 24 32C24 28 22 24 20 20Z" fill="#162210"/>
+    <!-- Right leaf -->
+    <path d="M44 20C44 20 52 28 52 36C52 44 44 48 44 48C44 48 40 40 40 32C40 28 42 24 44 20Z" fill="#162210"/>
+  </g>
+</svg>

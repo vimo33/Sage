@@ -4,6 +4,9 @@
   "title": "Onboarding Narration Settings Screen",
   "dependencies": [],
   "priority": 3,
-  "status": "backlog",
-  "id": "feature-1768428028078-iwyqqkj6p"
+  "status": "verified",
+  "id": "feature-1768428028078-iwyqqkj6p",
+  "branchName": "main",
+  "startedAt": "2026-01-15T01:07:38.313Z",
+  "updatedAt": "2026-01-15T01:17:15.037Z"
 }

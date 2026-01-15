@@ -6,6 +6,9 @@
     "offline-indicator"
   ],
   "priority": 2,
-  "status": "backlog",
-  "id": "feature-1768428028076-uy3g2c29y"
+  "status": "verified",
+  "id": "feature-1768428028076-uy3g2c29y",
+  "branchName": "main",
+  "startedAt": "2026-01-15T00:41:34.960Z",
+  "updatedAt": "2026-01-15T00:53:09.400Z"
 }

@@ -4,6 +4,9 @@
   "title": "Global Header Redesign",
   "dependencies": [],
   "priority": 1,
-  "status": "backlog",
-  "id": "feature-1768428028065-w0enanffo"
+  "status": "verified",
+  "id": "feature-1768428028065-w0enanffo",
+  "branchName": "main",
+  "startedAt": "2026-01-14T23:03:41.235Z",
+  "updatedAt": "2026-01-14T23:14:45.323Z"
 }

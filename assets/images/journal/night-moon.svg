@@ -1,0 +1,51 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Night Moon Icon: Peaceful crescent moon with stars -->
+  <defs>
+    <radialGradient id="moon-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#93C5FD"/>
+      <stop offset="50%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1E40AF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="moon-surface" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="50%" stop-color="#E0E7FF"/>
+      <stop offset="100%" stop-color="#C7D2FE"/>
+    </linearGradient>
+    <radialGradient id="night-sky" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#1E3A8A" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#1E3A8A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Night sky background glow -->
+  <circle cx="80" cy="80" r="70" fill="url(#night-sky)"/>
+
+  <!-- Moon outer glow -->
+  <circle cx="75" cy="75" r="45" fill="url(#moon-glow)" opacity="0.4"/>
+
+  <!-- Crescent moon shape using mask technique -->
+  <circle cx="70" cy="70" r="35" fill="url(#moon-surface)"/>
+  <circle cx="85" cy="60" r="28" fill="#1E3A8A" fill-opacity="0.15"/>
+
+  <!-- Moon surface details (subtle craters) -->
+  <circle cx="55" cy="65" r="5" fill="#C7D2FE" opacity="0.5"/>
+  <circle cx="70" cy="85" r="4" fill="#C7D2FE" opacity="0.4"/>
+  <circle cx="60" cy="78" r="3" fill="#C7D2FE" opacity="0.3"/>
+
+  <!-- Stars -->
+  <g fill="#FBBF24">
+    <!-- Large star top right -->
+    <path d="M120 40 L122 46 L128 46 L123 50 L125 56 L120 52 L115 56 L117 50 L112 46 L118 46 Z" opacity="0.9"/>
+    <!-- Medium star -->
+    <path d="M130 80 L131 84 L135 84 L132 87 L133 91 L130 88 L127 91 L128 87 L125 84 L129 84 Z" opacity="0.7"/>
+    <!-- Small stars -->
+    <circle cx="110" cy="60" r="2" opacity="0.8"/>
+    <circle cx="140" cy="65" r="1.5" opacity="0.6"/>
+    <circle cx="125" cy="100" r="1.5" opacity="0.5"/>
+    <circle cx="100" cy="35" r="2" opacity="0.7"/>
+    <circle cx="135" cy="45" r="1" opacity="0.5"/>
+  </g>
+
+  <!-- Subtle sparkle on moon -->
+  <circle cx="55" cy="55" r="3" fill="#FFFFFF" opacity="0.7"/>
+</svg>

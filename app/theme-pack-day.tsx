@@ -15,6 +15,7 @@ import {
 import { COLORS, SPACING, RADII, TYPOGRAPHY, getThemedColors, withAlpha } from '../lib/ui/theme';
 import { useSageStore } from '../lib/storage/store';
 import { getThemePackById, getThemePackDay, isDayUnlocked } from '../lib/theme-packs';
+import { AppHeader } from '../components/navigation';
 
 type ContentSection = 'opening' | 'teaching' | 'practice' | 'closing' | 'complete';
 
@@ -228,20 +229,13 @@ export default function ThemePackDayScreen() {
         style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View style={[styles.header, { borderBottomColor: colors.border }]}>
-          <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-            <Text style={[styles.closeButtonText, { color: colors.text }]}>×</Text>
-          </TouchableOpacity>
-          <View style={styles.headerCenter}>
-            <Text style={[styles.dayLabel, { color: colors.textMuted }]}>
-              Day {dayNumber} of 7
-            </Text>
-            <Text style={[styles.dayTitle, { color: colors.text }]}>
-              {dayContent.title}
-            </Text>
-          </View>
-          <View style={styles.closeButton} />
-        </View>
+        <AppHeader
+          variant="close"
+          title={`Day ${dayNumber}: ${dayContent.title}`}
+          onBack={handleClose}
+          showProfile={false}
+          testID="theme-pack-day-header"
+        />
 
         {currentSection !== 'complete' && renderSectionIndicator()}
 
@@ -302,36 +296,6 @@ const styles = StyleSheet.create({
   },
   keyboardView: {
     flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md,
-    borderBottomWidth: 1,
-  },
-  closeButton: {
-    width: 44,
-    height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  closeButtonText: {
-    fontSize: 28,
-    fontWeight: '300',
-  },
-  headerCenter: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  dayLabel: {
-    ...TYPOGRAPHY.styles.caption,
-    textTransform: 'uppercase',
-  },
-  dayTitle: {
-    ...TYPOGRAPHY.styles.h4,
-    marginTop: 2,
   },
   sectionIndicator: {
     flexDirection: 'row',

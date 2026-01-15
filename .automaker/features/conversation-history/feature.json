@@ -1,0 +1,12 @@
+{
+  "id": "conversation-history",
+  "category": "Core",
+  "title": "Conversation History & Auto-Save",
+  "description": "Replace clunky session saving with auto-save conversation system. Add conversation history sidebar with smart grouping by date and context. Remove blocking session summary modal.",
+  "status": "planned",
+  "priority": 1,
+  "complexity": "high",
+  "dependencies": [],
+  "createdAt": "2026-01-15T17:29:00.000Z",
+  "updatedAt": "2026-01-15T17:29:00.000Z"
+}

@@ -24,17 +24,19 @@ export interface ThemePackDay {
 }
 
 /**
- * A complete 7-day theme pack
+ * A complete theme pack (can be 3-day quick path or 7-day journey)
  */
 export interface ThemePack {
   id: string;
   title: string;
   description: string;
-  icon: string;
+  icon: string; // Fallback emoji icon
+  image: string; // Image identifier for the theme (e.g., 'acceptance', 'purpose')
   theme: ThemeTag;
   color: string; // Accent color for the pack
-  dayCount: 7; // Always 7 days
+  dayCount: number; // Number of days (3 for quick paths, 7 for journeys)
   estimatedMinutesPerDay: number;
+  isQuickPath?: boolean; // True for short beginner paths (3 days), false/undefined for full journeys (7 days)
   days: ThemePackDay[];
 }
 
@@ -132,9 +134,9 @@ export function getNextAvailableDay(
 /**
  * Calculate progress percentage
  */
-export function getProgressPercentage(progress: ThemePackProgress | null): number {
+export function getProgressPercentage(progress: ThemePackProgress | null, totalDays: number = 7): number {
   if (!progress) {
     return 0;
   }
-  return Math.round((progress.completedDays.length / 7) * 100);
+  return Math.round((progress.completedDays.length / totalDays) * 100);
 }

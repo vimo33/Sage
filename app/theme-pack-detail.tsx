@@ -2,6 +2,7 @@ import { router, useLocalSearchParams, Href } from 'expo-router';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   SafeAreaView,
   ScrollView,
@@ -10,8 +11,9 @@ import {
 } from 'react-native';
 import { COLORS, SPACING, RADII, TYPOGRAPHY, getThemedColors, withAlpha } from '../lib/ui/theme';
 import { useSageStore } from '../lib/storage/store';
-import { getThemePackById, isDayUnlocked, getProgressPercentage, getNextAvailableDay } from '../lib/theme-packs';
+import { getThemePackById, isDayUnlocked, getProgressPercentage, getNextAvailableDay, getThemeImage } from '../lib/theme-packs';
 import type { ThemePackDay, ThemePackProgress } from '../lib/theme-packs';
+import { AppHeader } from '../components/navigation';
 
 function DayCard({
   day,
@@ -135,18 +137,12 @@ export default function ThemePackDetailScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { borderBottomColor: colors.border }]}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <Text style={[styles.backButtonText, { color: colors.text }]}>←</Text>
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>
-          {pack.title}
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
+      <AppHeader
+        variant="back"
+        title={pack.title}
+        showProfile={false}
+        testID="theme-pack-detail-header"
+      />
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -159,7 +155,15 @@ export default function ThemePackDetailScreen() {
             { backgroundColor: withAlpha(pack.color, 0.15) },
           ]}
         >
-          <Text style={styles.heroIcon}>{pack.icon}</Text>
+          {getThemeImage(pack.image) ? (
+            <Image
+              source={getThemeImage(pack.image)!}
+              style={styles.heroImage}
+              resizeMode="contain"
+            />
+          ) : (
+            <Text style={styles.heroIcon}>{pack.icon}</Text>
+          )}
           <Text style={[styles.heroTitle, { color: colors.text }]}>
             {pack.title}
           </Text>
@@ -240,30 +244,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md,
-    borderBottomWidth: 1,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  backButtonText: {
-    fontSize: 24,
-    fontWeight: '300',
-  },
-  headerTitle: {
-    ...TYPOGRAPHY.styles.h4,
-  },
-  headerSpacer: {
-    width: 40,
-  },
   scrollContent: {
     paddingBottom: 40,
   },
@@ -286,6 +266,11 @@ const styles = StyleSheet.create({
   },
   heroIcon: {
     fontSize: 64,
+    marginBottom: SPACING.lg,
+  },
+  heroImage: {
+    width: 100,
+    height: 100,
     marginBottom: SPACING.lg,
   },
   heroTitle: {

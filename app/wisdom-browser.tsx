@@ -24,6 +24,7 @@ import {
 import { useSageStore } from '../lib/storage/store';
 import { COLORS, SPACING, RADII, TYPOGRAPHY, SHADOWS, withAlpha, getThemedColors } from '../lib/ui/theme';
 import { ChunkDetailModal } from '../components/wisdom/ChunkDetailModal';
+import { AppHeader } from '../components/navigation';
 
 type BrowseMode = 'source' | 'theme';
 
@@ -290,21 +291,16 @@ export default function WisdomBrowserScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.back()}
-          style={styles.backButton}
-          testID="wisdom-browser-back"
-        >
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
-        <View style={styles.headerContent}>
-          <Text style={styles.title}>Wisdom Library</Text>
-          <Text style={styles.subtitle}>
-            {totalChunks.toLocaleString()} passages from ancient texts
-          </Text>
-        </View>
+      <AppHeader
+        variant="back"
+        title="Wisdom Library"
+        showProfile={false}
+        testID="wisdom-browser-header"
+      />
+      <View style={styles.headerSubtitle}>
+        <Text style={styles.subtitle}>
+          {totalChunks.toLocaleString()} passages from ancient texts
+        </Text>
       </View>
 
       {/* Mode Tabs */}
@@ -436,30 +432,13 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
       color: colors.textSecondary,
       ...TYPOGRAPHY.styles.body,
     },
-    header: {
+    headerSubtitle: {
       paddingHorizontal: SPACING.xl,
-      paddingTop: SPACING.md,
-      paddingBottom: SPACING.lg,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border,
-    },
-    backButton: {
-      marginBottom: SPACING.sm,
-    },
-    backButtonText: {
-      color: COLORS.primary,
-      fontSize: 16,
-      fontWeight: '500',
-    },
-    headerContent: {},
-    title: {
-      ...TYPOGRAPHY.styles.h1,
-      color: colors.text,
+      paddingBottom: SPACING.md,
     },
     subtitle: {
       ...TYPOGRAPHY.styles.body,
       color: colors.textSecondary,
-      marginTop: 2,
     },
     tabsContainer: {
       flexDirection: 'row',

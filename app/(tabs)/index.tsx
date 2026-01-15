@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   SafeAreaView,
   ScrollView,
@@ -12,9 +13,11 @@ import {
 import { COLORS, SPACING, RADII, TYPOGRAPHY, SHADOWS, getThemedColors, withAlpha } from '../../lib/ui/theme';
 import { DailyWisdomWidget } from '../../lib/ui/DailyWisdomWidget';
 import { getFeaturedReflections } from '../../lib/reflection';
-import { getAllThemePacks, getProgressPercentage, getNextAvailableDay } from '../../lib/theme-packs';
+import { getAllThemePacks, getQuickPaths, getJourneys, getProgressPercentage, getNextAvailableDay, getThemeImage } from '../../lib/theme-packs';
 import { getFeaturedPrompts } from '../../lib/community-prompts';
 import { useSageStore, type SearchHistoryItem } from '../../lib/storage/store';
+import { AppHeader } from '../../components/navigation';
+import { DailyReflectionHeroCard, RecentJourneyCarousel, AskSageFAB, ThemeGrid, ThemePathProgress, PathsCarousel } from '../../components/home';
 
 // Helper to format minutes as readable string
 function formatTimeDisplay(minutes: number): string {
@@ -67,6 +70,8 @@ export default function ExploreScreen() {
   // Get theme packs and progress
   const themePackProgress = useSageStore((s) => s.themePackProgress);
   const themePacks = getAllThemePacks();
+  const quickPaths = getQuickPaths(); // Short 3-day beginner paths
+  const journeys = getJourneys(); // Longer 7-day deep exploration journeys
 
   // Get featured community prompts
   const featuredCommunityPrompts = getFeaturedPrompts([], 3);
@@ -82,17 +87,53 @@ export default function ExploreScreen() {
 
   const styles = createStyles(colors, isDark);
 
+  // Get user preferences for greeting
+  const preferences = useSageStore((s) => s.preferences);
+  const userName = preferences.userName;
+  const profileImageUri = preferences.profileImageUri;
+
+  // Get current date and time for greeting
+  const now = new Date();
+  const hour = now.getHours();
+  const greetingPrefix = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  const greeting = userName ? `${greetingPrefix}, ${userName}` : greetingPrefix;
+
+  // Format date as uppercase 'THURSDAY, OCT 24'
+  const weekday = now.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+  const month = now.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+  const day = now.getDate();
+  const dateString = `${weekday}, ${month} ${day}`;
+
+  // Generate user initials for avatar fallback
+  const userInitials = userName
+    ? userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    : null;
+
   return (
     <SafeAreaView style={styles.container}>
+      <AppHeader
+        variant="main"
+        showProfile={false}
+        showSearch={true}
+        onSearchPress={() => router.push('/global-search' as Href)}
+        showBorder={false}
+        testID="explore-header"
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.dateText}>Monday, Jan 05</Text>
-            <Text style={styles.greetingText}>Good afternoon, Alex</Text>
-          </View>
-          <TouchableOpacity style={styles.profileCircle}>
-            <Text style={styles.profileEmoji}>👤</Text>
-          </TouchableOpacity>
+        <View style={styles.greetingContainer}>
+          <Text style={styles.dateText}>{dateString}</Text>
+          <Text style={styles.greetingText}>{greeting}</Text>
+        </View>
+
+        {/* Daily Reflection Hero Card */}
+        <View style={styles.heroCardContainer}>
+          <DailyReflectionHeroCard
+            question="What are you grateful for today, and how has it shaped your perspective?"
+            onStartReflection={() => router.push('/guided-reflection?id=gratitude_devotion' as Href)}
+            onMenuPress={() => {
+              // Menu options can be added here (e.g., skip, change question)
+            }}
+          />
         </View>
 
         <View style={styles.wisdomWidgetContainer}>
@@ -101,7 +142,9 @@ export default function ExploreScreen() {
 
         <View style={styles.statsRow}>
           <View style={[styles.statBox, streak.isInGracePeriod && styles.statBoxGracePeriod]}>
-            <Text style={styles.statIcon}>{streak.isInGracePeriod ? '⏳' : '🔥'}</Text>
+            <View style={[styles.statIconCircle, styles.statIconCircleGreen]}>
+              <Text style={styles.statIconEmoji}>{streak.isInGracePeriod ? '⏳' : '🔥'}</Text>
+            </View>
             <Text style={styles.statValue} testID="streak-value">{streak.currentStreak}</Text>
             <Text style={styles.statLabel}>
               {streak.isInGracePeriod ? 'GRACE PERIOD' : 'DAY STREAK'}
@@ -112,7 +155,9 @@ export default function ExploreScreen() {
             onPress={() => setTimePeriod(p => p === 'weekly' ? 'monthly' : 'weekly')}
             testID="mindful-time-stat"
           >
-            <Text style={styles.statIcon}>🕒</Text>
+            <View style={[styles.statIconCircle, styles.statIconCircleBlue]}>
+              <Text style={styles.statIconEmoji}>🕒</Text>
+            </View>
             <Text style={styles.statValue} testID="mindful-time-value">
               {formatTimeDisplay(displayMinutes)}
             </Text>
@@ -144,6 +189,44 @@ export default function ExploreScreen() {
             </View>
           </View>
         )}
+
+        {/* Theme Path Progress - Show in-progress journeys */}
+        {Object.keys(themePackProgress).length > 0 && (
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Continue Your Journey</Text>
+            </View>
+            <View style={styles.themePathProgressContainer}>
+              {themePacks
+                .filter((pack) => {
+                  const progress = themePackProgress[pack.id];
+                  return progress && !progress.isComplete;
+                })
+                .slice(0, 2) // Show max 2 in-progress journeys
+                .map((pack) => (
+                  <ThemePathProgress
+                    key={pack.id}
+                    pack={pack}
+                    progress={themePackProgress[pack.id]}
+                    onPress={() => router.push(`/theme-pack-detail?id=${pack.id}` as Href)}
+                    testID={`theme-path-progress-${pack.id}`}
+                  />
+                ))}
+            </View>
+          </View>
+        )}
+
+        {/* Explore Themes Grid - 2x3 */}
+        <ThemeGrid testID="explore-theme-grid" />
+
+        {/* Quick Paths - Short 3-day beginner paths */}
+        <PathsCarousel
+          paths={quickPaths}
+          onPathPress={(pathId) => router.push(`/theme-pack-detail?id=${pathId}` as Href)}
+          onViewAllPress={() => router.push('/theme-packs' as Href)}
+          sectionTitle="Quick Paths"
+          testID="quick-paths-carousel"
+        />
 
         {/* Recent Questions Section */}
         {recentQuestions.length > 0 && (
@@ -209,7 +292,7 @@ export default function ExploreScreen() {
           </ScrollView>
         </View>
 
-        {/* 7-Day Journeys Section */}
+        {/* 7-Day Journeys Section - Deep multi-day explorations */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>7-Day Journeys</Text>
@@ -218,9 +301,9 @@ export default function ExploreScreen() {
             </TouchableOpacity>
           </View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.carousel}>
-            {themePacks.map((pack) => {
+            {journeys.map((pack) => {
               const progress = themePackProgress[pack.id];
-              const progressPercent = getProgressPercentage(progress ?? null);
+              const progressPercent = getProgressPercentage(progress ?? null, pack.dayCount);
               const isStarted = !!progress;
               const isComplete = progress?.isComplete ?? false;
               const nextDay = getNextAvailableDay(pack, progress ?? null);
@@ -233,7 +316,15 @@ export default function ExploreScreen() {
                   testID={`journey-card-${pack.id}`}
                 >
                   <View style={[styles.journeyImagePlaceholder, { backgroundColor: withAlpha(pack.color, 0.2) }]}>
-                    <Text style={styles.journeyEmoji}>{pack.icon}</Text>
+                    {getThemeImage(pack.image) ? (
+                      <Image
+                        source={getThemeImage(pack.image)!}
+                        style={styles.journeyImage}
+                        resizeMode="contain"
+                      />
+                    ) : (
+                      <Text style={styles.journeyEmoji}>{pack.icon}</Text>
+                    )}
                     <View style={styles.daysBadge}>
                       <Text style={styles.daysBadgeText}>{pack.dayCount} days</Text>
                     </View>
@@ -321,13 +412,7 @@ export default function ExploreScreen() {
         <View style={styles.bottomSpacer} />
       </ScrollView>
 
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => router.push('/ask')}
-      >
-        <Text style={styles.fabIcon}>✨</Text>
-        <Text style={styles.fabText}>Ask Sage</Text>
-      </TouchableOpacity>
+      <AskSageFAB testID="explore-ask-sage-fab" />
     </SafeAreaView>
   );
 }
@@ -340,13 +425,10 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
   scrollContainer: {
     paddingBottom: 100,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  greetingContainer: {
     paddingHorizontal: SPACING.xl,
-    paddingTop: SPACING.lg,
-    marginBottom: SPACING.xl,
+    paddingTop: SPACING.sm,
+    marginBottom: SPACING.md,
   },
   dateText: {
     ...TYPOGRAPHY.styles.label,
@@ -358,21 +440,12 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     color: colors.text,
     marginTop: 4,
   },
-  profileCircle: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: colors.surfaceAlt,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  profileEmoji: {
-    fontSize: 20,
-  },
   wisdomWidgetContainer: {
     marginHorizontal: SPACING.xl,
+  },
+  heroCardContainer: {
+    marginHorizontal: SPACING.xl,
+    marginBottom: SPACING.xl,
   },
   statsRow: {
     flexDirection: 'row',
@@ -384,27 +457,44 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     flex: 1,
     backgroundColor: colors.surface,
     padding: SPACING.lg,
-    borderRadius: RADII.md,
+    borderRadius: RADII.lg,
     borderWidth: 1,
     borderColor: colors.border,
+    alignItems: 'center',
   },
   statBoxGracePeriod: {
     borderColor: COLORS.warning,
     borderWidth: 2,
   },
-  statIcon: {
-    fontSize: 20,
-    marginBottom: 8,
+  statIconCircle: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: SPACING.sm,
+  },
+  statIconCircleGreen: {
+    backgroundColor: isDark ? 'rgba(55, 236, 19, 0.2)' : 'rgba(55, 236, 19, 0.15)',
+  },
+  statIconCircleBlue: {
+    backgroundColor: isDark ? 'rgba(59, 130, 246, 0.2)' : 'rgba(59, 130, 246, 0.15)',
+  },
+  statIconEmoji: {
+    fontSize: 24,
   },
   statValue: {
-    ...TYPOGRAPHY.styles.h2,
+    fontSize: 32,
+    fontWeight: '800',
     color: colors.text,
+    marginBottom: 4,
   },
   statLabel: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '700',
     color: colors.textMuted,
-    marginTop: 2,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   section: {
     marginTop: SPACING.xxxl,
@@ -483,6 +573,10 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
   },
   journeyEmoji: {
     fontSize: 36,
+  },
+  journeyImage: {
+    width: 70,
+    height: 70,
   },
   daysBadge: {
     position: 'absolute',
@@ -587,27 +681,6 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     ...TYPOGRAPHY.styles.caption,
     color: colors.textSecondary,
     marginTop: 2,
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 30,
-    right: 20,
-    backgroundColor: COLORS.primary,
-    height: 56,
-    borderRadius: RADII.full,
-    paddingHorizontal: SPACING.xxl,
-    flexDirection: 'row',
-    alignItems: 'center',
-    ...SHADOWS.primary,
-  },
-  fabIcon: {
-    fontSize: 20,
-    marginRight: 8,
-  },
-  fabText: {
-    color: COLORS.primaryText,
-    fontWeight: '800',
-    fontSize: 16,
   },
   communityPromptsContainer: {
     paddingHorizontal: SPACING.xl,
@@ -733,5 +806,10 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     fontSize: 24,
     color: COLORS.primary,
     fontWeight: '300',
+  },
+  // Theme Path Progress styles
+  themePathProgressContainer: {
+    paddingHorizontal: SPACING.xl,
+    gap: SPACING.md,
   },
 });

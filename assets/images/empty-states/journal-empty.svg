@@ -1,0 +1,57 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Journal Empty: Open book illustration -->
+  <defs>
+    <radialGradient id="journal-glow" cx="50%" cy="60%" r="50%">
+      <stop offset="0%" stop-color="#37ec13" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#37ec13" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="page-left" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f5f5f5"/>
+      <stop offset="100%" stop-color="#e5e5e5"/>
+    </linearGradient>
+    <linearGradient id="page-right" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e5e5e5"/>
+      <stop offset="100%" stop-color="#f5f5f5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background glow -->
+  <ellipse cx="80" cy="90" rx="60" ry="40" fill="url(#journal-glow)"/>
+
+  <!-- Book spine shadow -->
+  <path d="M80 50 L80 120" stroke="#37ec13" stroke-width="3" opacity="0.3"/>
+
+  <!-- Left page -->
+  <path d="M30 55 Q50 50 80 55 L80 115 Q50 110 30 115 Z" fill="url(#page-left)" stroke="#d4d4d4" stroke-width="1"/>
+
+  <!-- Right page -->
+  <path d="M130 55 Q110 50 80 55 L80 115 Q110 110 130 115 Z" fill="url(#page-right)" stroke="#d4d4d4" stroke-width="1"/>
+
+  <!-- Left page lines (subtle) -->
+  <line x1="40" y1="65" x2="70" y2="62" stroke="#d4d4d4" stroke-width="1" opacity="0.5"/>
+  <line x1="40" y1="75" x2="70" y2="72" stroke="#d4d4d4" stroke-width="1" opacity="0.5"/>
+  <line x1="40" y1="85" x2="70" y2="82" stroke="#d4d4d4" stroke-width="1" opacity="0.5"/>
+  <line x1="40" y1="95" x2="70" y2="92" stroke="#d4d4d4" stroke-width="1" opacity="0.5"/>
+
+  <!-- Right page lines (subtle) -->
+  <line x1="90" y1="62" x2="120" y2="65" stroke="#d4d4d4" stroke-width="1" opacity="0.5"/>
+  <line x1="90" y1="72" x2="120" y2="75" stroke="#d4d4d4" stroke-width="1" opacity="0.5"/>
+  <line x1="90" y1="82" x2="120" y2="85" stroke="#d4d4d4" stroke-width="1" opacity="0.5"/>
+  <line x1="90" y1="92" x2="120" y2="95" stroke="#d4d4d4" stroke-width="1" opacity="0.5"/>
+
+  <!-- Book cover edges (left) -->
+  <path d="M28 53 Q48 48 80 53" stroke="#37ec13" stroke-width="2" fill="none" opacity="0.6"/>
+  <path d="M28 117 Q48 112 80 117" stroke="#37ec13" stroke-width="2" fill="none" opacity="0.6"/>
+  <line x1="28" y1="53" x2="28" y2="117" stroke="#37ec13" stroke-width="2" opacity="0.6"/>
+
+  <!-- Book cover edges (right) -->
+  <path d="M132 53 Q112 48 80 53" stroke="#37ec13" stroke-width="2" fill="none" opacity="0.6"/>
+  <path d="M132 117 Q112 112 80 117" stroke="#37ec13" stroke-width="2" fill="none" opacity="0.6"/>
+  <line x1="132" y1="53" x2="132" y2="117" stroke="#37ec13" stroke-width="2" opacity="0.6"/>
+
+  <!-- Decorative pen/quill hint -->
+  <g transform="translate(115, 45) rotate(45)">
+    <rect x="-2" y="-15" width="4" height="20" rx="1" fill="#37ec13" opacity="0.4"/>
+    <path d="M-2 5 L0 12 L2 5 Z" fill="#37ec13" opacity="0.5"/>
+  </g>
+</svg>

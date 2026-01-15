@@ -8,6 +8,9 @@
     "contrasts-view"
   ],
   "priority": 2,
-  "status": "backlog",
-  "id": "feature-1768428028073-2f634hkzo"
+  "status": "verified",
+  "id": "feature-1768428028073-2f634hkzo",
+  "branchName": "main",
+  "startedAt": "2026-01-15T00:02:38.114Z",
+  "updatedAt": "2026-01-15T00:10:49.882Z"
 }

@@ -6,6 +6,9 @@
     "guided-reflection-flow"
   ],
   "priority": 1,
-  "status": "backlog",
-  "id": "feature-1768428028068-rs8d6w672"
+  "status": "verified",
+  "id": "feature-1768428028068-rs8d6w672",
+  "branchName": "main",
+  "startedAt": "2026-01-14T23:19:42.669Z",
+  "updatedAt": "2026-01-14T23:23:50.993Z"
 }

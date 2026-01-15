@@ -1,0 +1,39 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- No Insights Yet: Sage leaf in circle with glow -->
+  <defs>
+    <radialGradient id="no-insights-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#37ec13" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#37ec13" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#37ec13" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="no-insights-inner-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#37ec13" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#37ec13" stop-opacity="0.05"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Outer glow -->
+  <circle cx="80" cy="80" r="70" fill="url(#no-insights-glow)"/>
+
+  <!-- Circle border with subtle glow -->
+  <circle cx="80" cy="80" r="55" stroke="#37ec13" stroke-width="2" fill="url(#no-insights-inner-glow)" opacity="0.8"/>
+
+  <!-- Inner decorative ring -->
+  <circle cx="80" cy="80" r="48" stroke="#37ec13" stroke-width="1" fill="none" opacity="0.3"/>
+
+  <!-- Sage leaf icon (scaled and centered from sage-leaf.svg) -->
+  <g transform="translate(80, 80) scale(1.2)">
+    <!-- Center leaf (tallest) -->
+    <path d="M0 -28C0 -28 -6 -16 -6 -4C-6 8 0 16 0 16C0 16 6 8 6 -4C6 -16 0 -28 0 -28Z" fill="#37ec13" opacity="0.9"/>
+    <!-- Left leaf -->
+    <path d="M-9 -16C-9 -16 -15 -8 -15 0C-15 8 -9 12 -9 12C-9 12 -6 4 -6 -4C-6 -8 -7 -12 -9 -16Z" fill="#37ec13" opacity="0.7"/>
+    <!-- Right leaf -->
+    <path d="M9 -16C9 -16 15 -8 15 0C15 8 9 12 9 12C9 12 6 4 6 -4C6 -8 7 -12 9 -16Z" fill="#37ec13" opacity="0.7"/>
+  </g>
+
+  <!-- Sparkle accents -->
+  <circle cx="45" cy="50" r="2" fill="#37ec13" opacity="0.5"/>
+  <circle cx="115" cy="55" r="1.5" fill="#37ec13" opacity="0.4"/>
+  <circle cx="50" cy="110" r="1.5" fill="#37ec13" opacity="0.4"/>
+  <circle cx="110" cy="105" r="2" fill="#37ec13" opacity="0.5"/>
+</svg>

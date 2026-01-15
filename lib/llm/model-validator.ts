@@ -162,6 +162,15 @@ export async function validateModel(): Promise<ModelValidationResult> {
   try {
     console.log('[Sage] Starting model validation...');
 
+    // On web platform, skip model validation as native modules aren't available
+    if (Platform.OS === 'web') {
+      console.log('[Sage] Web platform detected - skipping model validation');
+      return {
+        status: 'valid',
+        localUri: 'web-mock-path',
+      };
+    }
+
     // Check for model in documents directory (user-downloaded location)
     let localUri = getModelLocalPath();
     console.log('[Sage] Checking for model at:', localUri);

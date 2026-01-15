@@ -1,0 +1,40 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Calm Theme: Serene landscape with gentle hills and soft sky -->
+  <defs>
+    <linearGradient id="calm-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#87CEEB"/>
+      <stop offset="100%" stop-color="#E0F4FF"/>
+    </linearGradient>
+    <linearGradient id="calm-hill1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7CB69D"/>
+      <stop offset="100%" stop-color="#5A9A7E"/>
+    </linearGradient>
+    <linearGradient id="calm-hill2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8FC9AC"/>
+      <stop offset="100%" stop-color="#6BAD8F"/>
+    </linearGradient>
+    <linearGradient id="calm-hill3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A8D8C0"/>
+      <stop offset="100%" stop-color="#7CB69D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background sky -->
+  <circle cx="80" cy="80" r="70" fill="url(#calm-sky)" opacity="0.3"/>
+
+  <!-- Soft sun/moon glow -->
+  <circle cx="80" cy="50" r="20" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="80" cy="50" r="12" fill="#FFF8DC" opacity="0.8"/>
+
+  <!-- Gentle rolling hills - back layer -->
+  <ellipse cx="30" cy="110" rx="60" ry="35" fill="url(#calm-hill1)" opacity="0.5"/>
+
+  <!-- Middle hills -->
+  <ellipse cx="130" cy="115" rx="55" ry="30" fill="url(#calm-hill2)" opacity="0.6"/>
+
+  <!-- Front hills -->
+  <ellipse cx="80" cy="125" rx="70" ry="28" fill="url(#calm-hill3)" opacity="0.7"/>
+
+  <!-- Subtle reflection/water -->
+  <ellipse cx="80" cy="135" rx="50" ry="8" fill="#87CEEB" opacity="0.2"/>
+</svg>

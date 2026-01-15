@@ -8,6 +8,9 @@
     "practice-generator"
   ],
   "priority": 2,
-  "status": "backlog",
-  "id": "feature-1768428028074-yoahtv82j"
+  "status": "verified",
+  "id": "feature-1768428028074-yoahtv82j",
+  "branchName": "main",
+  "startedAt": "2026-01-15T00:18:14.105Z",
+  "updatedAt": "2026-01-15T00:24:33.830Z"
 }

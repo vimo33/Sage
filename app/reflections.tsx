@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { COLORS, SPACING, RADII, TYPOGRAPHY, SHADOWS, withAlpha, getThemedColors } from '../lib/ui/theme';
 import { getAllGuidedReflections } from '../lib/reflection';
+import { AppHeader } from '../components/navigation';
 
 export default function ReflectionsScreen() {
   const colorScheme = useColorScheme();
@@ -22,13 +23,12 @@ export default function ReflectionsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Text style={styles.backIcon}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Guided Reflections</Text>
-        <View style={styles.placeholder} />
-      </View>
+      <AppHeader
+        variant="back"
+        title="Guided Reflections"
+        showProfile={false}
+        testID="reflections-header"
+      />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.introText}>
@@ -68,32 +68,6 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     container: {
       flex: 1,
       backgroundColor: colors.background,
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingHorizontal: SPACING.lg,
-      height: 60,
-      borderBottomWidth: 1,
-      borderBottomColor: withAlpha(COLORS.white, 0.05),
-    },
-    backBtn: {
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-    },
-    backIcon: {
-      color: colors.text,
-      fontSize: 24,
-    },
-    headerTitle: {
-      color: colors.text,
-      fontSize: 18,
-      fontWeight: '700',
-    },
-    placeholder: {
-      width: 40,
     },
     scrollContainer: {
       padding: SPACING.xl,

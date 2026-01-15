@@ -4,6 +4,9 @@
   "title": "Theme Card Image Assets",
   "dependencies": [],
   "priority": 1,
-  "status": "backlog",
-  "id": "feature-1768428028066-eneb9knfh"
+  "status": "verified",
+  "id": "feature-1768428028066-eneb9knfh",
+  "branchName": "main",
+  "startedAt": "2026-01-14T23:03:45.386Z",
+  "updatedAt": "2026-01-14T23:10:58.899Z"
 }

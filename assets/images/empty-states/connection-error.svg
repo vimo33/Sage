@@ -1,0 +1,51 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Connection Error: Broken chain/link icon -->
+  <defs>
+    <radialGradient id="error-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background glow -->
+  <circle cx="80" cy="80" r="65" fill="url(#error-glow)"/>
+
+  <!-- Left chain link -->
+  <g transform="translate(45, 80)">
+    <!-- Outer ring -->
+    <rect x="-18" y="-12" width="30" height="24" rx="12" fill="none" stroke="#737373" stroke-width="6"/>
+    <!-- Inner highlight -->
+    <rect x="-15" y="-9" width="24" height="18" rx="9" fill="none" stroke="#a3a3a3" stroke-width="2" opacity="0.5"/>
+  </g>
+
+  <!-- Right chain link -->
+  <g transform="translate(115, 80)">
+    <!-- Outer ring -->
+    <rect x="-12" y="-12" width="30" height="24" rx="12" fill="none" stroke="#737373" stroke-width="6"/>
+    <!-- Inner highlight -->
+    <rect x="-9" y="-9" width="24" height="18" rx="9" fill="none" stroke="#a3a3a3" stroke-width="2" opacity="0.5"/>
+  </g>
+
+  <!-- Break indication - jagged line in middle -->
+  <g transform="translate(80, 80)">
+    <!-- Lightning bolt break symbol -->
+    <path d="M-8 -15 L2 -3 L-4 -3 L8 15 L-2 3 L4 3 Z" fill="#ef4444" opacity="0.8"/>
+  </g>
+
+  <!-- Spark effects around break -->
+  <circle cx="72" cy="68" r="2" fill="#ef4444" opacity="0.6"/>
+  <circle cx="88" cy="72" r="1.5" fill="#ef4444" opacity="0.5"/>
+  <circle cx="75" cy="92" r="1.5" fill="#ef4444" opacity="0.5"/>
+  <circle cx="85" cy="88" r="2" fill="#ef4444" opacity="0.6"/>
+
+  <!-- Small broken pieces scattered -->
+  <rect x="68" y="58" width="4" height="3" rx="1" fill="#737373" opacity="0.4" transform="rotate(-20 70 59)"/>
+  <rect x="88" y="98" width="4" height="3" rx="1" fill="#737373" opacity="0.4" transform="rotate(15 90 99)"/>
+
+  <!-- Warning triangle accent -->
+  <g transform="translate(80, 130)">
+    <path d="M0 -8 L7 6 L-7 6 Z" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="-3" x2="0" y2="1" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/>
+    <circle cx="0" cy="3.5" r="1" fill="#ef4444" opacity="0.5"/>
+  </g>
+</svg>

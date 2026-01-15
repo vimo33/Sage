@@ -26,6 +26,7 @@ import {
 } from '../lib/reflection';
 import { COLORS, SPACING, RADII, TYPOGRAPHY, SHADOWS, withAlpha, getThemedColors } from '../lib/ui/theme';
 import { QuestionVariations } from '../components/reflection/QuestionVariations';
+import { AppHeader } from '../components/navigation';
 
 export default function GuidedReflectionScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -186,21 +187,22 @@ export default function GuidedReflectionScreen() {
         style={dynamicStyles.flex}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
-        {/* Header */}
-        <View style={dynamicStyles.header}>
-          <TouchableOpacity onPress={handleCancel} style={dynamicStyles.backBtn}>
-            <Text style={dynamicStyles.backIcon}>×</Text>
-          </TouchableOpacity>
-          <View style={dynamicStyles.headerCenter}>
-            <Text style={dynamicStyles.headerTitle}>{reflection.title}</Text>
-            {progress && !isComplete && (
-              <Text style={dynamicStyles.headerSubtitle}>
-                Step {progress.currentStep + 1} of {progress.totalSteps}
-              </Text>
-            )}
+        <AppHeader
+          variant="close"
+          title={reflection.title}
+          onBack={handleCancel}
+          showProfile={false}
+          testID="guided-reflection-header"
+        />
+
+        {/* Progress Indicator */}
+        {progress && !isComplete && (
+          <View style={dynamicStyles.progressInfo}>
+            <Text style={dynamicStyles.progressText}>
+              Step {progress.currentStep + 1} of {progress.totalSteps}
+            </Text>
           </View>
-          <View style={dynamicStyles.placeholder} />
-        </View>
+        )}
 
         {/* Progress Bar */}
         {progress && !isComplete && (
@@ -396,41 +398,13 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     flex: {
       flex: 1,
     },
-    header: {
-      flexDirection: 'row',
+    progressInfo: {
       alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingHorizontal: SPACING.lg,
-      height: 60,
-      borderBottomWidth: 1,
-      borderBottomColor: withAlpha(COLORS.white, 0.05),
+      paddingVertical: SPACING.xs,
     },
-    backBtn: {
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    backIcon: {
-      color: colors.text,
-      fontSize: 28,
-      fontWeight: '300',
-    },
-    headerCenter: {
-      alignItems: 'center',
-    },
-    headerTitle: {
-      color: colors.text,
-      fontSize: 16,
-      fontWeight: '700',
-    },
-    headerSubtitle: {
+    progressText: {
       color: colors.textMuted,
       fontSize: 12,
-      marginTop: 2,
-    },
-    placeholder: {
-      width: 40,
     },
     progressContainer: {
       paddingHorizontal: SPACING.xl,

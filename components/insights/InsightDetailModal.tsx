@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,23 @@ import { COLORS, SPACING, RADII, SHADOWS, withAlpha, TYPOGRAPHY, getThemedColors
 import { InsightShareModal } from './InsightShareModal';
 import { TagInput } from './TagInput';
 import { TagChip } from './TagChip';
+import { AudioPlayerCard } from './AudioPlayerCard';
+
+// Generate reflection questions based on insight content
+function generateReflectionQuestions(verseContent: string): string[] {
+  // Default reflection questions that apply to any insight
+  const baseQuestions = [
+    'What does this insight mean to you personally?',
+    'How might this wisdom apply to your current situation?',
+    'What would change in your life if you fully embraced this teaching?',
+  ];
+  return baseQuestions;
+}
+
+// Generate a practice exercise based on insight content
+function generatePracticeExercise(verseContent: string): string {
+  return 'Take 5 minutes today to sit quietly and reflect on this insight. Notice any thoughts or feelings that arise, and consider one small action you could take to embody this wisdom.';
+}
 
 interface InsightDetailModalProps {
   visible: boolean;
@@ -39,6 +56,10 @@ export function InsightDetailModal({ visible, insight, onClose }: InsightDetailM
   const [isEditing, setIsEditing] = useState(false);
   const [editedNote, setEditedNote] = useState('');
   const [isShareModalVisible, setIsShareModalVisible] = useState(false);
+
+  // Journal prompt section state
+  const [isJournalEditing, setIsJournalEditing] = useState(false);
+  const [journalThoughts, setJournalThoughts] = useState('');
 
   const allTags = getAllTags();
   const currentTags = insight?.tags ?? [];
@@ -66,6 +87,7 @@ export function InsightDetailModal({ visible, insight, onClose }: InsightDetailM
   useEffect(() => {
     if (insight) {
       setEditedNote(insight.userNote || '');
+      setJournalThoughts(insight.userNote || '');
     }
   }, [insight]);
 
@@ -122,6 +144,39 @@ export function InsightDetailModal({ visible, insight, onClose }: InsightDetailM
     setIsShareModalVisible(false);
   }, []);
 
+  // Journal prompt handlers
+  const handleJournalEditToggle = useCallback(() => {
+    if (isJournalEditing) {
+      // Cancel editing - reset to saved value
+      setJournalThoughts(insight?.userNote || '');
+    }
+    setIsJournalEditing(!isJournalEditing);
+  }, [isJournalEditing, insight]);
+
+  const handleSaveJournalNote = useCallback(() => {
+    if (!insight) return;
+
+    updateInsight(insight.id, {
+      userNote: journalThoughts.trim() || undefined,
+    });
+
+    // Trigger haptic feedback for save
+    void HapticPatterns.saveInsight();
+
+    setIsJournalEditing(false);
+  }, [insight, journalThoughts, updateInsight]);
+
+  // Generate reflection questions and practice exercise based on insight content
+  const reflectionQuestions = useMemo(
+    () => (insight ? generateReflectionQuestions(insight.verseContent) : []),
+    [insight?.verseContent]
+  );
+
+  const practiceExercise = useMemo(
+    () => (insight ? generatePracticeExercise(insight.verseContent) : ''),
+    [insight?.verseContent]
+  );
+
   if (!insight) return null;
 
   const formattedDate = new Date(insight.createdAt).toLocaleDateString(undefined, {
@@ -174,13 +229,122 @@ export function InsightDetailModal({ visible, insight, onClose }: InsightDetailM
               <Text style={styles.dateText}>Saved on {formattedDate}</Text>
             </View>
 
-            {/* Verse Content */}
-            <View style={styles.verseSection}>
-              <View style={styles.quoteIconContainer}>
-                <Text style={styles.quoteIcon}>"</Text>
+            {/* GUIDANCE Section - Quote */}
+            <View style={styles.labeledSection} testID="guidance-section">
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionDot}>●</Text>
+                <Text style={styles.sectionLabel}>GUIDANCE</Text>
               </View>
-              <Text style={styles.verseContent}>{insight.verseContent}</Text>
-              <Text style={styles.sourceRef}>— {insight.sourceRef}</Text>
+              <View style={styles.verseSection}>
+                <View style={styles.quoteIconContainer}>
+                  <Text style={styles.quoteIcon}>"</Text>
+                </View>
+                <Text style={styles.verseContent}>{insight.verseContent}</Text>
+                <Text style={styles.sourceRef}>— {insight.sourceRef}</Text>
+              </View>
+            </View>
+
+            {/* REFLECTION Section - Questions */}
+            <View style={styles.labeledSection} testID="reflection-section">
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionDot}>●</Text>
+                <Text style={styles.sectionLabel}>REFLECTION</Text>
+              </View>
+              <View style={styles.reflectionContainer}>
+                {reflectionQuestions.map((question, index) => (
+                  <View key={index} style={styles.questionItem}>
+                    <Text style={styles.questionNumber}>{index + 1}.</Text>
+                    <Text style={styles.questionText}>{question}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+
+            {/* PRACTICE Section - Exercise */}
+            <View style={styles.labeledSection} testID="practice-section">
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionDot}>●</Text>
+                <Text style={styles.sectionLabel}>PRACTICE</Text>
+              </View>
+              <View style={styles.practiceContainer}>
+                <Text style={styles.practiceText}>{practiceExercise}</Text>
+              </View>
+            </View>
+
+            {/* Audio Player Card */}
+            <AudioPlayerCard
+              text={insight.verseContent}
+              testID="insight-audio-player"
+            />
+
+            {/* Journal Prompt Section */}
+            <View style={styles.labeledSection} testID="journal-prompt-section">
+              <View style={styles.journalSectionHeader}>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionDot}>●</Text>
+                  <Text style={styles.sectionLabel}>JOURNAL YOUR THOUGHTS</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={handleJournalEditToggle}
+                  style={styles.journalEditButton}
+                  testID="journal-edit-button"
+                >
+                  <Text style={styles.journalEditIcon}>{isJournalEditing ? '×' : '✎'}</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.journalContainer}>
+                {isJournalEditing ? (
+                  <>
+                    <TextInput
+                      style={styles.journalInput}
+                      value={journalThoughts}
+                      onChangeText={setJournalThoughts}
+                      multiline
+                      textAlignVertical="top"
+                      placeholder="Write your thoughts about this insight..."
+                      placeholderTextColor={colors.textMuted}
+                      testID="journal-input"
+                    />
+                    <TouchableOpacity
+                      style={styles.saveNoteButton}
+                      onPress={handleSaveJournalNote}
+                      testID="save-note-button"
+                    >
+                      <Text style={styles.saveNoteButtonText}>Save Note</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <View style={styles.journalDisplay}>
+                    {journalThoughts ? (
+                      <Text style={styles.journalText}>{journalThoughts}</Text>
+                    ) : (
+                      <Text style={styles.journalPlaceholder}>
+                        Tap the edit icon to journal your reflections on this insight.
+                      </Text>
+                    )}
+                  </View>
+                )}
+
+                {/* Tag chips display */}
+                {currentTags.length > 0 && (
+                  <View style={styles.journalTagsContainer}>
+                    <View style={styles.journalTagsList}>
+                      {currentTags.map((tag) => (
+                        <TagChip key={tag} tag={tag} size="small" testID={`journal-tag-${tag}`} />
+                      ))}
+                    </View>
+                  </View>
+                )}
+
+                {/* Share Insight Action */}
+                <TouchableOpacity
+                  style={styles.shareInsightAction}
+                  onPress={handleShare}
+                  testID="share-insight-action"
+                >
+                  <Text style={styles.shareInsightActionText}>SHARE INSIGHT</Text>
+                </TouchableOpacity>
+              </View>
             </View>
 
             {/* Note Section */}
@@ -326,13 +490,64 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     color: colors.textSecondary,
     ...TYPOGRAPHY.styles.body,
   },
+  // New labeled section styles
+  labeledSection: {
+    marginBottom: SPACING.xl,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+  },
+  sectionDot: {
+    color: COLORS.primary,
+    fontSize: 12,
+    marginRight: SPACING.sm,
+  },
   verseSection: {
     backgroundColor: colors.surface,
     borderRadius: RADII.lg,
     padding: SPACING.xl,
-    marginBottom: SPACING.xl,
     borderWidth: 1,
     borderColor: colors.border,
+  },
+  // Reflection section styles
+  reflectionContainer: {
+    backgroundColor: colors.surface,
+    borderRadius: RADII.lg,
+    padding: SPACING.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  questionItem: {
+    flexDirection: 'row',
+    marginBottom: SPACING.md,
+  },
+  questionNumber: {
+    color: COLORS.primary,
+    fontSize: 15,
+    fontWeight: '600',
+    marginRight: SPACING.sm,
+    minWidth: 20,
+  },
+  questionText: {
+    color: colors.text,
+    fontSize: 15,
+    lineHeight: 22,
+    flex: 1,
+  },
+  // Practice section styles
+  practiceContainer: {
+    backgroundColor: colors.surface,
+    borderRadius: RADII.lg,
+    padding: SPACING.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  practiceText: {
+    color: colors.text,
+    fontSize: 15,
+    lineHeight: 22,
   },
   quoteIconContainer: {
     marginBottom: SPACING.sm,
@@ -409,6 +624,94 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     color: colors.textMuted,
     fontSize: 14,
     fontStyle: 'italic',
+  },
+  // Journal prompt section styles
+  journalSectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+  },
+  journalEditButton: {
+    width: 32,
+    height: 32,
+    borderRadius: RADII.full,
+    backgroundColor: withAlpha(COLORS.primary, 0.1),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  journalEditIcon: {
+    fontSize: 16,
+    color: COLORS.primary,
+  },
+  journalContainer: {
+    backgroundColor: colors.surface,
+    borderRadius: RADII.lg,
+    padding: SPACING.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  journalInput: {
+    backgroundColor: 'transparent',
+    color: colors.text,
+    fontSize: 15,
+    minHeight: 120,
+    lineHeight: 22,
+    textAlignVertical: 'top',
+    padding: 0,
+    marginBottom: SPACING.md,
+  },
+  journalDisplay: {
+    minHeight: 60,
+  },
+  journalText: {
+    color: colors.text,
+    fontSize: 15,
+    lineHeight: 22,
+  },
+  journalPlaceholder: {
+    color: colors.textMuted,
+    fontSize: 15,
+    lineHeight: 22,
+    fontStyle: 'italic',
+  },
+  saveNoteButton: {
+    backgroundColor: COLORS.primary,
+    borderRadius: RADII.md,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.lg,
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    ...SHADOWS.primary,
+  },
+  saveNoteButtonText: {
+    color: COLORS.primaryText,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  journalTagsContainer: {
+    marginTop: SPACING.lg,
+    paddingTop: SPACING.lg,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  journalTagsList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: SPACING.sm,
+  },
+  shareInsightAction: {
+    marginTop: SPACING.lg,
+    paddingTop: SPACING.lg,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    alignItems: 'center',
+  },
+  shareInsightActionText: {
+    color: COLORS.primary,
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
   actionButtonsRow: {
     flexDirection: 'row',

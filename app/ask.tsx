@@ -24,6 +24,7 @@ import { speakAssistantReply, stopSpeaking, type TTSEventCallbacks } from '../li
 import { HapticPatterns } from '../lib/haptics';
 import { COLORS, SPACING, RADII, TYPOGRAPHY, SHADOWS, withAlpha, getThemedColors } from '../lib/ui/theme';
 import { calculateReadingTime } from '../lib/ui/text-metrics';
+import { AppHeader } from '../components/navigation';
 import {
   analyzeCrisisSignals,
   getSupportMessage,
@@ -42,7 +43,7 @@ export default function AskScreen() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
   const colors = getThemedColors(isDark);
-  const { prompt } = useLocalSearchParams<{ prompt?: string }>();
+  const { prompt, theme } = useLocalSearchParams<{ prompt?: string; theme?: string }>();
 
   const [input, setInput] = useState('');
   const [crisisModalVisible, setCrisisModalVisible] = useState(false);
@@ -160,12 +161,55 @@ export default function AskScreen() {
     scrollViewRef.current?.scrollToEnd({ animated: true });
   }, [chatHistory, isGenerating]);
 
+  // Theme context prompts for explore themes
+  const THEME_PROMPTS: Record<string, string> = {
+    calm: "I'm seeking calm and tranquility. What wisdom can help me find inner peace today?",
+    action: "I need motivation to take action. What ancient wisdom can inspire me to move forward with purpose?",
+    self: "Help me explore my true nature. What insights can guide me toward deeper self-understanding?",
+    relationships: "I want to improve my connections with others. What wisdom speaks to building deeper relationships?",
+    change: "I'm going through a period of change. What guidance can help me embrace transformation?",
+    meaning: "I'm searching for deeper meaning in life. What wisdom can illuminate my purpose?",
+  };
+
   // Pre-fill input from query parameter (for quick re-ask functionality)
   useEffect(() => {
     if (prompt) {
       setInput(prompt);
     }
   }, [prompt]);
+
+  // Handle theme-based navigation - auto-send themed prompt
+  useEffect(() => {
+    if (theme && THEME_PROMPTS[theme] && chatHistory.length === 0 && !isGenerating) {
+      const themePrompt = THEME_PROMPTS[theme];
+      setInput(themePrompt);
+      // Auto-send after a brief delay to show the user what's being asked
+      const timer = setTimeout(() => {
+        setInput('');
+        addChatMessage({ role: 'user', content: themePrompt });
+        setIsGenerating(true);
+        generateAssistantResult(themePrompt, preferences, [])
+          .then((result) => {
+            addChatMessage({
+              role: 'assistant',
+              content: result.content,
+              citedVerses: result.citedVerses,
+            });
+          })
+          .catch((error) => {
+            console.error('Theme generation failed:', error);
+            addChatMessage({
+              role: 'assistant',
+              content: "I'm sorry, I encountered an error while reflecting. Please try again.",
+            });
+          })
+          .finally(() => {
+            setIsGenerating(false);
+          });
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [theme, chatHistory.length, isGenerating, addChatMessage, setIsGenerating, preferences]);
 
   // Start TTS for a specific message
   const startTTSForMessage = useCallback((messageId: string, content: string) => {
@@ -772,18 +816,18 @@ export default function AskScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.flex}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBackPress} style={styles.backBtn} testID="back-btn">
-            <Text style={styles.backIcon}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Ask Sage</Text>
-          <View style={styles.placeholder} />
-        </View>
+        <AppHeader
+          variant="back"
+          title="Ask Sage"
+          onBack={handleBackPress}
+          showProfile={false}
+          testID="ask-header"
+        />
 
         {/* Debug indicator with test button */}
         {(() => {
@@ -1056,32 +1100,6 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
   },
   flex: {
     flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: SPACING.lg,
-    height: 60,
-    borderBottomWidth: 1,
-    borderBottomColor: withAlpha(COLORS.white, 0.05),
-  },
-  backBtn: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-  },
-  backIcon: {
-    color: colors.text,
-    fontSize: 24,
-  },
-  headerTitle: {
-    color: colors.text,
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  placeholder: {
-    width: 40,
   },
   scrollContainer: {
     padding: SPACING.lg,

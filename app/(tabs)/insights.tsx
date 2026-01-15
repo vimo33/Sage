@@ -9,19 +9,30 @@ import {
   TextInput,
   useColorScheme,
 } from 'react-native';
-import { useSageStore, type SavedInsight } from '../../lib/storage/store';
+import { useRouter, Href } from 'expo-router';
+import { useSageStore, type SavedInsight, type JournalEntry } from '../../lib/storage/store';
 import { COLORS, SPACING, RADII, TYPOGRAPHY, SHADOWS, withAlpha, getThemedColors } from '../../lib/ui/theme';
 import { BiometricGate } from '../../components/auth/BiometricGate';
 import { InsightDetailModal } from '../../components/insights/InsightDetailModal';
 import { TagChip } from '../../components/insights/TagChip';
 import { MoodTrendChart } from '../../components/insights/MoodTrendChart';
+import { AppHeader } from '../../components/navigation';
+import { AskSageFAB } from '../../components/home';
+import { FilterTabs, TagFilterChips, type FilterTabType } from '../../components/filters';
+
+// Combined content item type for unified display
+type ContentItem =
+  | { type: 'insight'; data: SavedInsight; createdAt: number }
+  | { type: 'journal'; data: JournalEntry; createdAt: number };
 
 export default function InsightsScreen() {
+  const router = useRouter();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
   const colors = getThemedColors(isDark);
 
   const savedInsights = useSageStore((s) => s.savedInsights);
+  const journalEntries = useSageStore((s) => s.journalEntries);
   const getAllTags = useSageStore((s) => s.getAllTags);
   const searchInsights = useSageStore((s) => s.searchInsights);
 
@@ -30,17 +41,89 @@ export default function InsightsScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+  // New filter state
+  const [activeFilterTab, setActiveFilterTab] = useState<FilterTabType>('all');
+  const [selectedTagFilter, setSelectedTagFilter] = useState<string | null>(null);
+
   const allTags = getAllTags();
+
+  // Get tags from journal entries as well
+  const journalTags = useMemo(() => {
+    const tags = new Set<string>();
+    journalEntries.forEach((entry) => {
+      entry.tags?.forEach((tag) => tags.add(tag));
+    });
+    return Array.from(tags);
+  }, [journalEntries]);
+
+  // Combined tags from both insights and journal entries
+  const combinedTags = useMemo(() => {
+    const allTagsSet = new Set([...allTags, ...journalTags]);
+    return Array.from(allTagsSet).sort();
+  }, [allTags, journalTags]);
 
   const styles = createStyles(colors, isDark);
 
   // Filter insights based on search query and selected tags
   const filteredInsights = useMemo(() => {
-    if (!searchQuery && selectedTags.length === 0) {
-      return savedInsights;
+    let results = savedInsights;
+
+    // Apply search and tag filters
+    if (searchQuery || selectedTags.length > 0) {
+      results = searchInsights(searchQuery, selectedTags);
     }
-    return searchInsights(searchQuery, selectedTags);
-  }, [savedInsights, searchQuery, selectedTags, searchInsights]);
+
+    // Apply tag filter from TagFilterChips
+    if (selectedTagFilter) {
+      results = results.filter((insight) =>
+        insight.tags?.includes(selectedTagFilter)
+      );
+    }
+
+    return results;
+  }, [savedInsights, searchQuery, selectedTags, searchInsights, selectedTagFilter]);
+
+  // Filter journal entries based on tag filter
+  const filteredJournalEntries = useMemo(() => {
+    if (!selectedTagFilter) {
+      return journalEntries;
+    }
+    return journalEntries.filter((entry) =>
+      entry.tags?.includes(selectedTagFilter)
+    );
+  }, [journalEntries, selectedTagFilter]);
+
+  // Combined and filtered content based on active tab
+  const filteredContent = useMemo((): ContentItem[] => {
+    const insightItems: ContentItem[] = filteredInsights.map((insight) => ({
+      type: 'insight' as const,
+      data: insight,
+      createdAt: insight.createdAt,
+    }));
+
+    const journalItems: ContentItem[] = filteredJournalEntries.map((entry) => ({
+      type: 'journal' as const,
+      data: entry,
+      createdAt: entry.createdAt,
+    }));
+
+    let items: ContentItem[] = [];
+
+    switch (activeFilterTab) {
+      case 'all':
+        items = [...insightItems, ...journalItems];
+        break;
+      case 'journal':
+        items = journalItems;
+        break;
+      case 'insights':
+        items = insightItems;
+        break;
+    }
+
+    // Sort by creation date (newest first)
+    return items.sort((a, b) => b.createdAt - a.createdAt);
+  }, [filteredInsights, filteredJournalEntries, activeFilterTab]);
 
   const handleInsightPress = useCallback((insight: SavedInsight) => {
     setSelectedInsight(insight);
@@ -61,9 +144,11 @@ export default function InsightsScreen() {
   const handleClearFilters = useCallback(() => {
     setSearchQuery('');
     setSelectedTags([]);
+    setSelectedTagFilter(null);
+    setActiveFilterTab('all');
   }, []);
 
-  const hasActiveFilters = searchQuery.length > 0 || selectedTags.length > 0;
+  const hasActiveFilters = searchQuery.length > 0 || selectedTags.length > 0 || selectedTagFilter !== null || activeFilterTab !== 'all';
 
   const renderInsight = (insight: SavedInsight) => (
     <TouchableOpacity
@@ -73,6 +158,9 @@ export default function InsightsScreen() {
       testID={`insight-card-${insight.id}`}
       activeOpacity={0.9}
     >
+      <View style={styles.contentTypeBadge}>
+        <Text style={styles.contentTypeBadgeText}>INSIGHT</Text>
+      </View>
       <View style={styles.quoteIconContainer}>
         <Text style={styles.quoteIcon}>"</Text>
       </View>
@@ -108,13 +196,85 @@ export default function InsightsScreen() {
     </TouchableOpacity>
   );
 
+  const renderJournalEntry = (entry: JournalEntry) => (
+    <View
+      style={styles.journalCard}
+      key={entry.id}
+      testID={`journal-card-${entry.id}`}
+    >
+      <View style={[styles.contentTypeBadge, styles.journalBadge]}>
+        <Text style={[styles.contentTypeBadgeText, styles.journalBadgeText]}>JOURNAL</Text>
+      </View>
+      <View style={styles.journalHeader}>
+        <Text style={styles.journalDate}>
+          {new Date(entry.createdAt).toLocaleDateString(undefined, {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric'
+          })}
+        </Text>
+        {entry.mood && (
+          <View style={styles.moodBadge}>
+            <Text style={styles.moodText}>{entry.mood}</Text>
+          </View>
+        )}
+      </View>
+      <Text style={styles.journalContent} numberOfLines={3}>
+        {entry.content}
+      </Text>
+      {entry.tags && entry.tags.length > 0 && (
+        <View style={styles.tagsRow}>
+          {entry.tags.map((tag) => (
+            <TagChip
+              key={tag}
+              tag={tag}
+              size="small"
+              selected={selectedTags.includes(tag)}
+              onPress={() => handleTagPress(tag)}
+            />
+          ))}
+        </View>
+      )}
+    </View>
+  );
+
+  const renderContentItem = (item: ContentItem) => {
+    if (item.type === 'insight') {
+      return renderInsight(item.data as SavedInsight);
+    }
+    return renderJournalEntry(item.data as JournalEntry);
+  };
+
   return (
     <BiometricGate>
       <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
+        <AppHeader
+          variant="main"
+          showProfile={true}
+          showSearch={true}
+          onSearchPress={() => router.push('/global-search' as Href)}
+          showBorder={false}
+          testID="insights-header"
+        />
+        <View style={styles.titleContainer}>
           <Text style={styles.title}>Insights</Text>
           <Text style={styles.subtitle}>Treasures of wisdom</Text>
         </View>
+
+        {/* Filter Tabs */}
+        <FilterTabs
+          selectedTab={activeFilterTab}
+          onTabChange={setActiveFilterTab}
+          testID="filter-tabs"
+        />
+
+        {/* Tag Filter Chips */}
+        <TagFilterChips
+          availableTags={combinedTags}
+          selectedTag={selectedTagFilter}
+          onTagSelect={setSelectedTagFilter}
+          testID="tag-filter-chips"
+        />
 
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {/* Stats Row */}
@@ -133,7 +293,7 @@ export default function InsightsScreen() {
           {/* Mood Trend Chart */}
           <MoodTrendChart testID="mood-trend-chart" />
 
-          {savedInsights.length > 0 && (
+          {(savedInsights.length > 0 || journalEntries.length > 0) && (
             <>
               {/* Search Bar */}
               <View style={styles.searchContainer}>
@@ -195,36 +355,36 @@ export default function InsightsScreen() {
               {hasActiveFilters && (
                 <View style={styles.resultsInfo}>
                   <Text style={styles.resultsText}>
-                    {filteredInsights.length === 0
-                      ? 'No insights match your filters'
-                      : filteredInsights.length === 1
-                      ? '1 insight found'
-                      : `${filteredInsights.length} insights found`}
+                    {filteredContent.length === 0
+                      ? 'No items match your filters'
+                      : filteredContent.length === 1
+                      ? '1 item found'
+                      : `${filteredContent.length} items found`}
                   </Text>
                 </View>
               )}
             </>
           )}
 
-          {savedInsights.length === 0 ? (
+          {savedInsights.length === 0 && journalEntries.length === 0 ? (
             <View style={styles.emptyState}>
               <Text style={styles.emptyEmoji}>✨</Text>
               <Text style={styles.emptyTitle}>Your collection is empty</Text>
               <Text style={styles.emptySubtitle}>
-                Save insights from your conversations with Sage to see them here.
+                Save insights from your conversations with Sage or add journal entries to see them here.
               </Text>
             </View>
-          ) : filteredInsights.length === 0 ? (
+          ) : filteredContent.length === 0 ? (
             <View style={styles.emptyState}>
               <Text style={styles.emptyEmoji}>🔍</Text>
-              <Text style={styles.emptyTitle}>No matching insights</Text>
+              <Text style={styles.emptyTitle}>No matching items</Text>
               <Text style={styles.emptySubtitle}>
                 Try adjusting your search or removing some filters.
               </Text>
             </View>
           ) : (
             <View style={styles.insightsList}>
-              {filteredInsights.map(renderInsight)}
+              {filteredContent.map(renderContentItem)}
             </View>
           )}
         </ScrollView>
@@ -234,6 +394,8 @@ export default function InsightsScreen() {
           insight={selectedInsight}
           onClose={handleModalClose}
         />
+
+        <AskSageFAB testID="insights-ask-sage-fab" />
       </SafeAreaView>
     </BiometricGate>
   );
@@ -244,9 +406,8 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     flex: 1,
     backgroundColor: colors.background,
   },
-  header: {
+  titleContainer: {
     paddingHorizontal: SPACING.xl,
-    paddingTop: SPACING.lg,
     paddingBottom: SPACING.md,
   },
   title: {
@@ -260,7 +421,7 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
   },
   scrollContainer: {
     paddingHorizontal: SPACING.xl,
-    paddingBottom: 40,
+    paddingBottom: 100, // Extra padding for FAB
   },
   statsRow: {
     flexDirection: 'row',
@@ -432,5 +593,59 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     ...TYPOGRAPHY.styles.body,
     color: colors.textSecondary,
     textAlign: 'center',
+  },
+  // Content type badge styles
+  contentTypeBadge: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: 2,
+    borderRadius: RADII.sm,
+    backgroundColor: withAlpha(COLORS.primary, 0.15),
+    marginBottom: SPACING.sm,
+  },
+  contentTypeBadgeText: {
+    ...TYPOGRAPHY.styles.label,
+    color: COLORS.primary,
+    fontSize: 10,
+  },
+  journalBadge: {
+    backgroundColor: withAlpha(COLORS.info, 0.15),
+  },
+  journalBadgeText: {
+    color: COLORS.info,
+  },
+  // Journal card styles
+  journalCard: {
+    backgroundColor: colors.surface,
+    borderRadius: RADII.lg,
+    padding: SPACING.xl,
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...SHADOWS.sm,
+  },
+  journalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: SPACING.sm,
+  },
+  journalDate: {
+    ...TYPOGRAPHY.styles.bodyBold,
+    color: colors.text,
+  },
+  journalContent: {
+    ...TYPOGRAPHY.styles.body,
+    color: colors.textSecondary,
+    lineHeight: 22,
+  },
+  moodBadge: {
+    backgroundColor: colors.surfaceAlt,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: 2,
+    borderRadius: RADII.sm,
+  },
+  moodText: {
+    fontSize: 11,
+    color: colors.textMuted,
   },
 });

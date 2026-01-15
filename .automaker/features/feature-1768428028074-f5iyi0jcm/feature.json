@@ -7,6 +7,9 @@
     "breath-timer"
   ],
   "priority": 2,
-  "status": "backlog",
-  "id": "feature-1768428028074-f5iyi0jcm"
+  "status": "verified",
+  "id": "feature-1768428028074-f5iyi0jcm",
+  "branchName": "main",
+  "startedAt": "2026-01-15T00:16:28.126Z",
+  "updatedAt": "2026-01-15T00:22:17.033Z"
 }

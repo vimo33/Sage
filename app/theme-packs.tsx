@@ -2,6 +2,7 @@ import { router, Href } from 'expo-router';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   SafeAreaView,
   ScrollView,
@@ -10,8 +11,9 @@ import {
 } from 'react-native';
 import { COLORS, SPACING, RADII, TYPOGRAPHY, SHADOWS, getThemedColors, withAlpha } from '../lib/ui/theme';
 import { useSageStore } from '../lib/storage/store';
-import { getAllThemePacks, getProgressPercentage, isDayUnlocked } from '../lib/theme-packs';
+import { getAllThemePacks, getProgressPercentage, isDayUnlocked, getThemeImage } from '../lib/theme-packs';
 import type { ThemePack, ThemePackProgress } from '../lib/theme-packs';
+import { AppHeader } from '../components/navigation';
 
 function PackCard({
   pack,
@@ -48,7 +50,15 @@ function PackCard({
           { backgroundColor: withAlpha(pack.color, 0.15) },
         ]}
       >
-        <Text style={styles.packIcon}>{pack.icon}</Text>
+        {getThemeImage(pack.image) ? (
+          <Image
+            source={getThemeImage(pack.image)!}
+            style={styles.packImage}
+            resizeMode="contain"
+          />
+        ) : (
+          <Text style={styles.packIcon}>{pack.icon}</Text>
+        )}
         {isComplete && (
           <View style={styles.completeBadge}>
             <Text style={styles.completeBadgeText}>Complete</Text>
@@ -131,18 +141,12 @@ export default function ThemePacksScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <Text style={[styles.backButtonText, { color: colors.text }]}>←</Text>
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>
-          7-Day Journeys
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
+      <AppHeader
+        variant="back"
+        title="7-Day Journeys"
+        showProfile={false}
+        testID="theme-packs-header"
+      />
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -174,31 +178,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md,
-    borderBottomWidth: 1,
-    borderBottomColor: 'transparent',
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  backButtonText: {
-    fontSize: 24,
-    fontWeight: '300',
-  },
-  headerTitle: {
-    ...TYPOGRAPHY.styles.h3,
-  },
-  headerSpacer: {
-    width: 40,
-  },
   scrollContent: {
     paddingHorizontal: SPACING.xl,
     paddingTop: SPACING.lg,
@@ -222,6 +201,10 @@ const styles = StyleSheet.create({
   },
   packIcon: {
     fontSize: 48,
+  },
+  packImage: {
+    width: 80,
+    height: 80,
   },
   completeBadge: {
     position: 'absolute',

@@ -6,6 +6,9 @@
     "empty-state-illustration-assets"
   ],
   "priority": 1,
-  "status": "backlog",
-  "id": "feature-1768428028071-6ri8d2qna"
+  "status": "verified",
+  "id": "feature-1768428028071-6ri8d2qna",
+  "branchName": "main",
+  "startedAt": "2026-01-14T23:34:23.510Z",
+  "updatedAt": "2026-01-14T23:40:57.432Z"
 }

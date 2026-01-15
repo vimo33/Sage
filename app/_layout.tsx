@@ -224,6 +224,14 @@ function RootLayoutContent() {
           name="onboarding"
           options={{ headerShown: false, presentation: 'fullScreenModal' }}
         />
+        <Stack.Screen
+          name="tone-selection"
+          options={{ headerShown: false, presentation: 'card' }}
+        />
+        <Stack.Screen
+          name="narration-settings"
+          options={{ headerShown: false, presentation: 'card' }}
+        />
       </Stack>
     </View>
   );

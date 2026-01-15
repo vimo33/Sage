@@ -6,6 +6,9 @@
     "theme-card-image-assets"
   ],
   "priority": 2,
-  "status": "backlog",
-  "id": "feature-1768428028072-ho8hap0pg"
+  "status": "verified",
+  "id": "feature-1768428028072-ho8hap0pg",
+  "branchName": "main",
+  "startedAt": "2026-01-14T23:47:06.781Z",
+  "updatedAt": "2026-01-14T23:57:20.097Z"
 }

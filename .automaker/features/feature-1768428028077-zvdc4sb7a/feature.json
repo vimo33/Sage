@@ -6,6 +6,9 @@
     "app-logo-icon-assets"
   ],
   "priority": 3,
-  "status": "backlog",
-  "id": "feature-1768428028077-zvdc4sb7a"
+  "status": "verified",
+  "id": "feature-1768428028077-zvdc4sb7a",
+  "branchName": "main",
+  "startedAt": "2026-01-15T01:05:29.213Z",
+  "updatedAt": "2026-01-15T01:20:07.489Z"
 }

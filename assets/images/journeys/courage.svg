@@ -1,0 +1,52 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Courage Theme: Bold orange abstract shape representing strength and bravery -->
+  <defs>
+    <radialGradient id="courage-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFB366"/>
+      <stop offset="100%" stop-color="#FF8C42"/>
+    </radialGradient>
+    <linearGradient id="courage-flame" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FF6B35"/>
+      <stop offset="50%" stop-color="#FF8C42"/>
+      <stop offset="100%" stop-color="#FFB366"/>
+    </linearGradient>
+    <linearGradient id="courage-inner" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FF8C42"/>
+      <stop offset="100%" stop-color="#FFCC80"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background glow -->
+  <circle cx="80" cy="80" r="70" fill="url(#courage-bg)" opacity="0.2"/>
+
+  <!-- Abstract bold shape - rising flame/mountain representing courage -->
+  <g transform="translate(80, 85)">
+    <!-- Main bold shape -->
+    <path d="M0,-50 C25,-40 35,-20 40,10 C42,25 35,35 25,40
+             C15,45 5,45 0,45
+             C-5,45 -15,45 -25,40
+             C-35,35 -42,25 -40,10
+             C-35,-20 -25,-40 0,-50 Z"
+          fill="url(#courage-flame)" opacity="0.8"/>
+
+    <!-- Inner glow layer -->
+    <path d="M0,-35 C15,-28 22,-12 25,8
+             C26,18 22,25 15,28
+             C8,31 2,31 0,31
+             C-2,31 -8,31 -15,28
+             C-22,25 -26,18 -25,8
+             C-22,-12 -15,-28 0,-35 Z"
+          fill="url(#courage-inner)" opacity="0.7"/>
+
+    <!-- Central bright core -->
+    <ellipse cx="0" cy="5" rx="10" ry="15" fill="#FFCC80" opacity="0.8"/>
+    <ellipse cx="0" cy="0" rx="5" ry="8" fill="#FFFFFF" opacity="0.6"/>
+  </g>
+
+  <!-- Subtle radiating energy lines -->
+  <g stroke="#FF8C42" stroke-linecap="round" opacity="0.3">
+    <line x1="80" y1="25" x2="80" y2="15" stroke-width="2"/>
+    <line x1="55" y1="35" x2="48" y2="28" stroke-width="1.5"/>
+    <line x1="105" y1="35" x2="112" y2="28" stroke-width="1.5"/>
+  </g>
+</svg>
