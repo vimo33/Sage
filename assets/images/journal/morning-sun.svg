@@ -1,0 +1,52 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Morning Sun Icon: Warm orange glow radiating outward -->
+  <defs>
+    <radialGradient id="sun-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="40%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sun-core" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="60%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </radialGradient>
+    <linearGradient id="horizon-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FBBF24" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer glow halo -->
+  <circle cx="80" cy="70" r="55" fill="url(#sun-glow)" opacity="0.5"/>
+
+  <!-- Sun rays -->
+  <g opacity="0.7">
+    <!-- Top ray -->
+    <path d="M80 20 L83 35 L77 35 Z" fill="#F59E0B"/>
+    <!-- Top-right rays -->
+    <path d="M110 30 L105 43 L100 40 Z" fill="#F59E0B"/>
+    <path d="M130 50 L118 57 L116 52 Z" fill="#F59E0B"/>
+    <!-- Right ray -->
+    <path d="M140 70 L125 73 L125 67 Z" fill="#F59E0B"/>
+    <!-- Bottom-right rays -->
+    <path d="M130 90 L118 85 L120 80 Z" fill="#F59E0B"/>
+    <!-- Top-left rays -->
+    <path d="M50 30 L55 43 L60 40 Z" fill="#F59E0B"/>
+    <path d="M30 50 L42 57 L44 52 Z" fill="#F59E0B"/>
+    <!-- Left ray -->
+    <path d="M20 70 L35 73 L35 67 Z" fill="#F59E0B"/>
+    <!-- Bottom-left rays -->
+    <path d="M30 90 L42 85 L40 80 Z" fill="#F59E0B"/>
+  </g>
+
+  <!-- Main sun circle -->
+  <circle cx="80" cy="70" r="30" fill="url(#sun-core)"/>
+
+  <!-- Inner highlight -->
+  <circle cx="72" cy="62" r="8" fill="#FEF3C7" opacity="0.6"/>
+
+  <!-- Horizon line suggestion -->
+  <ellipse cx="80" cy="130" rx="60" ry="15" fill="url(#horizon-glow)"/>
+  <line x1="20" y1="130" x2="140" y2="130" stroke="#F59E0B" stroke-width="2" opacity="0.4"/>
+</svg>

@@ -1,0 +1,36 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Purpose Theme: Abstract compass/directional star representing direction and meaning -->
+  <defs>
+    <radialGradient id="purpose-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9B8BF4"/>
+      <stop offset="100%" stop-color="#7B68EE"/>
+    </radialGradient>
+    <linearGradient id="ray-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#7B68EE" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background glow -->
+  <circle cx="80" cy="80" r="65" fill="url(#purpose-bg)" opacity="0.2"/>
+
+  <!-- Compass rose / directional star -->
+  <g transform="translate(80, 80)">
+    <!-- Main directional points -->
+    <polygon points="0,-45 8,-15 -8,-15" fill="url(#ray-grad)"/>
+    <polygon points="0,45 8,15 -8,15" fill="#7B68EE" opacity="0.5"/>
+    <polygon points="-45,0 -15,-8 -15,8" fill="#7B68EE" opacity="0.5"/>
+    <polygon points="45,0 15,-8 15,8" fill="#7B68EE" opacity="0.5"/>
+
+    <!-- Secondary points -->
+    <polygon points="-32,-32 -10,-18 -18,-10" fill="url(#ray-grad)" opacity="0.6"/>
+    <polygon points="32,-32 10,-18 18,-10" fill="url(#ray-grad)" opacity="0.6"/>
+    <polygon points="-32,32 -10,18 -18,10" fill="#7B68EE" opacity="0.4"/>
+    <polygon points="32,32 10,18 18,10" fill="#7B68EE" opacity="0.4"/>
+  </g>
+
+  <!-- Center circles -->
+  <circle cx="80" cy="80" r="15" fill="#7B68EE" opacity="0.6"/>
+  <circle cx="80" cy="80" r="8" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="80" cy="80" r="3" fill="#7B68EE"/>
+</svg>

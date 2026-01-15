@@ -1,6 +1,4 @@
-import type { RNLlamaOAICompatibleMessage } from 'llama.rn';
-
-import { generateChat, isModelReady, getModelStatus, type GenerateOptions } from '../llm/inference';
+import { generateChat, isModelReady, getModelStatus, type GenerateOptions, type ChatMessage as LLMChatMessage } from '../llm/inference';
 import { detectIntentThemes, searchWisdom, type SearchOptions, type ToneTag, type WisdomChunk, type ThemeTag } from '../retrieval/search';
 import type { TonePreference, UserPreferences, ChatMessage, SessionSummary, DeveloperSettings } from '../storage/store';
 
@@ -301,7 +299,7 @@ export async function generateAssistantResult(
   const contextMessages = prepareContextMessages(previousMessages);
 
   // Build the full message array
-  const messages: RNLlamaOAICompatibleMessage[] = [
+  const messages: LLMChatMessage[] = [
     { role: 'system', content: system },
   ];
 
@@ -415,7 +413,7 @@ export async function regenerateAssistantResult(
   const contextMessages = prepareContextMessages(previousMessages);
 
   // Build the full message array
-  const messages: RNLlamaOAICompatibleMessage[] = [
+  const messages: LLMChatMessage[] = [
     { role: 'system', content: system },
   ];
 
@@ -547,7 +545,7 @@ export async function generateToneVariants(
   const generateVariant = async (tone: ToneVariantType): Promise<AssistantResult> => {
     const system = buildToneVariantSystemPrompt(tone, passages.slice(0, 5));
 
-    const messages: RNLlamaOAICompatibleMessage[] = [
+    const messages: LLMChatMessage[] = [
       { role: 'system', content: contextSummary ? `${system}\n\n${contextSummary.content}` : system },
     ];
 
@@ -752,7 +750,7 @@ export async function generateSessionSummary(
   if (isModelReady() && chatHistory.length >= 2) {
     try {
       const prompt = buildSummaryPrompt(chatHistory, preferences);
-      const messages: RNLlamaOAICompatibleMessage[] = [
+      const messages: LLMChatMessage[] = [
         { role: 'user', content: prompt },
       ];
 

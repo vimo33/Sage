@@ -41,6 +41,7 @@ const ACCEPTANCE_PACK: ThemePack = {
   title: 'Path of Acceptance',
   description: 'A 7-day journey into embracing what is, finding peace with the present moment, and releasing resistance.',
   icon: '🌸',
+  image: 'acceptance',
   theme: 'peace' as ThemeTag,
   color: '#E8B4BC',
   dayCount: 7,
@@ -134,6 +135,7 @@ const PURPOSE_PACK: ThemePack = {
   title: 'Finding Purpose',
   description: 'A 7-day exploration of meaning, direction, and dharma — discovering what calls to your deepest self.',
   icon: '🧭',
+  image: 'purpose',
   theme: 'purpose' as ThemeTag,
   color: '#7B68EE',
   dayCount: 7,
@@ -227,6 +229,7 @@ const STILLNESS_PACK: ThemePack = {
   title: 'Journey into Stillness',
   description: 'A 7-day practice of cultivating inner quiet, finding the still point within, and resting in presence.',
   icon: '🪷',
+  image: 'stillness',
   theme: 'meditation' as ThemeTag,
   color: '#5F9EA0',
   dayCount: 7,
@@ -313,12 +316,239 @@ const STILLNESS_PACK: ThemePack = {
 };
 
 /**
- * All available theme packs
+ * Quick Paths - Short 3-day beginner journeys
+ * Perfect for those new to reflection or wanting a quick introduction to a theme.
  */
-export const THEME_PACKS: ThemePack[] = [
+
+/**
+ * Mindfulness Basics - 3-day intro to mindfulness
+ */
+const MINDFULNESS_BASICS_PATH: ThemePack = {
+  id: 'mindfulness_basics',
+  title: 'Mindfulness Basics',
+  description: 'A gentle 3-day introduction to present-moment awareness.',
+  icon: '🧘',
+  image: 'stillness',
+  theme: 'meditation' as ThemeTag,
+  color: '#4CAF50',
+  dayCount: 3,
+  estimatedMinutesPerDay: 5,
+  isQuickPath: true,
+  days: [
+    createDay(
+      1,
+      'Being Present',
+      'Arriving in this moment',
+      'meditation' as ThemeTag,
+      'Right now, where is your attention? Is it here, or wandering elsewhere?',
+      'Mindfulness simply means being present to what is happening right now. The mind naturally wanders — this is not a problem. The practice is in the gentle return.',
+      'Set a timer for just 2 minutes. Focus on your breath. When your mind wanders, gently return. That\'s it — that\'s the whole practice.',
+      'You don\'t have to be perfect at this. You just have to begin.',
+      ['presence', 'breath', 'beginning', 'awareness']
+    ),
+    createDay(
+      2,
+      'Noticing Thoughts',
+      'Watching the mind without judgment',
+      'meditation' as ThemeTag,
+      'What kind of thoughts tend to dominate your mind? Planning? Worrying? Remembering?',
+      'Thoughts are not the enemy. In mindfulness, we learn to observe thoughts like clouds passing through the sky. We notice them, but we don\'t have to chase them.',
+      'Today, simply notice when you\'re lost in thought. Each time you notice, silently say "thinking" and return to the present moment.',
+      'The magic is in the noticing, not in having no thoughts.',
+      ['thoughts', 'awareness', 'observation', 'clarity']
+    ),
+    createDay(
+      3,
+      'Mindful Living',
+      'Bringing awareness into daily life',
+      'meditation' as ThemeTag,
+      'How might your day be different if you brought more presence to ordinary moments?',
+      'Mindfulness is not just for meditation — it\'s a way of being. Washing dishes mindfully. Walking mindfully. Listening mindfully. Every moment is an opportunity.',
+      'Choose one daily activity and do it with full attention today. Notice colors, textures, sounds, sensations. Be fully there.',
+      'The present moment is the only moment. This is where life happens.',
+      ['daily', 'presence', 'practice', 'awareness']
+    ),
+  ],
+};
+
+/**
+ * Stress Relief - 3-day path to calm
+ */
+const STRESS_RELIEF_PATH: ThemePack = {
+  id: 'stress_relief',
+  title: 'Stress Relief',
+  description: 'A 3-day journey to find calm in the midst of daily pressures.',
+  icon: '🌊',
+  image: 'calm',
+  theme: 'peace' as ThemeTag,
+  color: '#2196F3',
+  dayCount: 3,
+  estimatedMinutesPerDay: 5,
+  isQuickPath: true,
+  days: [
+    createDay(
+      1,
+      'Recognizing Stress',
+      'Awareness is the first step',
+      'peace' as ThemeTag,
+      'Where do you feel stress in your body right now? Shoulders? Jaw? Stomach?',
+      'Stress often lives in the body before we recognize it in the mind. By tuning into physical sensations, we catch stress earlier and can address it sooner.',
+      'Scan your body from head to toe. Notice any areas of tension. Take three deep breaths and imagine breathing into those areas.',
+      'What we can feel, we can begin to release.',
+      ['stress', 'body', 'awareness', 'tension']
+    ),
+    createDay(
+      2,
+      'The Breath of Calm',
+      'Your built-in stress reliever',
+      'peace' as ThemeTag,
+      'How does your breathing change when you\'re stressed? Does it become shallow, fast, or held?',
+      'The breath is your direct line to the nervous system. Slow, deep breathing activates your body\'s natural calming response. This is ancient wisdom confirmed by modern science.',
+      'Practice 4-7-8 breathing: Inhale for 4 counts, hold for 7, exhale for 8. Repeat 4 times. Notice the shift.',
+      'Calm is always one breath away.',
+      ['breath', 'calm', 'nervous system', 'peace']
+    ),
+    createDay(
+      3,
+      'Creating Calm Spaces',
+      'Building peace into your day',
+      'peace' as ThemeTag,
+      'What small moments of peace could you create in your daily routine?',
+      'We cannot eliminate all stress from life, but we can create regular moments of calm. Small pauses throughout the day act like pressure release valves.',
+      'Identify three transition moments in your day (waking, lunch, evening). At each, take three conscious breaths before moving on.',
+      'Peace is not something we find. It\'s something we create.',
+      ['peace', 'routine', 'practice', 'daily']
+    ),
+  ],
+};
+
+/**
+ * Gratitude Practice - 3-day path to appreciation
+ */
+const GRATITUDE_PATH: ThemePack = {
+  id: 'gratitude_practice',
+  title: 'Gratitude Practice',
+  description: 'A 3-day practice to cultivate appreciation and positivity.',
+  icon: '🙏',
+  image: 'acceptance',
+  theme: 'devotion' as ThemeTag,
+  color: '#FF9800',
+  dayCount: 3,
+  estimatedMinutesPerDay: 5,
+  isQuickPath: true,
+  days: [
+    createDay(
+      1,
+      'Simple Thanks',
+      'Noticing what we often overlook',
+      'devotion' as ThemeTag,
+      'What simple things in your life do you usually take for granted?',
+      'Gratitude begins by noticing what is already present. We often overlook the most fundamental gifts — breath, sight, shelter, connection. The practice is in the seeing.',
+      'List 5 things you\'re grateful for that you usually don\'t think about: clean water, a working body, a roof overhead...',
+      'Gratitude turns what we have into enough.',
+      ['gratitude', 'appreciation', 'simple', 'presence']
+    ),
+    createDay(
+      2,
+      'Grateful for People',
+      'Appreciating those in your life',
+      'devotion' as ThemeTag,
+      'Who has positively impacted your life? Have you told them?',
+      'Our lives are shaped by others. Expressing gratitude for people deepens our connections and reminds us we don\'t walk alone.',
+      'Think of one person who has helped you. Send them a message of appreciation today, even if it\'s brief.',
+      'Unexpressed gratitude is like a wrapped gift never given.',
+      ['gratitude', 'people', 'connection', 'appreciation']
+    ),
+    createDay(
+      3,
+      'Gratitude as Practice',
+      'Making thankfulness a habit',
+      'devotion' as ThemeTag,
+      'How would your outlook shift if gratitude became a daily habit?',
+      'Gratitude is like a muscle — it strengthens with use. Regular practice rewires our brain to notice the positive, building resilience and contentment.',
+      'Start a simple evening practice: Before sleep, name three things from the day you\'re grateful for. Make this your new ritual.',
+      'What you appreciate, appreciates.',
+      ['gratitude', 'habit', 'practice', 'joy']
+    ),
+  ],
+};
+
+/**
+ * Inner Peace - 3-day path to tranquility
+ */
+const INNER_PEACE_PATH: ThemePack = {
+  id: 'inner_peace',
+  title: 'Inner Peace',
+  description: 'A 3-day exploration of finding tranquility within.',
+  icon: '☮️',
+  image: 'stillness',
+  theme: 'peace' as ThemeTag,
+  color: '#9C27B0',
+  dayCount: 3,
+  estimatedMinutesPerDay: 5,
+  isQuickPath: true,
+  days: [
+    createDay(
+      1,
+      'What Disturbs Peace',
+      'Understanding our inner turbulence',
+      'peace' as ThemeTag,
+      'What most often disturbs your sense of inner peace?',
+      'We cannot cultivate peace without understanding what disrupts it. Our triggers reveal where our work lies.',
+      'Notice what disturbs your peace today. Don\'t try to fix it — just observe with curiosity.',
+      'Awareness of what disturbs us is the beginning of peace.',
+      ['peace', 'awareness', 'triggers', 'observation']
+    ),
+    createDay(
+      2,
+      'The Peace Within',
+      'Finding stillness beneath the waves',
+      'peace' as ThemeTag,
+      'Beneath all your thoughts and emotions, is there a quiet space that remains untouched?',
+      'Like the depths of the ocean remain calm while storms rage on the surface, there is a place within us that is always at peace. The practice is learning to access it.',
+      'Sit quietly and imagine diving below the surface waves of your thoughts. What do you find in the depths?',
+      'Peace is not something we create. It is something we uncover.',
+      ['peace', 'stillness', 'depth', 'presence']
+    ),
+    createDay(
+      3,
+      'Protecting Your Peace',
+      'Boundaries for tranquility',
+      'peace' as ThemeTag,
+      'What boundaries might you need to set to protect your inner peace?',
+      'Inner peace requires guardianship. This means choosing what we allow into our minds and how we spend our energy. Peace is a practice of wise choices.',
+      'Identify one thing that consistently drains your peace. What boundary could you set? Take one small step to protect your tranquility.',
+      'You are the guardian of your own peace. Guard it well.',
+      ['peace', 'boundaries', 'protection', 'choice']
+    ),
+  ],
+};
+
+/**
+ * All Quick Paths (short, beginner-friendly paths)
+ */
+export const QUICK_PATHS: ThemePack[] = [
+  MINDFULNESS_BASICS_PATH,
+  STRESS_RELIEF_PATH,
+  GRATITUDE_PATH,
+  INNER_PEACE_PATH,
+];
+
+/**
+ * All 7-Day Journeys (longer, deeper explorations)
+ */
+export const JOURNEYS: ThemePack[] = [
   ACCEPTANCE_PACK,
   PURPOSE_PACK,
   STILLNESS_PACK,
+];
+
+/**
+ * All available theme packs (both paths and journeys)
+ */
+export const THEME_PACKS: ThemePack[] = [
+  ...QUICK_PATHS,
+  ...JOURNEYS,
 ];
 
 /**
@@ -333,6 +563,20 @@ export function getThemePackById(id: string): ThemePack | undefined {
  */
 export function getAllThemePacks(): ThemePack[] {
   return THEME_PACKS;
+}
+
+/**
+ * Get only quick paths (short, beginner paths)
+ */
+export function getQuickPaths(): ThemePack[] {
+  return QUICK_PATHS;
+}
+
+/**
+ * Get only journeys (longer, multi-day programs)
+ */
+export function getJourneys(): ThemePack[] {
+  return JOURNEYS;
 }
 
 /**

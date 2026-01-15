@@ -1,0 +1,55 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Offline Mode: Cloud with slash icon -->
+  <defs>
+    <radialGradient id="offline-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a3a3a3"/>
+      <stop offset="100%" stop-color="#737373"/>
+    </linearGradient>
+    <!-- Clip path for the slash effect -->
+    <clipPath id="cloud-clip">
+      <path d="M45 95 C25 95 25 70 45 65 C45 45 75 40 90 55 C100 45 130 50 130 70 C145 70 145 95 130 95 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background glow -->
+  <ellipse cx="80" cy="80" rx="65" ry="50" fill="url(#offline-glow)"/>
+
+  <!-- Cloud shape -->
+  <path d="M45 95 C25 95 25 70 45 65 C45 45 75 40 90 55 C100 45 130 50 130 70 C145 70 145 95 130 95 Z"
+        fill="url(#cloud-gradient)" opacity="0.6"/>
+
+  <!-- Cloud outline -->
+  <path d="M45 95 C25 95 25 70 45 65 C45 45 75 40 90 55 C100 45 130 50 130 70 C145 70 145 95 130 95 Z"
+        fill="none" stroke="#737373" stroke-width="2" opacity="0.8"/>
+
+  <!-- Inner cloud highlight -->
+  <path d="M50 90 C35 90 35 72 50 68 C50 52 75 48 87 60 C95 52 118 56 118 72 C130 72 130 90 118 90 Z"
+        fill="none" stroke="#d4d4d4" stroke-width="1" opacity="0.4"/>
+
+  <!-- Slash line (diagonal) - going through the cloud -->
+  <line x1="35" y1="115" x2="125" y2="45" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- Slash line outline for depth -->
+  <line x1="35" y1="115" x2="125" y2="45" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.2"/>
+
+  <!-- Small disconnection indicators -->
+  <g transform="translate(80, 110)">
+    <!-- Small waves indicating no signal -->
+    <path d="M-15 5 Q-10 0 -5 5" stroke="#f59e0b" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <path d="M5 5 Q10 0 15 5" stroke="#f59e0b" stroke-width="1.5" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- X marks on cloud edges -->
+  <g transform="translate(55, 55)">
+    <line x1="-3" y1="-3" x2="3" y2="3" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
+    <line x1="3" y1="-3" x2="-3" y2="3" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
+  </g>
+  <g transform="translate(120, 60)">
+    <line x1="-3" y1="-3" x2="3" y2="3" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
+    <line x1="3" y1="-3" x2="-3" y2="3" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
+  </g>
+</svg>

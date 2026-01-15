@@ -1,27 +1,42 @@
 import { Tabs } from 'expo-router';
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
-import { getThemedColors, COLORS } from '../../lib/ui/theme';
+import { View, StyleSheet, useColorScheme } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { getThemedColors, COLORS, RADII, withAlpha } from '../../lib/ui/theme';
+
+type TabName = 'index' | 'explore' | 'journal' | 'insights' | 'settings';
 
 type TabIconProps = {
-  name: 'index' | 'journal' | 'contrasts' | 'insights' | 'settings';
+  name: TabName;
   focused: boolean;
+  color: string;
 };
 
-const TAB_ICONS: Record<TabIconProps['name'], string> = {
-  index: '💬',
-  journal: '📔',
-  contrasts: '🔄',
-  insights: '✨',
-  settings: '⚙️',
+// Icon mapping: [outlined, filled] variants for each tab
+const TAB_ICONS: Record<TabName, { outlined: keyof typeof Ionicons.glyphMap; filled: keyof typeof Ionicons.glyphMap }> = {
+  index: { outlined: 'chatbubble-outline', filled: 'chatbubble' },
+  explore: { outlined: 'compass-outline', filled: 'compass' },
+  journal: { outlined: 'book-outline', filled: 'book' },
+  insights: { outlined: 'sparkles-outline', filled: 'sparkles' },
+  settings: { outlined: 'settings-outline', filled: 'settings' },
 };
 
-const TabIcon = ({ name, focused }: TabIconProps) => (
-  <View style={styles.iconContainer}>
-    <Text style={[styles.iconText, focused && styles.iconTextFocused]}>
-      {TAB_ICONS[name]}
-    </Text>
-  </View>
-);
+const ACTIVE_COLOR = '#37ec13';
+const INACTIVE_COLOR = '#737373';
+
+const TabIcon = ({ name, focused, color }: TabIconProps) => {
+  const iconConfig = TAB_ICONS[name];
+  const iconName = focused ? iconConfig.filled : iconConfig.outlined;
+
+  return (
+    <View style={[styles.iconContainer, focused && styles.iconContainerFocused]}>
+      <Ionicons
+        name={iconName}
+        size={24}
+        color={focused ? ACTIVE_COLOR : INACTIVE_COLOR}
+      />
+    </View>
+  );
+};
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -40,44 +55,50 @@ export default function TabLayout() {
           paddingBottom: 8,
           height: 70,
         },
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: colors.textMuted,
+        tabBarActiveTintColor: ACTIVE_COLOR,
+        tabBarInactiveTintColor: INACTIVE_COLOR,
         tabBarLabelStyle: styles.tabBarLabel,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
+          title: 'Home',
+          tabBarIcon: ({ focused, color }) => <TabIcon name="index" focused={focused} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="explore"
+        options={{
           title: 'Explore',
-          tabBarIcon: ({ focused }) => <TabIcon name="index" focused={focused} />,
+          tabBarIcon: ({ focused, color }) => <TabIcon name="explore" focused={focused} color={color} />,
         }}
       />
       <Tabs.Screen
         name="journal"
         options={{
           title: 'Journal',
-          tabBarIcon: ({ focused }) => <TabIcon name="journal" focused={focused} />,
+          tabBarIcon: ({ focused, color }) => <TabIcon name="journal" focused={focused} color={color} />,
         }}
       />
       <Tabs.Screen
         name="contrasts"
         options={{
-          title: 'Contrasts',
-          tabBarIcon: ({ focused }) => <TabIcon name="contrasts" focused={focused} />,
+          href: null, // Hide contrasts tab from tab bar
         }}
       />
       <Tabs.Screen
         name="insights"
         options={{
           title: 'Insights',
-          tabBarIcon: ({ focused }) => <TabIcon name="insights" focused={focused} />,
+          tabBarIcon: ({ focused, color }) => <TabIcon name="insights" focused={focused} color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ focused }) => <TabIcon name="settings" focused={focused} />,
+          tabBarIcon: ({ focused, color }) => <TabIcon name="settings" focused={focused} color={color} />,
         }}
       />
     </Tabs>
@@ -88,17 +109,16 @@ const styles = StyleSheet.create({
   tabBarLabel: {
     fontSize: 11,
     fontWeight: '500',
-    marginTop: 4,
+    marginTop: 2,
   },
   iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: 48,
+    height: 32,
+    borderRadius: RADII.full,
   },
-  iconText: {
-    fontSize: 22,
-    opacity: 0.6,
-  },
-  iconTextFocused: {
-    opacity: 1,
+  iconContainerFocused: {
+    backgroundColor: withAlpha(ACTIVE_COLOR, 0.15),
   },
 });

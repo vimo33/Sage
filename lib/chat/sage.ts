@@ -164,7 +164,7 @@ export async function generateSageReply(userText: string, options: SageReplyOpti
     }))
   );
 
-  const messages = [
+  const messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }> = [
     { role: 'system', content: buildSystemPrompt(tone) },
     { role: 'user', content: retrievedContext },
     { role: 'user', content: `User message: ${text}` },

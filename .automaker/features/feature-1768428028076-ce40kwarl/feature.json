@@ -6,6 +6,9 @@
     "empty-state-illustration-assets"
   ],
   "priority": 2,
-  "status": "backlog",
-  "id": "feature-1768428028076-ce40kwarl"
+  "status": "verified",
+  "id": "feature-1768428028076-ce40kwarl",
+  "branchName": "main",
+  "startedAt": "2026-01-15T00:32:15.875Z",
+  "updatedAt": "2026-01-15T00:41:34.096Z"
 }

@@ -1,5 +1,4 @@
-import type { RNLlamaOAICompatibleMessage } from 'llama.rn';
-import { generateChat, isModelReady } from '../llm/inference';
+import { generateChat, isModelReady, type ChatMessage as LLMChatMessage } from '../llm/inference';
 import { searchByTheme, type WisdomChunk, type ThemeTag } from '../retrieval/search';
 import type { UserPreferences, TonePreference } from '../storage/store';
 import type { GuidedReflection, ReflectionPrompt, GuidedReflectionSession, ReflectionDepth } from './types';
@@ -124,7 +123,7 @@ export async function generateReflectionResponse(
     previousResponses
   );
 
-  const messages: RNLlamaOAICompatibleMessage[] = [
+  const messages: LLMChatMessage[] = [
     { role: 'system', content: systemPrompt },
     { role: 'user', content: `The reflection prompt was: "${currentPrompt.promptText}"\n\nUser's response: "${userResponse}"` },
   ];
@@ -222,7 +221,7 @@ export async function generateSessionSummary(
     .map((r) => `- ${r.userResponse.slice(0, 100)}...`)
     .join('\n');
 
-  const messages: RNLlamaOAICompatibleMessage[] = [
+  const messages: LLMChatMessage[] = [
     {
       role: 'system',
       content: [

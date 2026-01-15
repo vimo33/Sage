@@ -4,6 +4,9 @@
   "title": "Onboarding Tone Selection Screen",
   "dependencies": [],
   "priority": 3,
-  "status": "backlog",
-  "id": "feature-1768428028077-wahkfafx0"
+  "status": "verified",
+  "id": "feature-1768428028077-wahkfafx0",
+  "branchName": "main",
+  "startedAt": "2026-01-15T00:56:04.002Z",
+  "updatedAt": "2026-01-15T01:07:37.436Z"
 }

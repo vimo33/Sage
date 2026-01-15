@@ -1,5 +1,30 @@
-import { initLlama, releaseAllLlama, type LlamaContext, type RNLlamaOAICompatibleMessage, type TokenData } from 'llama.rn';
+/**
+ * LLM Inference Module
+ *
+ * This module provides the main interface for LLM operations.
+ * It uses the provider abstraction layer to support multiple LLM backends.
+ *
+ * This file maintains backward compatibility with existing code while
+ * internally using the new provider abstraction.
+ */
 
+import {
+  initializeDefaultProvider,
+  getDefaultProvider,
+  isDefaultProviderReady,
+  getDefaultProviderStatus,
+  releaseAllProviders,
+  type LLMMessage,
+  type GenerationOptions as ProviderGenerationOptions,
+  type OnTokenCallback,
+  type OnProgressCallback,
+  type ProviderConfig,
+} from './provider';
+
+/**
+ * Model initialization options.
+ * These are translated to ProviderConfig internally.
+ */
 export type ModelInitOptions = {
   modelPath: string;
   isModelAsset?: boolean;
@@ -11,6 +36,10 @@ export type ModelInitOptions = {
   devices?: string[];
 };
 
+/**
+ * Generation options for chat completion.
+ * These are translated to the provider's GenerationOptions internally.
+ */
 export type GenerateOptions = {
   nPredict?: number;
   temperature?: number;
@@ -20,135 +49,27 @@ export type GenerateOptions = {
   stop?: string[];
 };
 
-const DEFAULT_STOP_WORDS = [
-  '</s>',
-  '<|end|>',
-  '<|eot_id|>',
-  '<|end_of_text|>',
-  '<|im_end|>',
-  '<|EOT|>',
-  '<|END_OF_TURN_TOKEN|>',
-  '<|end_of_turn|>',
-  '<|endoftext|>',
-];
+/**
+ * Message type for backward compatibility with existing code.
+ * @deprecated Use LLMMessage from provider/types instead
+ */
+export type ChatMessage = {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+};
 
-let context: LlamaContext | null = null;
-let contextVerified = false; // Track if context has been verified to work
+/**
+ * Token data for streaming callbacks.
+ * This wraps the provider's TokenChunk for backward compatibility.
+ */
+export type TokenData = {
+  token: string;
+};
 
-export async function initModel(
-  options: ModelInitOptions,
-  onProgress?: (progress: number) => void
-): Promise<LlamaContext> {
-  console.log('[Sage] initModel called with path:', options.modelPath);
-  console.log('[Sage] Current context exists:', Boolean(context));
-  console.log('[Sage] Context verified:', contextVerified);
-
-  if (context && contextVerified) {
-    console.log('[Sage] Context already exists and verified, returning existing context');
-    return context;
-  }
-
-  // Reset verified flag if we're reinitializing
-  contextVerified = false;
-
-  if (!options.modelPath) {
-    console.error('[Sage] initModel ERROR: modelPath is required but not provided');
-    throw new Error('modelPath is required');
-  }
-
-  console.log('[Sage] Calling initLlama with options:', JSON.stringify({
-    model: options.modelPath,
-    nCtx: options.nCtx,
-    nGpuLayers: options.nGpuLayers,
-    nThreads: options.nThreads,
-  }));
-
-  // Release any existing context first
-  if (context) {
-    try {
-      console.log('[Sage] Releasing existing context before reinitializing...');
-      await context.release();
-      context = null;
-    } catch (e) {
-      console.warn('[Sage] Failed to release existing context:', e);
-    }
-  }
-
-  context = await initLlama(
-    {
-      model: options.modelPath,
-      is_model_asset: options.isModelAsset,
-      n_ctx: options.nCtx ?? 2048,
-      n_gpu_layers: options.nGpuLayers ?? 1,
-      n_threads: options.nThreads ?? 4,
-      use_mlock: options.useMlock ?? false,
-      ctx_shift: options.ctxShift ?? true,
-      devices: options.devices,
-    },
-    onProgress
-  );
-
-  console.log('[Sage] initLlama completed successfully!');
-  console.log('[Sage] Context is now:', context ? 'SET ✅' : 'NULL ❌');
-
-  // Verify the context actually works by doing a minimal test completion
-  if (context) {
-    try {
-      console.log('[Sage] 🧪 Verifying context with test completion...');
-      // Create mutable arrays to avoid "Cannot assign to read-only property 'length'" error
-      const testMessages = [{ role: 'user' as const, content: 'Say "OK"' }];
-      const testStop = ['</s>', '<|end|>', '<|eot_id|>', '<|im_end|>'];
-      const testResult = await context.completion(
-        {
-          messages: testMessages,
-          n_predict: 5, // Minimal prediction
-          temperature: 0.1,
-          stop: testStop,
-        }
-      );
-
-      console.log('[Sage] 🧪 Test completion result:', JSON.stringify({
-        hasText: Boolean(testResult?.text),
-        hasContent: Boolean(testResult?.content),
-        tokensPredicted: testResult?.tokens_predicted,
-        textPreview: (testResult?.text || testResult?.content || '').substring(0, 50),
-      }));
-
-      // Check if we got any output
-      if (testResult && (testResult.tokens_predicted > 0 || testResult.text || testResult.content)) {
-        contextVerified = true;
-        console.log('[Sage] ✅ Context VERIFIED - LLM is working!');
-      } else {
-        console.error('[Sage] ❌ Context verification FAILED - no output generated');
-        contextVerified = false;
-      }
-    } catch (verifyError) {
-      console.error('[Sage] ❌ Context verification FAILED with error:', verifyError);
-      console.error('[Sage] Error details:', verifyError instanceof Error ? verifyError.message : String(verifyError));
-      contextVerified = false;
-      // Don't throw - let the app continue with fallback responses
-    }
-  }
-
-  console.log('[Sage] isModelReady() now returns:', isModelReady());
-
-  return context;
-}
-
-export async function releaseModel(): Promise<void> {
-  if (context) {
-    await context.release();
-    context = null;
-  }
-  contextVerified = false;
-  await releaseAllLlama();
-}
-
-export async function generateChat(
-  messages: RNLlamaOAICompatibleMessage[],
-  options: GenerateOptions = {},
-  onToken?: (data: TokenData) => void
-): Promise<{
+/**
+ * Result type for chat completion.
+ */
+export type ChatCompletionResult = {
   text: string;
   content: string;
   reasoningContent: string;
@@ -156,8 +77,97 @@ export async function generateChat(
   tokensPredicted: number;
   tokensEvaluated: number;
   timings: unknown;
-}> {
-  if (!context) {
+};
+
+/**
+ * Convert ModelInitOptions to ProviderConfig.
+ */
+function toProviderConfig(options: ModelInitOptions): ProviderConfig {
+  return {
+    modelPath: options.modelPath,
+    isModelAsset: options.isModelAsset,
+    contextSize: options.nCtx,
+    gpuLayers: options.nGpuLayers,
+    threads: options.nThreads,
+    useMlock: options.useMlock,
+    contextShift: options.ctxShift,
+    devices: options.devices,
+  };
+}
+
+/**
+ * Convert GenerateOptions to provider GenerationOptions.
+ */
+function toProviderGenerationOptions(options: GenerateOptions): ProviderGenerationOptions {
+  return {
+    maxTokens: options.nPredict,
+    temperature: options.temperature,
+    topK: options.topK,
+    topP: options.topP,
+    repeatPenalty: options.repeatPenalty,
+    stopSequences: options.stop,
+  };
+}
+
+/**
+ * Initialize the LLM model.
+ *
+ * This function initializes the default provider with the given configuration.
+ * It maintains backward compatibility by returning a context-like object.
+ *
+ * @param options Model initialization options
+ * @param onProgress Optional progress callback (0-1)
+ * @returns A promise that resolves when initialization is complete
+ */
+export async function initModel(
+  options: ModelInitOptions,
+  onProgress?: (progress: number) => void
+): Promise<unknown> {
+  console.log('[Sage] initModel called with path:', options.modelPath);
+  console.log('[Sage] Current provider ready:', isDefaultProviderReady());
+
+  if (isDefaultProviderReady()) {
+    console.log('[Sage] Provider already initialized and ready');
+    return getDefaultProvider();
+  }
+
+  const config = toProviderConfig(options);
+
+  try {
+    const provider = await initializeDefaultProvider(config, onProgress as OnProgressCallback);
+    console.log('[Sage] Provider initialized successfully');
+    console.log('[Sage] isModelReady() now returns:', isModelReady());
+    return provider;
+  } catch (error) {
+    console.error('[Sage] initModel ERROR:', error);
+    throw error;
+  }
+}
+
+/**
+ * Release the LLM model and free resources.
+ */
+export async function releaseModel(): Promise<void> {
+  await releaseAllProviders();
+  console.log('[Sage] Model released');
+}
+
+/**
+ * Generate a chat completion.
+ *
+ * @param messages Array of chat messages
+ * @param options Generation options
+ * @param onToken Optional callback for streaming tokens
+ * @returns The completion result
+ */
+export async function generateChat(
+  messages: ChatMessage[],
+  options: GenerateOptions = {},
+  onToken?: (data: TokenData) => void
+): Promise<ChatCompletionResult> {
+  const provider = getDefaultProvider();
+
+  if (!provider) {
     throw new Error('Model not initialized');
   }
 
@@ -167,79 +177,74 @@ export async function generateChat(
   console.log('[Sage] Options:', JSON.stringify(options));
 
   try {
-    console.log('[Sage] 🚀 Calling context.completion...');
+    // Convert messages to LLMMessage format
+    const llmMessages: LLMMessage[] = messages.map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
 
-    // IMPORTANT: Create deep mutable copies of messages and stop arrays
-    // llama.rn's context.completion() mutates these arrays internally (e.g., push())
-    // and Hermes engine can make spread/mapped arrays read-only, causing
-    // "Cannot assign to read-only property 'length'" errors
-    const mutableMessages = messages.map(m => ({ ...m }));
-    const mutableStop = [...(options.stop ?? DEFAULT_STOP_WORDS)];
+    // Convert options
+    const genOptions = toProviderGenerationOptions(options);
 
-    const result = await context.completion(
-      {
-        messages: mutableMessages,
-        n_predict: options.nPredict ?? 512,
-        temperature: options.temperature ?? 0.8,
-        top_k: options.topK ?? 40,
-        top_p: options.topP ?? 0.9,
-        penalty_repeat: options.repeatPenalty ?? 1.2,
-        stop: mutableStop,
-      },
-      onToken
-    );
+    // Wrap onToken callback if provided
+    const tokenCallback: OnTokenCallback | undefined = onToken
+      ? (chunk) => {
+          onToken({ token: chunk.token });
+        }
+      : undefined;
 
-    console.log('[Sage] ✅ Chat completion finished!');
-    console.log('[Sage] Result keys:', result ? Object.keys(result) : 'null');
-    console.log('[Sage] Tokens predicted:', result?.tokens_predicted);
-    console.log('[Sage] Tokens evaluated:', result?.tokens_evaluated);
-    console.log('[Sage] Raw text length:', result?.text?.length ?? 0);
-    console.log('[Sage] Raw content length:', result?.content?.length ?? 0);
-    console.log('[Sage] Text preview:', (result?.text ?? '').substring(0, 200));
-    console.log('[Sage] Content preview:', (result?.content ?? '').substring(0, 200));
+    console.log('[Sage] Calling provider.generateCompletion...');
+    const result = await provider.generateCompletion(llmMessages, genOptions, tokenCallback);
 
-    // Safely extract properties with fallbacks
-    const text = result?.text ?? '';
-    const content = result?.content ?? result?.text ?? '';
-
-    console.log('[Sage] Final text length:', text.length);
-    console.log('[Sage] Final content length:', content.length);
+    console.log('[Sage] Chat completion finished!');
+    console.log('[Sage] Tokens predicted:', result.tokensGenerated);
+    console.log('[Sage] Text preview:', result.text.substring(0, 200));
 
     return {
-      text,
-      content,
-      reasoningContent: result?.reasoning_content ?? '',
-      toolCalls: result?.tool_calls ?? [],
-      tokensPredicted: result?.tokens_predicted ?? 0,
-      tokensEvaluated: result?.tokens_evaluated ?? 0,
-      timings: result?.timings ?? null,
+      text: result.text,
+      content: result.content,
+      reasoningContent: result.reasoningContent ?? '',
+      toolCalls: result.toolCalls ?? [],
+      tokensPredicted: result.tokensGenerated,
+      tokensEvaluated: result.tokensEvaluated,
+      timings: result.timings ?? null,
     };
   } catch (error) {
-    console.error('[Sage] ❌ Chat completion error:', error);
-    console.error('[Sage] Error type:', error?.constructor?.name);
-    console.error('[Sage] Error message:', error instanceof Error ? error.message : String(error));
+    console.error('[Sage] Chat completion error:', error);
     throw error;
   }
 }
 
+/**
+ * Stop any ongoing generation.
+ */
 export async function stopGeneration(): Promise<void> {
-  if (!context) return;
-  await context.stopCompletion();
+  const provider = getDefaultProvider();
+  if (provider) {
+    await provider.stopGeneration();
+  }
 }
 
+/**
+ * Check if the model is ready for generation.
+ */
 export function isModelReady(): boolean {
-  const ready = Boolean(context) && contextVerified;
-  console.log('[Sage] isModelReady() called, context:', context ? 'EXISTS' : 'NULL', ', verified:', contextVerified, ', returning:', ready);
+  const ready = isDefaultProviderReady();
+  console.log('[Sage] isModelReady() called, returning:', ready);
   return ready;
 }
 
 /**
- * Returns detailed model status for debugging
+ * Get detailed model status for debugging.
  */
 export function getModelStatus(): { contextExists: boolean; verified: boolean; ready: boolean } {
+  const status = getDefaultProviderStatus();
   return {
-    contextExists: Boolean(context),
-    verified: contextVerified,
-    ready: Boolean(context) && contextVerified,
+    contextExists: status.isConnected,
+    verified: status.isVerified,
+    ready: status.isReady,
   };
 }
+
+// Re-export provider types for consumers who want to use them directly
+export { LLMMessage, ProviderConfig } from './provider';

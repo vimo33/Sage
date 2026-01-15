@@ -2,6 +2,9 @@
   "category": "ui",
   "description": "Full-text search across all past conversations, journal entries, and saved insights. Include filters by date range, tradition/source, and tags with highlighted search terms in results.\n\n**Rationale:** As users accumulate conversations and journal entries over time, they need to quickly find past insights, specific topics, or previous reflections without manually browsing.",
   "title": "Search Conversations and Journals",
-  "status": "backlog",
-  "id": "feature-1768429144834-2jj1a8obg"
+  "status": "verified",
+  "id": "feature-1768429144834-2jj1a8obg",
+  "branchName": "main",
+  "startedAt": "2026-01-15T01:17:16.175Z",
+  "updatedAt": "2026-01-15T01:32:25.585Z"
 }

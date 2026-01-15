@@ -25,14 +25,21 @@ export async function speakAssistantReply(
     .replace(/\n\n/g, '. ')
     .trim();
 
-  Speech.speak(cleanText, {
+  const speechOptions: Speech.SpeechOptions = {
     rate: preferences.voiceSpeed,
     pitch: 1.0,
     onStart: () => callbacks?.onStart?.(),
     onDone: () => callbacks?.onDone?.(),
     onStopped: () => callbacks?.onStopped?.(),
     onError: (error) => callbacks?.onError?.(error),
-  });
+  };
+
+  // Use selected voice if available
+  if (preferences.selectedVoiceId) {
+    speechOptions.voice = preferences.selectedVoiceId;
+  }
+
+  Speech.speak(cleanText, speechOptions);
 }
 
 export function stopSpeaking() {

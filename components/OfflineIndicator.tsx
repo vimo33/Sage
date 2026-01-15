@@ -1,10 +1,11 @@
 /**
  * OfflineIndicator Component
  *
- * Persistent visual indicator showing network status and on-device processing.
+ * Persistent visual indicator showing network status, sync status, and on-device processing.
  * Reinforces the privacy promise with real-time status:
  * - When offline: Shows "Fully Private - On-Device Only" (green/positive)
  * - When online: Shows "Network Available - Processing Stays Local" (info)
+ * - Shows sync status when there are pending changes
  *
  * The app is fully offline-capable, so this indicator is informational
  * and emphasizes the privacy-first architecture.
@@ -16,6 +17,8 @@ import {
   Text,
   StyleSheet,
   useColorScheme,
+  Platform,
+  TouchableOpacity,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -28,7 +31,6 @@ import Animated, {
 import {
   COLORS,
   SPACING,
-  RADII,
   TYPOGRAPHY,
   ANIMATION,
   getThemedColors,
@@ -36,17 +38,115 @@ import {
   withAlpha,
 } from '../lib/ui/theme';
 import { useNetworkState } from '../lib/connectivity/useNetworkState';
+import { useSyncState } from '../lib/offline-sync/useSyncState';
 
 interface OfflineIndicatorProps {
   /** Whether to show the indicator even when online */
   alwaysShow?: boolean;
+  /** Callback when sync button is pressed */
+  onSyncPress?: () => void;
 }
 
-export function OfflineIndicator({ alwaysShow = true }: OfflineIndicatorProps) {
+// Static version for web (no animations to avoid worklet issues)
+function OfflineIndicatorWeb({ alwaysShow = true, onSyncPress }: OfflineIndicatorProps) {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
   const colors = getThemedColors(isDark);
   const { isConnected, isLoading } = useNetworkState();
+  const { pendingCount, isSyncing, hasPendingChanges, lastSyncFormatted, sync } = useSyncState();
+
+  // Don't render anything while loading
+  if (isLoading) {
+    return null;
+  }
+
+  // If not always showing and online, hide
+  if (!alwaysShow && isConnected) {
+    return null;
+  }
+
+  // Determine display content based on connection and sync status
+  const isOffline = !isConnected;
+
+  // Determine status color and text based on state
+  let statusColor: string;
+  let statusText: string;
+  let statusIcon: string;
+  let syncStatusText: string | null = null;
+
+  if (isOffline) {
+    statusColor = COLORS.success;
+    statusText = 'Fully Private - On-Device Only';
+    statusIcon = '🔒';
+    if (hasPendingChanges) {
+      syncStatusText = `${pendingCount} change${pendingCount > 1 ? 's' : ''} waiting to sync`;
+    }
+  } else if (isSyncing) {
+    statusColor = COLORS.info;
+    statusText = 'Syncing...';
+    statusIcon = '🔄';
+  } else if (hasPendingChanges) {
+    statusColor = COLORS.warning;
+    statusText = 'Changes pending sync';
+    statusIcon = '📤';
+    syncStatusText = `${pendingCount} item${pendingCount > 1 ? 's' : ''} to sync`;
+  } else {
+    statusColor = COLORS.info;
+    statusText = 'Network Available - Processing Stays Local';
+    statusIcon = '🛡️';
+    if (lastSyncFormatted) {
+      syncStatusText = `Last synced: ${lastSyncFormatted}`;
+    }
+  }
+
+  const styles = createStyles(colors, isDark, statusColor);
+
+  const handleSyncPress = async () => {
+    if (onSyncPress) {
+      onSyncPress();
+    } else if (isConnected && !isSyncing) {
+      await sync();
+    }
+  };
+
+  return (
+    <View
+      testID="offline-indicator"
+      accessibilityRole="none"
+      accessibilityLabel={statusText}
+    >
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.content}
+          onPress={handleSyncPress}
+          disabled={!isConnected || isSyncing}
+          activeOpacity={0.7}
+        >
+          <View style={styles.statusSection}>
+            <View style={[styles.statusDot, { backgroundColor: statusColor }]} />
+            <Text style={styles.icon}>{statusIcon}</Text>
+            <Text style={styles.statusText} testID="offline-indicator-text">
+              {statusText}
+            </Text>
+          </View>
+          {syncStatusText && (
+            <Text style={styles.syncStatusText}>
+              {syncStatusText}
+            </Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+// Animated version for native platforms
+function OfflineIndicatorNative({ alwaysShow = true, onSyncPress }: OfflineIndicatorProps) {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+  const colors = getThemedColors(isDark);
+  const { isConnected, isLoading } = useNetworkState();
+  const { pendingCount, isSyncing, hasPendingChanges, lastSyncFormatted, sync } = useSyncState();
 
   // Animation for the status dot pulse
   const pulseScale = useSharedValue(1);
@@ -89,15 +189,49 @@ export function OfflineIndicator({ alwaysShow = true }: OfflineIndicatorProps) {
     return null;
   }
 
-  // Determine display content based on connection status
+  // Determine display content based on connection and sync status
   const isOffline = !isConnected;
-  const statusColor = isOffline ? COLORS.success : COLORS.info;
-  const statusText = isOffline
-    ? 'Fully Private - On-Device Only'
-    : 'Network Available - Processing Stays Local';
-  const statusIcon = isOffline ? '🔒' : '🛡️';
+
+  // Determine status color and text based on state
+  let statusColor: string;
+  let statusText: string;
+  let statusIcon: string;
+  let syncStatusText: string | null = null;
+
+  if (isOffline) {
+    statusColor = COLORS.success;
+    statusText = 'Fully Private - On-Device Only';
+    statusIcon = '🔒';
+    if (hasPendingChanges) {
+      syncStatusText = `${pendingCount} change${pendingCount > 1 ? 's' : ''} waiting to sync`;
+    }
+  } else if (isSyncing) {
+    statusColor = COLORS.info;
+    statusText = 'Syncing...';
+    statusIcon = '🔄';
+  } else if (hasPendingChanges) {
+    statusColor = COLORS.warning;
+    statusText = 'Changes pending sync';
+    statusIcon = '📤';
+    syncStatusText = `${pendingCount} item${pendingCount > 1 ? 's' : ''} to sync`;
+  } else {
+    statusColor = COLORS.info;
+    statusText = 'Network Available - Processing Stays Local';
+    statusIcon = '🛡️';
+    if (lastSyncFormatted) {
+      syncStatusText = `Last synced: ${lastSyncFormatted}`;
+    }
+  }
 
   const styles = createStyles(colors, isDark, statusColor);
+
+  const handleSyncPress = async () => {
+    if (onSyncPress) {
+      onSyncPress();
+    } else if (isConnected && !isSyncing) {
+      await sync();
+    }
+  };
 
   return (
     <View
@@ -106,7 +240,12 @@ export function OfflineIndicator({ alwaysShow = true }: OfflineIndicatorProps) {
       accessibilityLabel={statusText}
     >
       <Animated.View style={[styles.container, containerAnimatedStyle]}>
-        <View style={styles.content}>
+        <TouchableOpacity
+          style={styles.content}
+          onPress={handleSyncPress}
+          disabled={!isConnected || isSyncing}
+          activeOpacity={0.7}
+        >
           <View style={styles.statusSection}>
             <Animated.View style={[styles.statusDot, pulseStyle, { backgroundColor: statusColor }]} />
             <Text style={styles.icon}>{statusIcon}</Text>
@@ -114,10 +253,23 @@ export function OfflineIndicator({ alwaysShow = true }: OfflineIndicatorProps) {
               {statusText}
             </Text>
           </View>
-        </View>
+          {syncStatusText && (
+            <Text style={styles.syncStatusText}>
+              {syncStatusText}
+            </Text>
+          )}
+        </TouchableOpacity>
       </Animated.View>
     </View>
   );
+}
+
+// Export the appropriate component based on platform
+export function OfflineIndicator(props: OfflineIndicatorProps) {
+  if (Platform.OS === 'web') {
+    return <OfflineIndicatorWeb {...props} />;
+  }
+  return <OfflineIndicatorNative {...props} />;
 }
 
 const createStyles = (
@@ -133,7 +285,7 @@ const createStyles = (
       borderBottomColor: withAlpha(statusColor, 0.3),
     },
     content: {
-      flexDirection: 'row',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       paddingVertical: SPACING.sm,
@@ -157,5 +309,11 @@ const createStyles = (
       ...TYPOGRAPHY.styles.caption,
       color: colors.text,
       letterSpacing: 0.3,
+    },
+    syncStatusText: {
+      ...TYPOGRAPHY.styles.caption,
+      color: withAlpha(colors.textSecondary, 0.8),
+      fontSize: 10,
+      marginTop: 2,
     },
   });

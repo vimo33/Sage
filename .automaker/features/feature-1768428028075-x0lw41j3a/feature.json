@@ -6,6 +6,9 @@
     "donation-screen"
   ],
   "priority": 2,
-  "status": "backlog",
-  "id": "feature-1768428028075-x0lw41j3a"
+  "status": "verified",
+  "id": "feature-1768428028075-x0lw41j3a",
+  "branchName": "main",
+  "startedAt": "2026-01-15T00:24:34.697Z",
+  "updatedAt": "2026-01-15T00:30:15.372Z"
 }

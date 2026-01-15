@@ -4,6 +4,9 @@
   "title": "Floating Ask Sage Button",
   "dependencies": [],
   "priority": 1,
-  "status": "backlog",
-  "id": "feature-1768428028070-mhzag2vpn"
+  "status": "verified",
+  "id": "feature-1768428028070-mhzag2vpn",
+  "branchName": "main",
+  "startedAt": "2026-01-14T23:28:44.568Z",
+  "updatedAt": "2026-01-14T23:34:22.676Z"
 }

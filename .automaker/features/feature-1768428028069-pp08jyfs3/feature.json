@@ -6,6 +6,9 @@
     "theme-pack-system"
   ],
   "priority": 1,
-  "status": "backlog",
-  "id": "feature-1768428028069-pp08jyfs3"
+  "status": "verified",
+  "id": "feature-1768428028069-pp08jyfs3",
+  "branchName": "main",
+  "startedAt": "2026-01-14T23:26:13.308Z",
+  "updatedAt": "2026-01-14T23:32:27.461Z"
 }

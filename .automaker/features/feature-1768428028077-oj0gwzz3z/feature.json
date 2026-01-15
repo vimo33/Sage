@@ -4,6 +4,9 @@
   "title": "Settings Section Reorganization",
   "dependencies": [],
   "priority": 3,
-  "status": "backlog",
-  "id": "feature-1768428028077-oj0gwzz3z"
+  "status": "verified",
+  "id": "feature-1768428028077-oj0gwzz3z",
+  "branchName": "main",
+  "startedAt": "2026-01-15T00:54:01.964Z",
+  "updatedAt": "2026-01-15T01:05:28.331Z"
 }

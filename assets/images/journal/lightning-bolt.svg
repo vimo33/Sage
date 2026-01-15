@@ -1,0 +1,60 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lightning/Realization Icon: Electric bolt with energy glow -->
+  <defs>
+    <linearGradient id="bolt-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="50%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <radialGradient id="energy-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#FBBF24" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#F59E0B" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bolt-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background energy glow -->
+  <circle cx="80" cy="80" r="60" fill="url(#energy-glow)"/>
+
+  <!-- Outer spark lines -->
+  <g stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity="0.6">
+    <line x1="40" y1="50" x2="30" y2="40"/>
+    <line x1="35" y1="80" x2="22" y2="80"/>
+    <line x1="40" y1="110" x2="30" y2="120"/>
+    <line x1="120" y1="50" x2="130" y2="40"/>
+    <line x1="125" y1="80" x2="138" y2="80"/>
+    <line x1="120" y1="110" x2="130" y2="120"/>
+  </g>
+
+  <!-- Main lightning bolt -->
+  <g filter="url(#bolt-glow)">
+    <path
+      d="M95 20 L60 75 L78 75 L55 140 L105 70 L85 70 L110 20 Z"
+      fill="url(#bolt-gradient)"
+      stroke="#F59E0B"
+      stroke-width="2"
+    />
+  </g>
+
+  <!-- Inner highlight on bolt -->
+  <path
+    d="M92 30 L68 70 L82 70 L65 120 L98 75 L86 75 L102 30 Z"
+    fill="#FEF3C7"
+    opacity="0.4"
+  />
+
+  <!-- Small energy sparks -->
+  <g fill="#FBBF24">
+    <circle cx="45" cy="65" r="3" opacity="0.8"/>
+    <circle cx="115" cy="60" r="2.5" opacity="0.7"/>
+    <circle cx="50" cy="95" r="2" opacity="0.6"/>
+    <circle cx="110" cy="100" r="2.5" opacity="0.7"/>
+  </g>
+</svg>

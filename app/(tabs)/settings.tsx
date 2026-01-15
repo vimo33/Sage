@@ -16,6 +16,7 @@ import {
 import * as Haptics from 'expo-haptics';
 import { useSageStore, type TonePreference, type FontSizePreference } from '../../lib/storage/store';
 import { COLORS, SPACING, RADII, getThemedColors, getScaledTypography, ACCENT_COLORS } from '../../lib/ui/theme';
+import { AppHeader } from '../../components/navigation';
 import { getBiometricTypeName } from '../../lib/auth/biometric';
 import { shareJournalExport, getExportPreview, type ExportFormat } from '../../lib/storage/export';
 import { importJournalFromFile, type ImportResult } from '../../lib/storage/import';
@@ -26,9 +27,12 @@ import { TipJarModal } from '../../components/TipJarModal';
 import { DeveloperSettingsModal } from '../../components/DeveloperSettingsModal';
 import { AccentColorPickerModal } from '../../components/AccentColorPickerModal';
 import { TraditionSelectorModal } from '../../components/TraditionSelectorModal';
+import { VoicePickerModal } from '../../components/VoicePickerModal';
+import { SafetySettingsModal } from '../../components/SafetySettingsModal';
+import { AboutModal } from '../../components/AboutModal';
 import { formatTimeForDisplay, getFrequencyLabel } from '../../lib/notifications';
 import { loadCloudSyncPreferences, formatBackupDate, type CloudSyncPreferences } from '../../lib/cloud-sync';
-import { getSupporterTier, getSupporterTierInfo, formatAmount } from '../../lib/donations';
+import { getSupporterTier, getSupporterTierInfo, formatAmount, getChfTiers, processDonation, createDonationRecord, getThankYouMessage, type DonationTier } from '../../lib/donations';
 import { validateModel, importModelFromUri, type ModelValidationResult } from '../../lib/llm/model-validator';
 import { isModelReady, initModel, getModelStatus } from '../../lib/llm/inference';
 import * as DocumentPicker from 'expo-document-picker';
@@ -59,12 +63,18 @@ export default function SettingsScreen() {
   const [isDeveloperSettingsModalVisible, setIsDeveloperSettingsModalVisible] = useState(false);
   const [isAccentColorModalVisible, setIsAccentColorModalVisible] = useState(false);
   const [isTraditionSelectorModalVisible, setIsTraditionSelectorModalVisible] = useState(false);
+  const [isVoicePickerModalVisible, setIsVoicePickerModalVisible] = useState(false);
+  const [isSafetySettingsModalVisible, setIsSafetySettingsModalVisible] = useState(false);
+  const [isAboutModalVisible, setIsAboutModalVisible] = useState(false);
   const [modelStatus, setModelStatus] = useState<ModelValidationResult | null>(null);
   const [isCheckingModel, setIsCheckingModel] = useState(false);
   const [isImportingModel, setIsImportingModel] = useState(false);
+  const [isProcessingDonation, setIsProcessingDonation] = useState(false);
+  const [selectedDonationTier, setSelectedDonationTier] = useState<string | null>(null);
 
   const initNotifications = useSageStore((s) => s.initNotifications);
   const donationPreferences = useSageStore((s) => s.donationPreferences);
+  const recordDonation = useSageStore((s) => s.recordDonation);
   const notifPrefs = preferences.notificationPreferences;
   const analyticsPrefs = preferences.analyticsPreferences;
 
@@ -272,6 +282,41 @@ export default function SettingsScreen() {
     setImportResult(null);
   }, [importResult, importJournalEntries]);
 
+  // Handle CHF donation from Support Sage card
+  const handleChfDonation = useCallback(async (tier: DonationTier) => {
+    setSelectedDonationTier(tier.id);
+    setIsProcessingDonation(true);
+
+    try {
+      const result = await processDonation(tier);
+
+      if (result.success) {
+        // Record the donation in preferences
+        const record = createDonationRecord(tier, result.transactionId);
+        recordDonation(record);
+
+        // Show thank you message
+        Alert.alert(
+          'Thank You!',
+          getThankYouMessage(tier),
+          [{ text: 'OK' }]
+        );
+      }
+    } catch (error) {
+      console.error('[Settings] Donation error:', error);
+      Alert.alert(
+        'Donation Failed',
+        'Could not process your donation. Please try again later.',
+        [{ text: 'OK' }]
+      );
+    } finally {
+      setIsProcessingDonation(false);
+      setSelectedDonationTier(null);
+    }
+  }, [recordDonation]);
+
+  const chfTiers = getChfTiers();
+
   const scaledTypography = getScaledTypography(preferences.fontSize);
   const styles = createStyles(colors, isDark, scaledTypography);
 
@@ -284,449 +329,630 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <AppHeader
+        variant="main"
+        showProfile={true}
+        showBorder={false}
+        testID="settings-header"
+      />
+      <View style={styles.titleContainer}>
         <Text style={styles.title}>Settings</Text>
         <Text style={styles.subtitle}>Customize your Sage experience</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Response Tone</Text>
-          <View style={styles.toneGrid}>
-            {tones.map((t) => (
-              <TouchableOpacity
-                key={t.id}
-                style={[
-                  styles.toneCard,
-                  preferences.tone === t.id && styles.toneCardActive,
-                ]}
-                onPress={() => setPreferences({ tone: t.id })}
-              >
-                <Text style={styles.toneIcon}>{t.icon}</Text>
-                <Text style={styles.toneLabel}>{t.title}</Text>
-                {preferences.tone === t.id && <View style={styles.activeDot} />}
-              </TouchableOpacity>
-            ))}
+        {/* ============================================ */}
+        {/* PROFILE SECTION */}
+        {/* ============================================ */}
+        <View style={styles.sectionGroup}>
+          <View style={styles.sectionHeaderRow}>
+            <Text style={styles.sectionGroupIcon}>👤</Text>
+            <Text style={styles.sectionGroupTitle}>PROFILE</Text>
           </View>
-        </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Wisdom Traditions</Text>
-          <View style={styles.card}>
-            <TouchableOpacity
-              testID="tradition-preferences-button"
-              style={styles.exportRow}
-              onPress={() => setIsTraditionSelectorModalVisible(true)}
-            >
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Preferred Traditions</Text>
-                <Text style={styles.rowSublabel}>
-                  {preferences.preferredTraditions.length === 0
-                    ? 'All traditions (default)'
-                    : `${preferences.preferredTraditions.length} tradition${preferences.preferredTraditions.length === 1 ? '' : 's'} selected`}
-                </Text>
-              </View>
-              <Text style={styles.exportArrow}>{'>'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Narration</Text>
-          <View style={styles.card}>
-            <View style={styles.row}>
-              <View>
-                <Text style={styles.rowLabel}>Voice Guidance</Text>
-                <Text style={styles.rowSublabel}>Hear Sage during reflections</Text>
-              </View>
-              <Switch
-                value={preferences.narrateResponses}
-                onValueChange={(val) => setPreferences({ narrateResponses: val })}
-                trackColor={{ false: colors.surfaceAlt, true: COLORS.primary }}
-              />
-            </View>
-
-            <View style={styles.divider} />
-
-            <View style={styles.speedSection}>
-              <View style={styles.speedHeader}>
-                <Text style={styles.rowLabel}>Speaking Speed</Text>
-                <Text style={styles.speedValue}>{preferences.voiceSpeed.toFixed(1)}x</Text>
-              </View>
-              <View style={styles.speedControls}>
+          {/* Response Tone */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Response Tone</Text>
+            <View style={styles.toneGrid}>
+              {tones.map((t) => (
                 <TouchableOpacity
-                  style={styles.speedBtn}
-                  onPress={() => setPreferences({ voiceSpeed: Math.max(0.5, preferences.voiceSpeed - 0.1) })}
+                  key={t.id}
+                  style={[
+                    styles.toneCard,
+                    preferences.tone === t.id && styles.toneCardActive,
+                  ]}
+                  onPress={() => setPreferences({ tone: t.id })}
                 >
-                  <Text style={styles.speedBtnText}>-</Text>
+                  <Text style={styles.toneIcon}>{t.icon}</Text>
+                  <Text style={styles.toneLabel}>{t.title}</Text>
+                  {preferences.tone === t.id && <View style={styles.activeDot} />}
                 </TouchableOpacity>
-                <View style={styles.speedTrack}>
+              ))}
+            </View>
+          </View>
+
+          {/* Wisdom Traditions */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Wisdom Traditions</Text>
+            <View style={styles.card}>
+              <TouchableOpacity
+                testID="tradition-preferences-button"
+                style={styles.exportRow}
+                onPress={() => setIsTraditionSelectorModalVisible(true)}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Preferred Traditions</Text>
+                  <Text style={styles.rowSublabel}>
+                    {preferences.preferredTraditions.length === 0
+                      ? 'All traditions (default)'
+                      : `${preferences.preferredTraditions.length} tradition${preferences.preferredTraditions.length === 1 ? '' : 's'} selected`}
+                  </Text>
+                </View>
+                <Text style={styles.exportArrow}>{'>'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Narration Settings */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Narration</Text>
+            <View style={styles.card}>
+              <View style={styles.row}>
+                <View>
+                  <Text style={styles.rowLabel}>Voice Guidance</Text>
+                  <Text style={styles.rowSublabel}>Hear Sage during reflections</Text>
+                </View>
+                <Switch
+                  testID="narration-toggle"
+                  value={preferences.narrateResponses}
+                  onValueChange={(val) => setPreferences({ narrateResponses: val })}
+                  trackColor={{ false: colors.surfaceAlt, true: COLORS.primary }}
+                />
+              </View>
+
+              {preferences.narrateResponses && (
+                <>
+                  <View style={styles.divider} />
+
+                  {/* Voice Picker */}
+                  <TouchableOpacity
+                    testID="voice-picker-button"
+                    style={styles.exportRow}
+                    onPress={() => setIsVoicePickerModalVisible(true)}
+                  >
+                    <View style={styles.rowContent}>
+                      <Text style={styles.rowLabel}>Voice Selection</Text>
+                      <Text style={styles.rowSublabel}>
+                        {preferences.selectedVoiceId ? 'Custom voice selected' : 'System default'}
+                      </Text>
+                    </View>
+                    <Text style={styles.exportArrow}>{'>'}</Text>
+                  </TouchableOpacity>
+
+                  <View style={styles.divider} />
+
+                  {/* Speed Slider */}
+                  <View style={styles.speedSection}>
+                    <View style={styles.speedHeader}>
+                      <Text style={styles.rowLabel}>Speaking Speed</Text>
+                      <Text style={styles.speedValue}>{preferences.voiceSpeed.toFixed(1)}x</Text>
+                    </View>
+                    <View style={styles.speedControls}>
+                      <TouchableOpacity
+                        testID="speed-decrease-btn"
+                        style={styles.speedBtn}
+                        onPress={() => setPreferences({ voiceSpeed: Math.max(0.5, preferences.voiceSpeed - 0.1) })}
+                      >
+                        <Text style={styles.speedBtnText}>-</Text>
+                      </TouchableOpacity>
+                      <View style={styles.speedTrack}>
+                        <View
+                          style={[
+                            styles.speedFill,
+                            { width: `${((preferences.voiceSpeed - 0.5) / 1.5) * 100}%` },
+                          ]}
+                        />
+                      </View>
+                      <TouchableOpacity
+                        testID="speed-increase-btn"
+                        style={styles.speedBtn}
+                        onPress={() => setPreferences({ voiceSpeed: Math.min(2.0, preferences.voiceSpeed + 0.1) })}
+                      >
+                        <Text style={styles.speedBtnText}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </>
+              )}
+            </View>
+          </View>
+
+          {/* Display Settings */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Display</Text>
+            <View style={styles.card}>
+              <View style={styles.fontSizeSection}>
+                <Text style={styles.rowLabel}>Text Size</Text>
+                <Text style={styles.rowSublabel}>Adjust base font size for better readability</Text>
+                <View style={styles.fontSizeOptions}>
+                  {([
+                    { id: 'small', label: 'Small', icon: 'A' },
+                    { id: 'medium', label: 'Medium', icon: 'A' },
+                    { id: 'large', label: 'Large', icon: 'A' },
+                  ] as const).map((option) => (
+                    <TouchableOpacity
+                      key={option.id}
+                      testID={`font-size-${option.id}`}
+                      style={[
+                        styles.fontSizeOption,
+                        preferences.fontSize === option.id && styles.fontSizeOptionActive,
+                      ]}
+                      onPress={() => setPreferences({ fontSize: option.id })}
+                    >
+                      <Text
+                        style={[
+                          styles.fontSizeIcon,
+                          option.id === 'small' && styles.fontSizeIconSmall,
+                          option.id === 'medium' && styles.fontSizeIconMedium,
+                          option.id === 'large' && styles.fontSizeIconLarge,
+                          preferences.fontSize === option.id && styles.fontSizeIconActive,
+                        ]}
+                      >
+                        {option.icon}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.fontSizeLabel,
+                          preferences.fontSize === option.id && styles.fontSizeLabelActive,
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+              <View style={styles.divider} />
+              <View style={styles.row}>
+                <View>
+                  <Text style={styles.rowLabel}>Show Citations</Text>
+                  <Text style={styles.rowSublabel}>Display source references in responses</Text>
+                </View>
+                <Switch
+                  testID="citation-toggle"
+                  value={preferences.showCitations}
+                  onValueChange={(val) => setPreferences({ showCitations: val })}
+                  trackColor={{ false: colors.surfaceAlt, true: COLORS.primary }}
+                />
+              </View>
+            </View>
+          </View>
+
+          {/* Appearance */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Appearance</Text>
+            <View style={styles.card}>
+              <TouchableOpacity
+                testID="accent-color-settings-button"
+                style={styles.exportRow}
+                onPress={() => setIsAccentColorModalVisible(true)}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Accent Color</Text>
+                  <Text style={styles.rowSublabel}>
+                    {ACCENT_COLORS[preferences.accentColor]?.name ?? 'Forest'}
+                  </Text>
+                </View>
+                <View style={styles.accentColorPreview}>
                   <View
                     style={[
-                      styles.speedFill,
-                      { width: `${((preferences.voiceSpeed - 0.5) / 1.5) * 100}%` },
+                      styles.accentColorDot,
+                      {
+                        backgroundColor:
+                          ACCENT_COLORS[preferences.accentColor]?.primary ?? COLORS.primary,
+                      },
+                    ]}
+                  />
+                  <Text style={styles.exportArrow}>{'>'}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        {/* ============================================ */}
+        {/* PRIVACY SECTION */}
+        {/* ============================================ */}
+        <View style={styles.sectionGroup}>
+          <View style={styles.sectionHeaderRow}>
+            <Text style={styles.sectionGroupIcon}>🔒</Text>
+            <Text style={styles.sectionGroupTitle}>PRIVACY</Text>
+          </View>
+
+          {/* Storage Settings */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Data Storage</Text>
+            <View style={styles.card}>
+              <View style={styles.row}>
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Local Storage</Text>
+                  <Text style={styles.rowSublabel}>All data stored on-device only</Text>
+                </View>
+                <Text style={styles.statusBadge}>Active</Text>
+              </View>
+              <View style={styles.divider} />
+              <TouchableOpacity
+                testID="cloud-backup-settings-button"
+                style={styles.exportRow}
+                onPress={() => setIsCloudSyncModalVisible(true)}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>iCloud Backup</Text>
+                  <Text style={styles.rowSublabel}>
+                    {cloudSyncPrefs?.enabled
+                      ? cloudSyncPrefs.lastBackupAt
+                        ? `Last backup: ${formatBackupDate(cloudSyncPrefs.lastBackupAt)}`
+                        : 'Enabled - No backups yet'
+                      : 'End-to-end encrypted backup'}
+                  </Text>
+                </View>
+                <View style={styles.cloudSyncStatus}>
+                  {cloudSyncPrefs?.enabled && (
+                    <Text style={styles.statusBadgeSmall}>ON</Text>
+                  )}
+                  <Text style={styles.exportArrow}>{'>'}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Security */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Security</Text>
+            <View style={styles.card}>
+              <View style={styles.row}>
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Biometric Lock</Text>
+                  <Text style={styles.rowSublabel}>
+                    {biometricSupport?.isSupported && biometricSupport?.isEnrolled
+                      ? `Protect Journal & Insights with ${getBiometricTypeName(biometricSupport.biometricType)}`
+                      : 'Set up Face ID or Touch ID on your device to enable'}
+                  </Text>
+                </View>
+                {isTogglingBiometric ? (
+                  <ActivityIndicator color={COLORS.primary} />
+                ) : (
+                  <Switch
+                    testID="biometric-lock-toggle"
+                    value={preferences.biometricLockEnabled}
+                    onValueChange={handleBiometricToggle}
+                    trackColor={{ false: colors.surfaceAlt, true: COLORS.primary }}
+                    disabled={!biometricSupport?.isSupported || !biometricSupport?.isEnrolled}
+                  />
+                )}
+              </View>
+              {biometricSupport?.isSupported && biometricSupport?.isEnrolled && (
+                <>
+                  <View style={styles.divider} />
+                  <View style={styles.infoRow}>
+                    <Text style={styles.infoText}>
+                      When enabled, you will need to authenticate to view your Journal and Insights
+                    </Text>
+                  </View>
+                </>
+              )}
+            </View>
+          </View>
+
+          {/* Export/Import */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Data Management</Text>
+            <View style={styles.card}>
+              <TouchableOpacity
+                testID="export-journal-button"
+                style={styles.exportRow}
+                onPress={() => setIsExportModalVisible(true)}
+                disabled={journalEntries.length === 0}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={[styles.rowLabel, journalEntries.length === 0 && styles.disabledText]}>
+                    Export Journal
+                  </Text>
+                  <Text style={styles.rowSublabel}>
+                    {journalEntries.length === 0
+                      ? 'No entries to export'
+                      : `${exportPreview.entryCount} ${exportPreview.entryCount === 1 ? 'entry' : 'entries'} (${exportPreview.estimatedSize})`}
+                  </Text>
+                </View>
+                <Text style={[styles.exportArrow, journalEntries.length === 0 && styles.disabledText]}>
+                  {'>'}
+                </Text>
+              </TouchableOpacity>
+              <View style={styles.divider} />
+              <TouchableOpacity
+                testID="import-journal-button"
+                style={styles.exportRow}
+                onPress={handleImport}
+                disabled={isImporting}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Import Journal</Text>
+                  <Text style={styles.rowSublabel}>Restore entries from exported file</Text>
+                </View>
+                {isImporting ? (
+                  <ActivityIndicator color={COLORS.primary} size="small" />
+                ) : (
+                  <Text style={styles.exportArrow}>{'>'}</Text>
+                )}
+              </TouchableOpacity>
+              <View style={styles.divider} />
+              <TouchableOpacity
+                testID="analytics-settings-button"
+                style={styles.exportRow}
+                onPress={() => setIsAnalyticsModalVisible(true)}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Analytics Preferences</Text>
+                  <Text style={styles.rowSublabel}>
+                    {analyticsPrefs.enabled
+                      ? `Enabled - ${[
+                          analyticsPrefs.crashReportingEnabled && 'Crash reports',
+                          analyticsPrefs.usageMetricsEnabled && 'Usage patterns',
+                        ].filter(Boolean).join(', ')}`
+                      : 'Disabled - Opt-in for anonymous usage data'}
+                  </Text>
+                </View>
+                <Text style={styles.exportArrow}>{'>'}</Text>
+              </TouchableOpacity>
+              <View style={styles.divider} />
+              <TouchableOpacity style={styles.dangerRow}>
+                <Text style={styles.dangerText}>Clear Chat History</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        {/* ============================================ */}
+        {/* SAFETY SECTION */}
+        {/* ============================================ */}
+        <View style={styles.sectionGroup}>
+          <View style={styles.sectionHeaderRow}>
+            <Text style={styles.sectionGroupIcon}>🛡️</Text>
+            <Text style={styles.sectionGroupTitle}>SAFETY</Text>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.card}>
+              <TouchableOpacity
+                testID="safety-settings-button"
+                style={styles.exportRow}
+                onPress={() => setIsSafetySettingsModalVisible(true)}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Content Limits & Crisis Resources</Text>
+                  <Text style={styles.rowSublabel}>
+                    {preferences.safetySettings.contentLimitLevel === 'standard'
+                      ? 'Standard content filtering'
+                      : preferences.safetySettings.contentLimitLevel === 'sensitive'
+                      ? 'Sensitive topics allowed'
+                      : 'Restrictive filtering'}
+                    {preferences.safetySettings.showCrisisResources && ' • Crisis resources enabled'}
+                  </Text>
+                </View>
+                <Text style={styles.exportArrow}>{'>'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        {/* ============================================ */}
+        {/* NOTIFICATIONS SECTION */}
+        {/* ============================================ */}
+        <View style={styles.sectionGroup}>
+          <View style={styles.sectionHeaderRow}>
+            <Text style={styles.sectionGroupIcon}>🔔</Text>
+            <Text style={styles.sectionGroupTitle}>NOTIFICATIONS</Text>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.card}>
+              <TouchableOpacity
+                testID="notification-settings-button"
+                style={styles.exportRow}
+                onPress={() => setIsNotificationModalVisible(true)}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>Daily Check-in Reminders</Text>
+                  <Text style={styles.rowSublabel}>
+                    {notifPrefs.enabled
+                      ? `${formatTimeForDisplay(notifPrefs.reminderTime)} - ${getFrequencyLabel(notifPrefs.frequency)}`
+                      : 'Disabled'}
+                  </Text>
+                </View>
+                <View style={styles.notificationStatus}>
+                  {notifPrefs.enabled && (
+                    <Text style={styles.statusBadgeSmall}>ON</Text>
+                  )}
+                  <Text style={styles.exportArrow}>{'>'}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        {/* ============================================ */}
+        {/* AI MODEL SECTION (Advanced) */}
+        {/* ============================================ */}
+        <View style={styles.sectionGroup}>
+          <View style={styles.sectionHeaderRow}>
+            <Text style={styles.sectionGroupIcon}>🤖</Text>
+            <Text style={styles.sectionGroupTitle}>AI MODEL</Text>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.card}>
+              <View style={styles.row}>
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>LLM Status</Text>
+                  <Text style={styles.rowSublabel}>
+                    {(() => {
+                      if (isCheckingModel) return 'Checking model status...';
+                      if (modelStatus?.status !== 'valid') return 'Not imported - AI responses disabled';
+                      const llmStatus = getModelStatus();
+                      if (llmStatus.ready) {
+                        return `Loaded & Verified (${(modelStatus.size / (1024 * 1024)).toFixed(0)}MB)`;
+                      } else if (llmStatus.contextExists) {
+                        return `Context exists but NOT verified - LLM may not work`;
+                      } else {
+                        return `Model available (${(modelStatus.size / (1024 * 1024)).toFixed(0)}MB) - tap to load`;
+                      }
+                    })()}
+                  </Text>
+                </View>
+                <View style={styles.modelStatusIndicator}>
+                  <View
+                    style={[
+                      styles.modelStatusDot,
+                      {
+                        backgroundColor: (() => {
+                          if (modelStatus?.status !== 'valid') return COLORS.danger;
+                          const llmStatus = getModelStatus();
+                          if (llmStatus.ready) return COLORS.success;
+                          if (llmStatus.contextExists) return COLORS.warning;
+                          return COLORS.warning;
+                        })(),
+                      },
                     ]}
                   />
                 </View>
-                <TouchableOpacity
-                  style={styles.speedBtn}
-                  onPress={() => setPreferences({ voiceSpeed: Math.min(2.0, preferences.voiceSpeed + 0.1) })}
-                >
-                  <Text style={styles.speedBtnText}>+</Text>
-                </TouchableOpacity>
               </View>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Display</Text>
-          <View style={styles.card}>
-            <View style={styles.fontSizeSection}>
-              <Text style={styles.rowLabel}>Text Size</Text>
-              <Text style={styles.rowSublabel}>Adjust base font size for better readability</Text>
-              <View style={styles.fontSizeOptions}>
-                {([
-                  { id: 'small', label: 'Small', icon: 'A' },
-                  { id: 'medium', label: 'Medium', icon: 'A' },
-                  { id: 'large', label: 'Large', icon: 'A' },
-                ] as const).map((option) => (
-                  <TouchableOpacity
-                    key={option.id}
-                    testID={`font-size-${option.id}`}
-                    style={[
-                      styles.fontSizeOption,
-                      preferences.fontSize === option.id && styles.fontSizeOptionActive,
-                    ]}
-                    onPress={() => setPreferences({ fontSize: option.id })}
-                  >
-                    <Text
-                      style={[
-                        styles.fontSizeIcon,
-                        option.id === 'small' && styles.fontSizeIconSmall,
-                        option.id === 'medium' && styles.fontSizeIconMedium,
-                        option.id === 'large' && styles.fontSizeIconLarge,
-                        preferences.fontSize === option.id && styles.fontSizeIconActive,
-                      ]}
-                    >
-                      {option.icon}
+              {modelStatus?.status === 'valid' && modelStatus.localUri && (
+                <>
+                  <View style={styles.divider} />
+                  <View style={styles.infoRow}>
+                    <Text style={styles.infoText} numberOfLines={2}>
+                      Path: {modelStatus.localUri.replace('file://', '')}
                     </Text>
-                    <Text
-                      style={[
-                        styles.fontSizeLabel,
-                        preferences.fontSize === option.id && styles.fontSizeLabelActive,
-                      ]}
-                    >
-                      {option.label}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-            <View style={styles.divider} />
-            <View style={styles.row}>
-              <View>
-                <Text style={styles.rowLabel}>Show Citations</Text>
-                <Text style={styles.rowSublabel}>Display source references in responses</Text>
-              </View>
-              <Switch
-                testID="citation-toggle"
-                value={preferences.showCitations}
-                onValueChange={(val) => setPreferences({ showCitations: val })}
-                trackColor={{ false: colors.surfaceAlt, true: COLORS.primary }}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Appearance</Text>
-          <View style={styles.card}>
-            <TouchableOpacity
-              testID="accent-color-settings-button"
-              style={styles.exportRow}
-              onPress={() => setIsAccentColorModalVisible(true)}
-            >
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Accent Color</Text>
-                <Text style={styles.rowSublabel}>
-                  {ACCENT_COLORS[preferences.accentColor]?.name ?? 'Forest'}
-                </Text>
-              </View>
-              <View style={styles.accentColorPreview}>
-                <View
-                  style={[
-                    styles.accentColorDot,
-                    {
-                      backgroundColor:
-                        ACCENT_COLORS[preferences.accentColor]?.primary ?? COLORS.primary,
-                    },
-                  ]}
-                />
-                <Text style={styles.exportArrow}>{'>'}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Reminders</Text>
-          <View style={styles.card}>
-            <TouchableOpacity
-              testID="notification-settings-button"
-              style={styles.exportRow}
-              onPress={() => setIsNotificationModalVisible(true)}
-            >
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Daily Check-in Reminders</Text>
-                <Text style={styles.rowSublabel}>
-                  {notifPrefs.enabled
-                    ? `${formatTimeForDisplay(notifPrefs.reminderTime)} - ${getFrequencyLabel(notifPrefs.frequency)}`
-                    : 'Disabled'}
-                </Text>
-              </View>
-              <Text style={styles.exportArrow}>{'>'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Security</Text>
-          <View style={styles.card}>
-            <View style={styles.row}>
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Biometric Lock</Text>
-                <Text style={styles.rowSublabel}>
-                  {biometricSupport?.isSupported && biometricSupport?.isEnrolled
-                    ? `Protect Journal & Insights with ${getBiometricTypeName(biometricSupport.biometricType)}`
-                    : 'Set up Face ID or Touch ID on your device to enable'}
-                </Text>
-              </View>
-              {isTogglingBiometric ? (
-                <ActivityIndicator color={COLORS.primary} />
-              ) : (
-                <Switch
-                  testID="biometric-lock-toggle"
-                  value={preferences.biometricLockEnabled}
-                  onValueChange={handleBiometricToggle}
-                  trackColor={{ false: colors.surfaceAlt, true: COLORS.primary }}
-                  disabled={!biometricSupport?.isSupported || !biometricSupport?.isEnrolled}
-                />
+                  </View>
+                </>
               )}
-            </View>
-            {biometricSupport?.isSupported && biometricSupport?.isEnrolled && (
-              <>
-                <View style={styles.divider} />
-                <View style={styles.infoRow}>
-                  <Text style={styles.infoText}>
-                    When enabled, you will need to authenticate to view your Journal and Insights
+              <View style={styles.divider} />
+              <TouchableOpacity
+                testID="import-model-button"
+                style={styles.exportRow}
+                onPress={handleImportModel}
+                disabled={isImportingModel}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>
+                    {modelStatus?.status === 'valid' ? 'Replace Model' : 'Import Model'}
+                  </Text>
+                  <Text style={styles.rowSublabel}>
+                    {modelStatus?.status === 'valid'
+                      ? 'Import a different GGUF model file'
+                      : 'Import a GGUF model file from device storage'}
                   </Text>
                 </View>
-              </>
-            )}
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>AI Model</Text>
-          <View style={styles.card}>
-            <View style={styles.row}>
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>LLM Status</Text>
-                <Text style={styles.rowSublabel}>
-                  {(() => {
-                    if (isCheckingModel) return 'Checking model status...';
-                    if (modelStatus?.status !== 'valid') return 'Not imported - AI responses disabled';
-                    const llmStatus = getModelStatus();
-                    if (llmStatus.ready) {
-                      return `✅ Loaded & Verified (${(modelStatus.size / (1024 * 1024)).toFixed(0)}MB)`;
-                    } else if (llmStatus.contextExists) {
-                      return `⚠️ Context exists but NOT verified - LLM may not work`;
-                    } else {
-                      return `Model available (${(modelStatus.size / (1024 * 1024)).toFixed(0)}MB) - tap to load`;
-                    }
-                  })()}
-                </Text>
-              </View>
-              <View style={styles.modelStatusIndicator}>
-                <View
-                  style={[
-                    styles.modelStatusDot,
-                    {
-                      backgroundColor: (() => {
-                        if (modelStatus?.status !== 'valid') return COLORS.danger;
-                        const llmStatus = getModelStatus();
-                        if (llmStatus.ready) return COLORS.success;
-                        if (llmStatus.contextExists) return COLORS.warning;
-                        return COLORS.warning;
-                      })(),
-                    },
-                  ]}
-                />
-              </View>
-            </View>
-            {modelStatus?.status === 'valid' && modelStatus.localUri && (
-              <>
-                <View style={styles.divider} />
-                <View style={styles.infoRow}>
-                  <Text style={styles.infoText} numberOfLines={2}>
-                    Path: {modelStatus.localUri.replace('file://', '')}
-                  </Text>
-                </View>
-              </>
-            )}
-            <View style={styles.divider} />
-            <TouchableOpacity
-              testID="import-model-button"
-              style={styles.exportRow}
-              onPress={handleImportModel}
-              disabled={isImportingModel}
-            >
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>
-                  {modelStatus?.status === 'valid' ? 'Replace Model' : 'Import Model'}
-                </Text>
-                <Text style={styles.rowSublabel}>
-                  {modelStatus?.status === 'valid'
-                    ? 'Import a different GGUF model file'
-                    : 'Import a GGUF model file from device storage'}
-                </Text>
-              </View>
-              {isImportingModel ? (
-                <ActivityIndicator color={COLORS.primary} size="small" />
-              ) : (
-                <Text style={styles.exportArrow}>{'>'}</Text>
-              )}
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Analytics</Text>
-          <View style={styles.card}>
-            <TouchableOpacity
-              testID="analytics-settings-button"
-              style={styles.exportRow}
-              onPress={() => setIsAnalyticsModalVisible(true)}
-            >
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Anonymous Analytics</Text>
-                <Text style={styles.rowSublabel}>
-                  {analyticsPrefs.enabled
-                    ? `Enabled - ${[
-                        analyticsPrefs.crashReportingEnabled && 'Crash reports',
-                        analyticsPrefs.usageMetricsEnabled && 'Usage patterns',
-                      ].filter(Boolean).join(', ')}`
-                    : 'Disabled - Opt-in for crash reports & usage'}
-                </Text>
-              </View>
-              <Text style={styles.exportArrow}>{'>'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Privacy & Data</Text>
-          <View style={styles.card}>
-            <TouchableOpacity
-              testID="cloud-backup-settings-button"
-              style={styles.exportRow}
-              onPress={() => setIsCloudSyncModalVisible(true)}
-            >
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Cloud Backup</Text>
-                <Text style={styles.rowSublabel}>
-                  {cloudSyncPrefs?.enabled
-                    ? cloudSyncPrefs.lastBackupAt
-                      ? `Last backup: ${formatBackupDate(cloudSyncPrefs.lastBackupAt)}`
-                      : 'Enabled - No backups yet'
-                    : 'End-to-end encrypted backup'}
-                </Text>
-              </View>
-              <View style={styles.cloudSyncStatus}>
-                {cloudSyncPrefs?.enabled && (
-                  <Text style={styles.statusBadgeSmall}>ON</Text>
+                {isImportingModel ? (
+                  <ActivityIndicator color={COLORS.primary} size="small" />
+                ) : (
+                  <Text style={styles.exportArrow}>{'>'}</Text>
                 )}
-                <Text style={styles.exportArrow}>{'>'}</Text>
-              </View>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            <View style={styles.row}>
-              <Text style={styles.rowLabel}>Local Storage Only</Text>
-              <Text style={styles.statusBadge}>Active</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.divider} />
-            <TouchableOpacity
-              testID="export-journal-button"
-              style={styles.exportRow}
-              onPress={() => setIsExportModalVisible(true)}
-              disabled={journalEntries.length === 0}
-            >
-              <View style={styles.rowContent}>
-                <Text style={[styles.rowLabel, journalEntries.length === 0 && styles.disabledText]}>
-                  Export Journal
-                </Text>
-                <Text style={styles.rowSublabel}>
-                  {journalEntries.length === 0
-                    ? 'No entries to export'
-                    : `${exportPreview.entryCount} ${exportPreview.entryCount === 1 ? 'entry' : 'entries'} (${exportPreview.estimatedSize})`}
-                </Text>
-              </View>
-              <Text style={[styles.exportArrow, journalEntries.length === 0 && styles.disabledText]}>
-                {'>'}
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            <TouchableOpacity
-              testID="import-journal-button"
-              style={styles.exportRow}
-              onPress={handleImport}
-              disabled={isImporting}
-            >
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>
-                  Import Journal
-                </Text>
-                <Text style={styles.rowSublabel}>
-                  Restore entries from exported file
-                </Text>
-              </View>
-              {isImporting ? (
-                <ActivityIndicator color={COLORS.primary} size="small" />
-              ) : (
-                <Text style={styles.exportArrow}>{'>'}</Text>
-              )}
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            <TouchableOpacity style={styles.dangerRow}>
-              <Text style={styles.dangerText}>Clear Chat History</Text>
-            </TouchableOpacity>
           </View>
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Support</Text>
-          <View style={styles.card}>
-            <TouchableOpacity
-              testID="tip-jar-button"
-              style={styles.exportRow}
-              onPress={() => setIsTipJarModalVisible(true)}
-            >
-              <View style={styles.rowContent}>
-                <Text style={styles.rowLabel}>Support Sage</Text>
-                <Text style={styles.rowSublabel}>
-                  {donationPreferences.totalDonated > 0
-                    ? `Thank you for your support! (${formatAmount(donationPreferences.totalDonated)})`
-                    : 'Help fund development with a tip'}
-                </Text>
-              </View>
-              {getSupporterTier(donationPreferences.totalDonated) !== 'none' && (
+        {/* ============================================ */}
+        {/* SUPPORT SECTION */}
+        {/* ============================================ */}
+        <View style={styles.sectionGroup}>
+          <View style={styles.sectionHeaderRow}>
+            <Text style={styles.sectionGroupIcon}>❤️</Text>
+            <Text style={styles.sectionGroupTitle}>SUPPORT</Text>
+          </View>
+
+          <View style={styles.section}>
+          <View style={styles.supportSageCard}>
+            <View style={styles.supportSageHeader}>
+              <Text style={styles.supportSageIcon}>❤️</Text>
+              <Text style={styles.supportSageTitle}>Support Sage</Text>
+            </View>
+            <Text style={styles.supportSageDescription}>
+              {donationPreferences.totalDonated > 0
+                ? `Thank you for your generous support! (${formatAmount(donationPreferences.totalDonated)})`
+                : 'Sage is free and open-source. Your support helps fund development and keeps this project alive.'}
+            </Text>
+            <View style={styles.donationButtonsContainer}>
+              {chfTiers.map((tier) => (
+                <TouchableOpacity
+                  key={tier.id}
+                  testID={`donation-button-${tier.id}`}
+                  style={styles.donationButton}
+                  onPress={() => handleChfDonation(tier)}
+                  disabled={isProcessingDonation}
+                >
+                  {isProcessingDonation && selectedDonationTier === tier.id ? (
+                    <ActivityIndicator color={COLORS.primary} size="small" />
+                  ) : (
+                    <>
+                      <Text style={styles.donationButtonIcon}>{tier.icon}</Text>
+                      <Text style={styles.donationButtonLabel}>{tier.name}</Text>
+                      <Text style={styles.donationButtonPrice}>
+                        {formatAmount(tier.amount, tier.currency)}
+                      </Text>
+                    </>
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
+            {getSupporterTier(donationPreferences.totalDonated) !== 'none' && (
+              <View style={styles.supporterBadgeContainer}>
                 <Text style={styles.supporterBadgeIcon}>
                   {getSupporterTierInfo(getSupporterTier(donationPreferences.totalDonated)).icon}
                 </Text>
-              )}
-              <Text style={styles.exportArrow}>{'>'}</Text>
+                <Text style={styles.supporterBadgeLabel}>
+                  {getSupporterTierInfo(getSupporterTier(donationPreferences.totalDonated)).label}
+                </Text>
+              </View>
+            )}
+            <TouchableOpacity
+              testID="tip-jar-button"
+              style={styles.moreOptionsButton}
+              onPress={() => setIsTipJarModalVisible(true)}
+            >
+              <Text style={styles.moreOptionsText}>More options</Text>
+              <Text style={styles.moreOptionsArrow}>{'>'}</Text>
             </TouchableOpacity>
+          </View>
+          </View>
+        </View>
+
+        {/* ============================================ */}
+        {/* ABOUT SECTION */}
+        {/* ============================================ */}
+        <View style={styles.sectionGroup}>
+          <View style={styles.sectionHeaderRow}>
+            <Text style={styles.sectionGroupIcon}>ℹ️</Text>
+            <Text style={styles.sectionGroupTitle}>ABOUT</Text>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.card}>
+              <TouchableOpacity
+                testID="about-sage-button"
+                style={styles.exportRow}
+                onPress={() => setIsAboutModalVisible(true)}
+              >
+                <View style={styles.rowContent}>
+                  <Text style={styles.rowLabel}>About Sage</Text>
+                  <Text style={styles.rowSublabel}>
+                    Learn more about the app, terms, and privacy
+                  </Text>
+                </View>
+                <Text style={styles.exportArrow}>{'>'}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
@@ -939,6 +1165,24 @@ export default function SettingsScreen() {
         visible={isTraditionSelectorModalVisible}
         onClose={() => setIsTraditionSelectorModalVisible(false)}
       />
+
+      {/* Voice Picker Modal */}
+      <VoicePickerModal
+        visible={isVoicePickerModalVisible}
+        onClose={() => setIsVoicePickerModalVisible(false)}
+      />
+
+      {/* Safety Settings Modal */}
+      <SafetySettingsModal
+        visible={isSafetySettingsModalVisible}
+        onClose={() => setIsSafetySettingsModalVisible(false)}
+      />
+
+      {/* About Modal */}
+      <AboutModal
+        visible={isAboutModalVisible}
+        onClose={() => setIsAboutModalVisible(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -952,9 +1196,8 @@ const createStyles = (
     flex: 1,
     backgroundColor: colors.background,
   },
-  header: {
+  titleContainer: {
     paddingHorizontal: SPACING.xl,
-    paddingTop: SPACING.lg,
     paddingBottom: SPACING.md,
   },
   title: {
@@ -970,8 +1213,30 @@ const createStyles = (
     paddingHorizontal: SPACING.xl,
     paddingBottom: 40,
   },
+  sectionGroup: {
+    marginTop: SPACING.xxxl,
+    marginBottom: SPACING.md,
+  },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.sm,
+    paddingBottom: SPACING.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  sectionGroupIcon: {
+    fontSize: 18,
+    marginRight: SPACING.sm,
+  },
+  sectionGroupTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: 1.5,
+    color: colors.text,
+  },
   section: {
-    marginTop: SPACING.xxl,
+    marginTop: SPACING.lg,
   },
   sectionTitle: {
     ...scaledTypography.styles.label,
@@ -979,6 +1244,11 @@ const createStyles = (
     textTransform: 'uppercase',
     marginBottom: SPACING.md,
     marginLeft: 4,
+  },
+  notificationStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
   },
   toneGrid: {
     flexDirection: 'row',
@@ -1351,6 +1621,93 @@ const createStyles = (
   supporterBadgeIcon: {
     fontSize: 20,
     marginRight: SPACING.sm,
+  },
+  // Support Sage card styles
+  supportSageCard: {
+    backgroundColor: colors.surface,
+    borderRadius: RADII.md,
+    padding: SPACING.lg,
+    overflow: 'hidden',
+  },
+  supportSageHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+  },
+  supportSageIcon: {
+    fontSize: 28,
+    marginRight: SPACING.md,
+  },
+  supportSageTitle: {
+    ...scaledTypography.styles.h3,
+    color: colors.text,
+  },
+  supportSageDescription: {
+    ...scaledTypography.styles.body,
+    color: colors.textSecondary,
+    lineHeight: 22,
+    marginBottom: SPACING.lg,
+  },
+  donationButtonsContainer: {
+    flexDirection: 'row',
+    gap: SPACING.md,
+    marginBottom: SPACING.lg,
+  },
+  donationButton: {
+    flex: 1,
+    backgroundColor: colors.surfaceAlt,
+    borderRadius: RADII.md,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.sm,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 90,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  donationButtonIcon: {
+    fontSize: 24,
+    marginBottom: SPACING.xs,
+  },
+  donationButtonLabel: {
+    ...scaledTypography.styles.bodyBold,
+    color: colors.text,
+    marginBottom: 2,
+  },
+  donationButtonPrice: {
+    ...scaledTypography.styles.caption,
+    color: COLORS.primary,
+    fontWeight: '700',
+  },
+  supporterBadgeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.primaryLight,
+    borderRadius: RADII.sm,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+    marginBottom: SPACING.md,
+  },
+  supporterBadgeLabel: {
+    ...scaledTypography.styles.bodyBold,
+    color: COLORS.primary,
+  },
+  moreOptionsButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: SPACING.sm,
+  },
+  moreOptionsText: {
+    ...scaledTypography.styles.body,
+    color: colors.textSecondary,
+    marginRight: SPACING.xs,
+  },
+  moreOptionsArrow: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    fontWeight: '600',
   },
   // Accent color styles
   accentColorPreview: {

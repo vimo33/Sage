@@ -10,6 +10,7 @@ import {
   Switch,
   useColorScheme,
   Modal,
+  Image,
 } from 'react-native';
 import { useSageStore, type TonePreference } from '../lib/storage/store';
 import { COLORS, SPACING, RADII, TYPOGRAPHY, SHADOWS, withAlpha, getThemedColors } from '../lib/ui/theme';
@@ -145,7 +146,11 @@ export default function OnboardingScreen() {
         </View>
         <View style={styles.content}>
           <View style={styles.logoContainer}>
-            <Text style={styles.logoIcon}>🌿</Text>
+            <Image
+              source={require('../assets/images/sage-app-icon.png')}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
           </View>
           <Text style={styles.heroTitle}>
             A quiet place{"\n"}to <Text style={styles.primaryText}>reflect.</Text>
@@ -155,8 +160,11 @@ export default function OnboardingScreen() {
           </Text>
         </View>
         <View style={styles.footer}>
-          <TouchableOpacity style={styles.primaryButton} onPress={nextStep}>
-            <Text style={styles.primaryButtonText}>Begin</Text>
+          <TouchableOpacity style={styles.primaryButton} onPress={nextStep} testID="begin-button">
+            <Text style={styles.primaryButtonText}>Begin →</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.secondaryButton} onPress={() => {}} testID="learn-more-button">
+            <Text style={styles.secondaryButtonText}>Learn more</Text>
           </TouchableOpacity>
           <View style={styles.privacyNote}>
             <Text style={styles.privacyText}>
@@ -330,17 +338,15 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     paddingBottom: 40,
   },
   logoContainer: {
-    width: 80,
-    height: 80,
-    backgroundColor: COLORS.primary,
-    borderRadius: RADII.lg,
+    width: 120,
+    height: 120,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: SPACING.xxl,
-    ...SHADOWS.md,
   },
-  logoIcon: {
-    fontSize: 40,
+  logoImage: {
+    width: 120,
+    height: 120,
   },
   heroTitle: {
     fontSize: 40,
@@ -504,6 +510,20 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     color: COLORS.black,
     fontSize: 18,
     fontWeight: '700',
+  },
+  secondaryButton: {
+    height: 56,
+    borderRadius: RADII.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  secondaryButtonText: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '600',
   },
   privacyNote: {
     alignItems: 'center',

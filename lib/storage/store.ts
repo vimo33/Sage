@@ -38,6 +38,7 @@ import {
   DEFAULT_DONATION_PREFERENCES,
   calculateTotalDonated,
 } from '../donations';
+import { addToSyncQueue, initOfflineSync } from '../offline-sync';
 
 export type TonePreference = 'practical' | 'poetic' | 'minimal' | 'deep';
 export type FontSizePreference = 'small' | 'medium' | 'large';
@@ -125,11 +126,27 @@ export const DEFAULT_DEVELOPER_SETTINGS: DeveloperSettings = {
 
 export type AccentColorKey = 'green' | 'blue' | 'purple' | 'orange' | 'pink' | 'teal';
 
+// Safety settings types
+export type ContentLimitLevel = 'standard' | 'sensitive' | 'restrictive';
+
+export interface SafetySettings {
+  contentLimitLevel: ContentLimitLevel;
+  showCrisisResources: boolean;
+  crisisResourcesRegion: string;
+}
+
+export const DEFAULT_SAFETY_SETTINGS: SafetySettings = {
+  contentLimitLevel: 'standard',
+  showCrisisResources: true,
+  crisisResourcesRegion: 'United States',
+};
+
 export interface UserPreferences {
   tone: TonePreference;
   fontSize: FontSizePreference;
   voiceSpeed: number;
   narrateResponses: boolean;
+  selectedVoiceId: string | null; // For voice picker
   showCitations: boolean;
   preferredThemes: ThemeTag[];
   preferredTraditions: string[];
@@ -140,12 +157,18 @@ export interface UserPreferences {
   analyticsPreferences: AnalyticsPreferences;
   developerSettings: DeveloperSettings;
   accentColor: AccentColorKey;
+  safetySettings: SafetySettings;
+  // User profile data
+  userName: string | null;
+  profileImageUri: string | null;
 }
 
 export interface JournalEntry {
   id: string;
+  title?: string;
   content: string;
   mood?: string;
+  tags?: string[];
   createdAt: number;
   linkedInsightIds: string[];
 }
@@ -350,6 +373,7 @@ const DEFAULT_PREFERENCES: UserPreferences = {
   fontSize: 'medium',
   voiceSpeed: 1.0,
   narrateResponses: false,
+  selectedVoiceId: null,
   showCitations: true,
   preferredThemes: [],
   preferredTraditions: [],
@@ -360,6 +384,9 @@ const DEFAULT_PREFERENCES: UserPreferences = {
   analyticsPreferences: DEFAULT_ANALYTICS_PREFERENCES,
   developerSettings: DEFAULT_DEVELOPER_SETTINGS,
   accentColor: 'green',
+  safetySettings: DEFAULT_SAFETY_SETTINGS,
+  userName: null,
+  profileImageUri: null,
 };
 
 // SecureStore keys - MUST use only alphanumeric, '.', '-', '_' characters (NO colons!)
@@ -584,6 +611,27 @@ async function persistSearchHistory(items: SearchHistoryItem[]): Promise<void> {
   }
 }
 
+async function persistJournalEntries(entries: JournalEntry[]): Promise<void> {
+  try {
+    // Keep last 500 entries to avoid storage bloat
+    const recent = entries.slice(0, 500);
+    await SecureStore.setItemAsync('journal_entries', JSON.stringify(recent));
+  } catch (error) {
+    console.error('[Sage] Failed to persist journal entries:', error);
+  }
+}
+
+async function loadJournalEntries(): Promise<JournalEntry[]> {
+  try {
+    const raw = await SecureStore.getItemAsync('journal_entries');
+    if (!raw) return [];
+    return JSON.parse(raw) as JournalEntry[];
+  } catch (error) {
+    console.error('[Sage] Failed to load journal entries:', error);
+    return [];
+  }
+}
+
 // Helper function to get start of week (Sunday)
 function getStartOfWeek(date: Date): number {
   const d = new Date(date);
@@ -718,6 +766,7 @@ export const useSageStore = create<SageState>((set, get) => ({
     const storedDonationPrefs = await loadStoredDonationPrefs();
     const storedSavedInsights = await loadStoredSavedInsights();
     const storedSearchHistory = await loadStoredSearchHistory();
+    const storedJournalEntries = await loadJournalEntries();
 
     const nextPreferences: UserPreferences = {
       ...DEFAULT_PREFERENCES,
@@ -736,6 +785,10 @@ export const useSageStore = create<SageState>((set, get) => ({
       developerSettings: {
         ...DEFAULT_DEVELOPER_SETTINGS,
         ...stored?.developerSettings,
+      },
+      safetySettings: {
+        ...DEFAULT_SAFETY_SETTINGS,
+        ...stored?.safetySettings,
       },
     };
 
@@ -807,8 +860,12 @@ export const useSageStore = create<SageState>((set, get) => ({
       donationPreferences: storedDonationPrefs ?? DEFAULT_DONATION_PREFERENCES,
       savedInsights: storedSavedInsights ?? [],
       searchHistory: storedSearchHistory ?? [],
+      journalEntries: storedJournalEntries ?? [],
       isInitialized: true,
     });
+
+    // Initialize offline sync service
+    void initOfflineSync();
   },
 
   validateAndLoadModel: async () => {
@@ -949,23 +1006,38 @@ export const useSageStore = create<SageState>((set, get) => ({
       id: `journal_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`,
       createdAt: Date.now(),
     };
-    set((state) => ({
-      journalEntries: [newEntry, ...state.journalEntries],
-    }));
+    set((state) => {
+      const updatedEntries = [newEntry, ...state.journalEntries];
+      void persistJournalEntries(updatedEntries);
+      return { journalEntries: updatedEntries };
+    });
+    // Add to offline sync queue
+    void addToSyncQueue('journal_entry', 'create', newEntry.id, newEntry, 1);
   },
 
   updateJournalEntry: (entryId, updates) => {
-    set((state) => ({
-      journalEntries: state.journalEntries.map((entry) =>
+    set((state) => {
+      const updatedEntries = state.journalEntries.map((entry) =>
         entry.id === entryId ? { ...entry, ...updates } : entry
-      ),
-    }));
+      );
+      const updatedEntry = updatedEntries.find(e => e.id === entryId);
+      if (updatedEntry) {
+        // Add to offline sync queue
+        void addToSyncQueue('journal_entry', 'update', entryId, updatedEntry, 1);
+      }
+      void persistJournalEntries(updatedEntries);
+      return { journalEntries: updatedEntries };
+    });
   },
 
   deleteJournalEntry: (entryId) => {
-    set((state) => ({
-      journalEntries: state.journalEntries.filter((entry) => entry.id !== entryId),
-    }));
+    // Add to offline sync queue before deletion
+    void addToSyncQueue('journal_entry', 'delete', entryId, { id: entryId }, 1);
+    set((state) => {
+      const updatedEntries = state.journalEntries.filter((entry) => entry.id !== entryId);
+      void persistJournalEntries(updatedEntries);
+      return { journalEntries: updatedEntries };
+    });
   },
 
   importJournalEntries: (entries) => {
@@ -982,6 +1054,7 @@ export const useSageStore = create<SageState>((set, get) => ({
       // Merge and re-sort all entries by createdAt (newest first)
       const allEntries = [...sortedNewEntries, ...state.journalEntries]
         .sort((a, b) => b.createdAt - a.createdAt);
+      void persistJournalEntries(allEntries);
       return { journalEntries: allEntries };
     });
 
@@ -999,6 +1072,8 @@ export const useSageStore = create<SageState>((set, get) => ({
       void persistSavedInsights(newInsights);
       return { savedInsights: newInsights };
     });
+    // Add to offline sync queue
+    void addToSyncQueue('saved_insight', 'create', newInsight.id, newInsight, 1);
   },
 
   updateInsight: (insightId, updates) => {
@@ -1007,11 +1082,18 @@ export const useSageStore = create<SageState>((set, get) => ({
         insight.id === insightId ? { ...insight, ...updates } : insight
       );
       void persistSavedInsights(newInsights);
+      const updatedInsight = newInsights.find(i => i.id === insightId);
+      if (updatedInsight) {
+        // Add to offline sync queue
+        void addToSyncQueue('saved_insight', 'update', insightId, updatedInsight, 1);
+      }
       return { savedInsights: newInsights };
     });
   },
 
   deleteInsight: (insightId) => {
+    // Add to offline sync queue before deletion
+    void addToSyncQueue('saved_insight', 'delete', insightId, { id: insightId }, 1);
     set((state) => {
       const newInsights = state.savedInsights.filter((insight) => insight.id !== insightId);
       void persistSavedInsights(newInsights);

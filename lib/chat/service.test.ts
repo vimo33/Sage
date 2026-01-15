@@ -50,6 +50,7 @@ describe('regenerateAssistantResult', () => {
     fontSize: 'medium',
     voiceSpeed: 1.0,
     narrateResponses: false,
+    selectedVoiceId: null,
     showCitations: true,
     preferredThemes: [],
     preferredTraditions: [],
@@ -78,6 +79,13 @@ describe('regenerateAssistantResult', () => {
       repeatPenalty: 1.2,
     },
     accentColor: 'green',
+    safetySettings: {
+      contentLimitLevel: 'standard',
+      showCrisisResources: true,
+      crisisResourcesRegion: 'United States',
+    },
+    userName: null,
+    profileImageUri: null,
   };
 
   const mockPreferencesWithDevSettings: UserPreferences = {

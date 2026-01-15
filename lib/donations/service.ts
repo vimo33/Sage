@@ -72,6 +72,44 @@ export const DONATION_TIERS: DonationTier[] = [
   },
 ];
 
+// CHF donation tiers for the Support Sage card - amounts in cents
+export const CHF_DONATION_TIERS: DonationTier[] = [
+  {
+    id: 'chf-coffee',
+    name: 'Coffee',
+    description: 'Buy me a coffee',
+    amount: 200,
+    currency: 'CHF',
+    type: 'one-time',
+    icon: '☕',
+  },
+  {
+    id: 'chf-lunch',
+    name: 'Lunch',
+    description: 'Buy me lunch',
+    amount: 500,
+    currency: 'CHF',
+    type: 'one-time',
+    icon: '🍽️',
+  },
+  {
+    id: 'chf-dinner',
+    name: 'Dinner',
+    description: 'Buy me dinner',
+    amount: 1000,
+    currency: 'CHF',
+    type: 'one-time',
+    icon: '🥘',
+  },
+];
+
+/**
+ * Get CHF donation tiers
+ */
+export function getChfTiers(): DonationTier[] {
+  return CHF_DONATION_TIERS;
+}
+
 /**
  * Format amount for display
  */

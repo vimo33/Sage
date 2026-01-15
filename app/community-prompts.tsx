@@ -30,6 +30,7 @@ import { useSageStore } from '../lib/storage/store';
 import { PromptCard } from '../components/community-prompts/PromptCard';
 import { SubmissionModal } from '../components/community-prompts/SubmissionModal';
 import { BrowsePromptsModal } from '../components/community-prompts/BrowsePromptsModal';
+import { AppHeader } from '../components/navigation';
 
 const CATEGORIES = Object.keys(CATEGORY_INFO) as CommunityPromptCategory[];
 
@@ -100,20 +101,21 @@ export default function CommunityPromptsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Community Prompts</Text>
-        <TouchableOpacity
-          onPress={() => setShowBrowseModal(true)}
-          style={styles.searchButton}
-          testID="search-button"
-        >
-          <Text style={styles.searchButtonText}>Search</Text>
-        </TouchableOpacity>
-      </View>
+      <AppHeader
+        variant="back"
+        title="Community Prompts"
+        showProfile={false}
+        testID="community-prompts-header"
+        rightElement={
+          <TouchableOpacity
+            onPress={() => setShowBrowseModal(true)}
+            style={styles.searchButton}
+            testID="search-button"
+          >
+            <Text style={styles.searchButtonText}>Search</Text>
+          </TouchableOpacity>
+        }
+      />
 
       {/* Category Tabs */}
       <ScrollView
@@ -252,26 +254,6 @@ const createStyles = (colors: ReturnType<typeof getThemedColors>, isDark: boolea
     container: {
       flex: 1,
       backgroundColor: colors.background,
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingHorizontal: SPACING.xl,
-      paddingVertical: SPACING.lg,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border,
-    },
-    backButton: {
-      paddingVertical: SPACING.xs,
-    },
-    backButtonText: {
-      ...TYPOGRAPHY.styles.body,
-      color: COLORS.primary,
-    },
-    title: {
-      ...TYPOGRAPHY.styles.h4,
-      color: colors.text,
     },
     searchButton: {
       paddingVertical: SPACING.xs,

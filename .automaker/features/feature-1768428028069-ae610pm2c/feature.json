@@ -7,6 +7,9 @@
     "mindful-time-tracking"
   ],
   "priority": 1,
-  "status": "backlog",
-  "id": "feature-1768428028069-ae610pm2c"
+  "status": "verified",
+  "id": "feature-1768428028069-ae610pm2c",
+  "branchName": "main",
+  "startedAt": "2026-01-14T23:23:51.831Z",
+  "updatedAt": "2026-01-14T23:28:43.761Z"
 }
